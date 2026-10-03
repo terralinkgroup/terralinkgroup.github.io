@@ -6532,7 +6532,10 @@ window.TL_IFE={info(q){
     fromCC:(APNAME[e.from]||[])[1]||"",toCC:(APNAME[e.to]||[])[1]||"",fromLL:(AINFO[e.from]||[]).slice(0,2),toLL:(AINFO[e.to]||[]).slice(0,2),
     pos:pl?(()=>{const x=pl.est||flightEst(e,pl.frac);return {lat:pl.lat,lon:pl.lon,brg:pl.brg,alt:x.alt,spd:x.spd,vs:x.vs,ground:!!x.ground};})():null,
     below:pl?whereIs(pl.lat,pl.lon):null,tzDiff:Math.round((tzOffsetAt(e.to,now)-tzOffsetAt(e.from,now))/6)/10,
-    arrLounge:hasLounge(AL[e.ai],e.to)?(loungeAt(e.to,e.ai)||{}).name||null:null,belt:1+Math.floor(h32("belt"+e.fn+e.to+iso(new Date()))*12),
+    arrLounge:hasLounge(AL[e.ai],e.to)?(loungeAt(e.to,e.ai)||{}).name||null:null,
+    ...(()=>{const salt=(e.charter?"c":"")+e.fn+e.from,t0=pl?pl.t0:now,de=rwyEnd(e.from,Math.floor(t0/864e5),"d"+salt,"dep"),ae=rwyEnd(e.to,Math.floor((t0+dur*6e4)/864e5),"a"+salt,"arr");
+      let nearCity=null;if(pl){let best=1e9;for(const c in AINFO){const A=AINFO[c],k=gcKm(pl.lat,pl.lon,A[0],A[1]);if(k<best){best=k;nearCity=[A[2],Math.round(k),(APNAME[c]||[])[1]||""];}}}
+      return {depRwy:de?de.id:null,arrRwy:ae?ae.id:null,nearCity,depGate:gateFor(e,utcToLocal(e.from,t0).date)};})(),belt:1+Math.floor(h32("belt"+e.fn+e.to+iso(new Date()))*12),
     cabins:{eco:cabinName(a.code,"eco",model),prem:cabinName(a.code,"prem",model),biz:cabinName(a.code,"biz",model),first:cabinName(a.code,"first",model)}};
 },
 /* the flight you're on right now, from My trips (your account if you're
@@ -6552,6 +6555,10 @@ async current(){
 },
 meal(fno){const m=MEALS.all(),today=todayISO();let hit=null;
   Object.keys(m).forEach(k=>{const [f,d]=k.split("|");if(f===fno&&Math.abs((new Date(d)-new Date(today))/864e5)<=1)hit=m[k];});return hit;},
+/* other aircraft in the air near a point, for the radio */
+nearby(lat,lon,km,not){const out=[];airborneNow().forEach(p=>{const a=AL[p.e.ai];if(!a||p.e.cs)return;const f=a.code+p.e.fn;if(f===not)return;
+  const k=gcKm(lat,lon,p.lat,p.lon);if(k<km)out.push({code:a.code,fn:p.e.fn,km:Math.round(k),alt:(p.est||flightEst(p.e,p.frac)).alt,to:p.e.to,toCity:cityOf(p.e.to)});});
+  return out.sort((x,y)=>x.km-y.km).slice(0,8);},
 logos(){return AL.filter(a=>!a.retired&&a.logo).map(a=>({code:a.code,name:a.name,logo:a.logo,color:brandOf(a.code).c}));}
 };
 
