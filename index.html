@@ -1006,6 +1006,106 @@ a.bd-row{text-decoration:none}
 .ap-inuse{line-height:1.9}.ap-inuse .rw-lab{display:inline-block;width:14px;padding:0;vertical-align:-2px;margin-right:4px}
 @media (max-width:900px){.ap-grid{grid-template-columns:1fr}}
 @media (max-width:560px){.ap-code{font-size:44px}.ap-clock{text-align:left}}
+/* ---- explore ---- */
+.ex-form{display:grid;grid-template-columns:minmax(200px,1.2fr) 1fr 1fr auto;gap:16px;align-items:end;border:1px solid var(--line);
+  border-radius:14px;padding:14px 16px;background:var(--surface);margin-bottom:12px}
+.ex-form .field{position:relative}
+.ex-form label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:6px}
+.ex-form .field input{width:100%;font:inherit;font-size:15px;padding:9px 11px;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--ink)}
+.ex-rng input{width:100%;accent-color:var(--brand)}
+.ex-rng b{color:var(--ink)}
+.ex-chk{display:flex;align-items:center;gap:7px;font-size:14px;white-space:nowrap;padding-bottom:6px;color:var(--ink)!important}
+.ex-sum{font-size:14px;color:var(--muted);margin:2px 0 12px}
+.ex-grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:14px;align-items:start}
+.ex-map{height:540px;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--water)}
+.ex-list{max-height:540px;overflow:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.dst-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px}
+.dst-nav{display:flex;gap:8px;margin-bottom:26px}
+.dst-nav button{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:18px;line-height:1}
+.dst-nav button:hover:not(:disabled){border-color:var(--ink)}
+.dst-nav button:disabled{opacity:.35;cursor:default}
+.dst-row{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:2px;padding:2px 2px 14px;scrollbar-width:thin;overscroll-behavior-x:contain}
+.dst{position:relative;flex:0 0 236px;aspect-ratio:3/4;border-radius:14px;overflow:hidden;scroll-snap-align:start;border:0;padding:0;background:#2b2f2c;color:#fff;text-align:left;box-shadow:var(--shadow)}
+.dst img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.dst:hover img{transform:scale(1.04)}
+.dst::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(0,0,0,.72) 100%)}
+.dst-t{position:absolute;left:0;right:0;bottom:0;padding:14px 15px 15px;z-index:1;display:flex;flex-direction:column;gap:2px}
+.dst-t small{font-size:11px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;font-weight:600}
+.dst-t b{font-family:var(--display);font-weight:600;font-size:24px;line-height:1.1}
+.dst-t span{font-size:13px;opacity:.92;line-height:1.35}.dst-t em{font-style:normal;font-size:12px;opacity:.78}
+.dst-t span i{font-style:normal;font-weight:700}
+.dst-no{position:absolute;top:12px;left:13px;z-index:1;font:600 12px/1 var(--ui);background:rgba(0,0,0,.38);padding:5px 7px;border-radius:20px;backdrop-filter:blur(3px)}
+@media(max-width:600px){.dst{flex-basis:68vw;max-width:250px}.dst-nav{display:none}.dst-row{margin:0 -20px;padding:2px 20px 14px;scroll-padding-left:20px}}
+.hp{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:28px;align-items:start}
+@media(max-width:900px){.hp{grid-template-columns:1fr}}
+.hp-find{width:100%;font:inherit;font-size:15px;padding:11px 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);margin-bottom:18px}
+.hp-grp{font:600 12px/1 var(--ui);letter-spacing:.09em;text-transform:uppercase;color:var(--faint);margin:22px 0 8px}
+.hp-q{border-bottom:1px solid var(--line)}
+.hp-q summary{list-style:none;cursor:pointer;padding:13px 28px 13px 0;font-weight:600;position:relative}
+.hp-q summary::-webkit-details-marker{display:none}
+.hp-q summary::after{content:"+";position:absolute;right:4px;top:10px;font-size:20px;color:var(--muted);font-weight:400}
+.hp-q[open] summary::after{content:"–"}
+.hp-q div{padding:0 0 16px;color:var(--muted);font-size:14.5px;line-height:1.6}
+.hp-q div ol,.hp-q div ul{margin:6px 0 0;padding-left:20px}
+.hp-q kbd{font:600 12px var(--ui);border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:1px 5px;background:var(--surface-2);color:var(--ink)}
+.hp-none{color:var(--muted);padding:14px 0}
+.hp-me dl{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;margin:0;font-size:13.5px}
+.hp-me dt{color:var(--muted)}.hp-me dd{margin:0;font-weight:600;text-align:right}
+.hp-fix{display:flex;flex-direction:column;gap:8px;margin-top:4px}
+.hp-fix .tbtn{width:100%;justify-content:center}
+.hp-fix p{font-size:12.5px;color:var(--faint);margin:0 0 6px;line-height:1.45}
+.foot-help{color:inherit;font-weight:700}
+.ex-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;padding:9px 14px;border-bottom:1px solid var(--line);text-decoration:none;color:inherit}
+.ex-row:hover{background:var(--surface-2)}
+.ex-row b{font-size:14px}.ex-row .p{font-weight:700;font-variant-numeric:tabular-nums;text-align:right}
+.ex-row small{grid-column:1/-1;font-size:12px;color:var(--muted)}
+.ex-pin{font:700 11px var(--ui);color:#fff;border-radius:999px;padding:2px 7px;white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+@media (max-width:900px){.ex-form{grid-template-columns:1fr 1fr}.ex-grid{grid-template-columns:1fr}.ex-map{height:380px}.ex-list{max-height:none}}
+@media (max-width:520px){.ex-form{grid-template-columns:1fr}}
+/* ---- weather ---- */
+.wx-now{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.wx-ic{font-size:30px;line-height:1;width:36px;text-align:center}
+.wx-now b{font-family:var(--display);font-size:30px;font-weight:600;line-height:1}
+.wx-now span{font-size:13px;color:var(--muted)}
+.wx-days{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;font-size:12.5px;text-align:center}
+.wx-days div{background:var(--surface-2);border-radius:8px;padding:6px 4px}
+.wx-days i{display:block;font-style:normal;font-size:18px}
+.wx-days small{display:block;color:var(--muted)}
+.wx-trip{font-size:13px;color:var(--muted);margin-top:8px}
+.wx-trip:empty{display:none}
+.wx-trip b{color:var(--ink)}
+/* ---- jet lag ---- */
+.jl-set{display:flex;gap:12px;flex-wrap:wrap;margin:4px 0 12px;font-size:13.5px;align-items:center}
+.jl-set select{font:inherit;padding:5px 8px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink)}
+.jl-day{border-left:3px solid var(--brand);padding:4px 0 4px 12px;margin:0 0 10px}
+.jl-day b{display:block;font-size:14px}
+.jl-day span{font-size:13.5px;color:var(--muted);line-height:1.5}
+.jl-sum{font-size:14.5px;margin:0 0 12px;line-height:1.5}
+/* ---- planes near me ---- */
+.near{border:1px solid var(--line);border-radius:12px;background:var(--surface);overflow:hidden;margin-top:12px}
+.near h3{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin:0;padding:12px 14px 6px}
+.near-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;width:100%;text-align:left;font:inherit;color:inherit;background:none;border:0;border-top:1px solid var(--line);padding:10px 14px;cursor:pointer}
+.near-row:hover{background:var(--surface-2)}
+.near-row b{font-size:14.5px}.near-row .d{font-weight:700;font-variant-numeric:tabular-nums;text-align:right}
+.near-row small{grid-column:1/-1;font-size:12.5px;color:var(--muted)}
+.me-dot{width:14px;height:14px;border-radius:50%;background:#2f7de1;border:3px solid #fff;box-shadow:0 0 0 6px rgba(47,125,225,.25)}
+/* ---- ops ---- */
+.op-chips{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 14px}
+.op-tiles{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:18px}
+.op-t{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--surface)}
+.op-t b{display:block;font-family:var(--display);font-size:25px;font-weight:600;font-variant-numeric:lining-nums}
+.op-t span{font-size:12px;color:var(--muted)}
+.op-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.op-card{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--surface)}
+.op-card h3{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin:0 0 8px}
+.op-tab{width:100%;border-collapse:collapse;font-size:13px}
+.op-tab td,.op-tab th{padding:6px 4px;border-top:1px solid var(--line);text-align:left}
+.op-tab th{font-size:11px;color:var(--faint);font-weight:700;border-top:0}
+.op-tab .n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.op-regs{display:flex;flex-wrap:wrap;gap:4px 6px;font-size:12px}
+.op-regs a{border:1px solid var(--line);border-radius:5px;padding:1px 6px;text-decoration:none;color:var(--ink);background:var(--surface-2)}
+.op-note{font-size:12.5px;color:var(--faint);margin-top:14px;line-height:1.5}
+@media (max-width:900px){.op-tiles{grid-template-columns:repeat(2,1fr)}.op-grid{grid-template-columns:1fr}}
 /* ---- route pages ---- */
 .rt-top{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:flex-end;margin-bottom:16px}
 .rt-od{font-family:var(--display);font-size:40px;font-weight:600;line-height:1.1}
@@ -2158,6 +2258,7 @@ body.sb-open{overflow:hidden}
   <button class="nav-arrow l" type="button" aria-label="Scroll tabs left" hidden>‹</button>
   <div class="nav-links">
     <a href="#/" data-nav="home">Book</a>
+    <a href="#/explore" data-nav="explore">Explore</a>
     <a href="#/map" data-nav="map">Route map</a>
     <a href="#/where" data-nav="where">Where we fly</a>
     <a href="#/fleet" data-nav="fleet">Fleet</a>
@@ -2170,10 +2271,11 @@ body.sb-open{overflow:hidden}
     <a href="#/club" data-nav="club">TerraClub</a>
     <a href="#/desk" data-nav="desk" id="nav-desk" hidden>Charter desk <span class="navbadge" id="desk-count" hidden></span></a>
     <a href="#/stats" data-nav="stats" id="nav-stats" hidden>Stats</a>
+    <a href="#/ops" data-nav="ops" id="nav-ops" hidden>Ops</a>
   </div>
   <button class="nav-arrow r" type="button" aria-label="Scroll tabs right" hidden>›</button>
   </div>
-  <div class="nav-right"><span class="hidem">Help</span><span class="hidem" id="who"></span><div class="thm"><button type="button" class="thm-b" id="thm-b" aria-haspopup="true" aria-expanded="false" aria-label="Appearance" title="Appearance"></button>
+  <div class="nav-right"><a class="hidem" href="#/help" data-nav="help" style="color:inherit;text-decoration:none">Help</a><span class="hidem" id="who"></span><div class="thm"><button type="button" class="thm-b" id="thm-b" aria-haspopup="true" aria-expanded="false" aria-label="Appearance" title="Appearance"></button>
     <div class="thm-m" id="thm-m" role="menu" hidden>
       <button type="button" role="menuitemradio" data-thm="device">Match device</button>
       <button type="button" role="menuitemradio" data-thm="light">Light</button>
@@ -2234,9 +2336,11 @@ body.sb-open{overflow:hidden}
     </div>
   </div></div>
   <section class="section">
-    <h2>Popular routes</h2><p class="lede">Where TerraLink travellers are heading this week.</p>
-    <div class="routes" id="routes"></div>
+    <div class="dst-head"><div><h2>Popular destinations</h2><p class="lede">Where TerraLink travellers are heading this week.</p></div>
+      <div class="dst-nav"><button type="button" id="dst-l" aria-label="Scroll back">‹</button><button type="button" id="dst-r" aria-label="Scroll on">›</button></div></div>
+    <div class="dst-row" id="routes" tabindex="0" aria-label="Popular destinations"></div>
     <a class="morelink" href="#/map">See the full route map →</a>
+    <a class="morelink" href="#/explore" style="margin-left:18px">Where can I go? Explore by budget →</a>
   </section>
   <section class="section" style="padding-top:6px">
     <h2>Our airlines</h2><p class="lede">Seven carriers, one booking.</p>
@@ -2337,6 +2441,31 @@ body.sb-open{overflow:hidden}
   <section class="section" id="ap-page"></section>
 </div>
 
+<!-- EXPLORE -->
+<div class="view" id="view-explore" hidden>
+  <section class="section">
+    <h2>Where can I go?</h2>
+    <p class="lede">Pick where you're starting from and what you'd spend. Everywhere in reach lights up with the cheapest economy fare, one way.</p>
+    <div class="ex-form">
+      <div class="field"><label for="ex-from">From</label><input id="ex-from" placeholder="City or airport" autocomplete="off" autocapitalize="characters" spellcheck="false"></div>
+      <div class="ex-rng"><label for="ex-max">Up to <b id="ex-max-l">$1,500</b></label><input type="range" id="ex-max" min="100" max="6000" step="50" value="1500"></div>
+      <div class="ex-rng"><label for="ex-hrs">Travel time up to <b id="ex-hrs-l">12 hours</b></label><input type="range" id="ex-hrs" min="1" max="30" step="1" value="12"></div>
+      <label class="ex-chk"><input type="checkbox" id="ex-ns"> Nonstop only</label>
+    </div>
+    <div class="ex-sum" id="ex-sum"></div>
+    <div class="ex-grid"><div class="ex-map" id="ex-map"></div><div class="ex-list" id="ex-list"></div></div>
+  </section>
+</div>
+
+<!-- OPS (operator only) -->
+<div class="view" id="view-ops" hidden>
+  <section class="section">
+    <h2>Ops</h2>
+    <p class="lede">How the airlines are running in the game: what earns, what sits idle, what overlaps. Only the operator's account can see this.</p>
+    <div id="ops-body"></div>
+  </section>
+</div>
+
 <!-- ROUTE -->
 <div class="view" id="view-route" hidden>
   <section class="section" id="rt-page"></section>
@@ -2366,6 +2495,24 @@ body.sb-open{overflow:hidden}
 </div>
 
 <!-- WHAT'S NEW -->
+<div class="view" id="view-help" hidden>
+  <section class="section">
+    <h2>Help</h2><p class="lede">Answers to the usual questions, and fixes for when something isn't working.</p>
+    <div class="hp"><div>
+      <input class="hp-find" id="hp-find" type="search" placeholder="Search help — try “offline” or “sign in”" autocomplete="off">
+      <div id="hp-list"><div class="hp-grp">The site</div><details class="hp-q" data-k="stuck loading blank white splash plane slow"><summary>The loading plane never lands, or the page stays blank</summary><div>The first visit after a quiet spell can take up to half a minute while the timetable wakes up. If it's still stuck:<ol><li>Refresh the page (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>R</kbd> on a computer, <kbd>⌘</kbd>+<kbd>Shift</kbd>+<kbd>R</kbd> on a Mac, or pull down on a phone).</li><li>Still stuck? Use <b>Reload the timetable</b> on this page — it fetches a fresh copy and leaves your trips alone.</li><li>Try another browser or turn off content blockers for this site.</li></ol></div></details><details class="hp-q" data-k="old version update cache stale outdated"><summary>I'm seeing an old version after an update</summary><div>The site keeps a copy of itself so it opens with no signal. Close every TerraLink tab and open it again — the new version loads the next time you're online. If it still looks old, use <b>Clear the offline copy</b> on this page.</div></details><details class="hp-q" data-k="broken button click nothing happens error extension"><summary>Something on the page looks broken or doesn't respond</summary><div>Refresh first. If it keeps happening, it's usually a browser extension (ad blockers, privacy tools, translators) changing the page — try a private window. TerraLink works in current Chrome, Edge, Safari and Firefox; very old browsers aren't supported.</div></details><details class="hp-q" data-k="install app home screen pwa phone"><summary>Installing TerraLink as an app</summary><div><ul><li><b>iPhone or iPad:</b> open the site in Safari, tap Share, then <i>Add to Home Screen</i>.</li><li><b>Android:</b> in Chrome, tap ⋮ then <i>Install app</i> (or <i>Add to Home screen</i>).</li><li><b>Computer:</b> in Chrome or Edge, click the install icon at the right of the address bar.</li></ul></div></details><details class="hp-q" data-k="offline no signal airplane mode wifi"><summary>Does it work offline?</summary><div>Once you've opened TerraLink with a connection, the timetable, My trips and boarding passes open with no signal. The live map, weather, Flight status for flights in the air, and signing in need a connection.</div></details><details class="hp-q" data-k="dark mode light theme appearance night"><summary>Switching between light and dark</summary><div>Use the round ◐ button at the top right. <i>Match device</i> follows your phone or computer's setting; <i>Light</i> and <i>Dark</i> stay put whatever the device does.</div></details><div class="hp-grp">Booking and trips</div><details class="hp-q" data-k="no flights found search results empty connection layover"><summary>My search says no flights</summary><div>Check the dates: some routes don't fly every day — a route page shows which days. Try a nearby airport (Newark for New York, say), or a different date. Searches include connections with at least 45 minutes and at most 12 hours between flights; a connection outside that isn't sold.</div></details><details class="hp-q" data-k="booking missing trips lost gone disappeared"><summary>Where did my booking go?</summary><div>Bookings are in <a class=lnk href='#/trips'>My trips</a>. If you weren't signed in when you booked, the trip is kept in that browser only — another browser, another device or a private window won't show it, and clearing your browsing data removes it. Sign in before booking to keep trips with your account.</div></details><details class="hp-q" data-k="time zone wrong local arrival +1 next day"><summary>The times look wrong</summary><div>Every time on TerraLink is local to the airport it's at: departures in the departure city's time, arrivals in the arrival city's. A small <b>+1</b> means it lands the next day.</div></details><details class="hp-q" data-k="calendar ics google outlook apple"><summary>Adding a trip to my calendar</summary><div>On an upcoming trip, choose <b>Add to calendar</b>. A calendar file downloads; open it and your phone or computer adds each flight. For Google Calendar on a computer, import the file from Settings → Import &amp; export.</div></details><details class="hp-q" data-k="price currency money payment card"><summary>What currency are the prices?</summary><div>Fares are in the game's currency. Nothing on TerraLink charges a real card.</div></details><div class="hp-grp">Flight status and maps</div><details class="hp-q" data-k="flight status search not found number registration"><summary>Flight status can't find my flight</summary><div>Search with the airline code and number together, like <b>UA869</b> or <b>SR395</b>; an aircraft registration; an airport code like <b>IAH</b>; or a route like <b>IAH-LHR</b>.</div></details><details class="hp-q" data-k="map grey blank tiles empty openstreetmap"><summary>The map is grey or empty</summary><div>The map pictures come from OpenStreetMap. A slow connection, an ad blocker or a work network can stop them loading — refresh, or allow the site in your blocker. Planes and routes still show on top.</div></details><details class="hp-q" data-k="near me location permission gps plane"><summary>“What's that plane? Near me” doesn't work</summary><div>It needs permission to use your location. In Chrome, click the icon left of the address and allow Location; on iPhone, go to Settings → Privacy → Location Services → Safari Websites. Your location stays in your browser — it isn't sent anywhere.</div></details><details class="hp-q" data-k="weather forecast unavailable"><summary>Weather says it isn't available</summary><div>The forecast comes from Open-Meteo. If it can't be reached the card says so; try again in a few minutes.</div></details><div class="hp-grp">Account</div><details class="hp-q" data-k="sign in login password account google discord"><summary>I can't sign in</summary><div>Check the email and password (passwords are case-sensitive). A new account has to be confirmed from the email that's sent before the first sign-in. If Google or Discord brings you back signed out, try again in a normal (not private) window with cookies allowed, or use email and password.</div></details><details class="hp-q" data-k="sign in hosted preview"><summary>It says sign-in needs the hosted site</summary><div>Sign-in only works on terralinkgroup.github.io, not on a saved copy of the page.</div></details><details class="hp-q" data-k="real airline fake game tickets"><summary>Is TerraLink a real airline?</summary><div>No — it's a fan-built booking site for airlines in a game. No real tickets are sold and it isn't affiliated with any real airline.</div></details></div>
+      <div class="hp-none" id="hp-none" hidden>Nothing matches that. Try a shorter word.</div>
+    </div><aside>
+      <div class="ap-card hp-me"><h3>Your setup</h3><dl id="hp-me"></dl>
+        <button type="button" class="tbtn" id="hp-copy" style="margin-top:12px;width:100%;justify-content:center">Copy these details</button></div>
+      <div class="ap-card"><h3>Quick fixes</h3><div class="hp-fix">
+        <p>Neither of these touches your trips, TerraClub points or sign-in.</p>
+        <button type="button" class="tbtn" id="hp-data">Reload the timetable</button>
+        <button type="button" class="tbtn" id="hp-sw">Clear the offline copy</button></div></div>
+    </aside></div>
+  </section>
+</div>
+
 <div class="view" id="view-news" hidden>
   <section class="section">
     <h2>What's new</h2><p class="lede">Every time the timetable is refreshed, this is what changed: new routes, extra flights, new aircraft and who's joined the group.</p>
@@ -2393,6 +2540,7 @@ body.sb-open{overflow:hidden}
       <span class="trk-col"><span>Colour by</span>
         <button type="button" class="mchip" data-trkcol="airline" aria-pressed="true">Airline</button>
         <button type="button" class="mchip" data-trkcol="alt" aria-pressed="false">Altitude</button></span>
+      <button type="button" class="mchip" id="trk-near">What's that plane? Near me</button>
     </div>
     <div class="map-tools trk-tools" id="trk-tools"></div>
     <div class="trk-wrap" id="trk-wrap">
@@ -2654,7 +2802,8 @@ body.sb-open{overflow:hidden}
 
 <footer><div class="foot">
   <div><div class="fb">TerraLink</div>
-    <div style="margin-top:6px">A fan-built booking front-end · schedules, connections &amp; fares from the TerraLink network.</div></div>
+    <div style="margin-top:6px">A fan-built booking front-end · schedules, connections &amp; fares from the TerraLink network.</div>
+    <div style="margin-top:10px"><a class="foot-help" href="#/help">Help and troubleshooting →</a></div></div>
   <div style="text-align:right">Not affiliated with any real airline.<br>The Starliner and Velora partnership with<br>Mercedes-Benz is fictional; not affiliated with Mercedes-Benz.<br>Starlink Wi-Fi is fictional; not affiliated with SpaceX or Starlink.<br>Prices shown in in-game currency.</div>
 </div>
 <a class="foot-al" href="#/alliance"><span>A proud member of</span><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASgAAABGCAYAAAB/jgmHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAABNhSURBVHhe7d15dA1nHwfw79y1ufdmkUQWVCIhJFFCiDUigkpq36r6CiKW0uqitIi3kaBqa63Vein6oi21dCcbghBLLa1wK8hLRJBVErm5y7x/JLk1MzeakMRwfp9znuOc3/xm7jM5ub/MPPM8g1ErHVgQQogISfgBQggRCypQhBDRogJFCBEtKlCEENGiAkUIES0qUIQQ0aICRQgRLSpQhBDRogJFCBEtKlCEENGiAkUIES0qUIQQ0aICRQgRLSpQhBDRogJFCBEtKlCEENGiAkUIES1GrG/UlMvl6NAhABMmTEBAQAdYW9uAAQOGYTh5JtaEvbv34N0Z73LihJBnnygLlMbaGm9MmozIyInQWFsLihIAsCwLXVkZ1q1ZjXXrP0dJSQk/hRDyjBNdgXJq6ISoqHnoP2AAXlAq+ZuBiuKUl5uLmAUx2L17NwwGAz9F9HqH9EGjRq5o28YPcoUc+fl5OH/hPK5cuYKzZ8/y00XNy8sLvr6+aOXVEq6NGsNkNCIt7SKy72TjRGoqsrKy+LsQUi2iKVAMw8DT0xOLP16MgIBOkMlk/BQAgMlkwvWM65g5cxZSUo7yN9fYd99+h+7dA/nhGikrK8O6tWuwZNlS/iYztUaDiRMmYtiwYXBzc6vy/FiWRWFBAc6eO4cvvvwCBw8m8VM4LPVfq9WiZ3AQJ2bJk+wbFhqGsWPHoZ2fH9QajcWrXFScT07uPRw5cgwbN27A6dOn+SmEVEkUg+QSiQSdO3fFfzZsROfOXar88hoMBpw8eQrjxo2tleJUX4YNG4a4A3GYOXMmPD09qzw/VBRqWzs7BAUFYdOmr7Bm9VqoNRp+2lPj7++Pb7/5DuvXf4HAwMAqb8ErMQwDR4eGGDxoEHbu/F5050PE7akXKIVCgaFDh2Lt2rVo0aIFJBJhl8rHm3T46eefMXnyRFy5coWfIlrhY8KxMHYh3N3cH/lFtuQFpRJDhgzBpv9sEsWXulevEHy+bj0CAwMfWWSrUnk+X2/9L7y8vPibCREQVoN6pFKp8MaUqVgQswDOTk4Wv8Asy6KkpAQbN2zAzFnv487dO/yUWmcwGFBcVFSjVqor4x8GvXqF4O2334GNrS1/E1iWxb2cu0i7eBFpFy/i0qVLKMjPB8ty77gZhkHXrl0RGx3Lidc3Ly8vzJ09B02aNOFvAgAUFxdDq9WazyfjfxnQlen4aWAYBp0CAjA/Ooa/iRCBp1agHBwcERMdg+nTp8PaxqbK4pSTew+xsTFYsmwpiouK+Cl14urVq2jRskW1m+9Lvli1eiX/MAgPHwsXFxd+GBn/y8DMWTPQpk0bhPQJQUifEPQKCYa3rzeWLl2K+4WFnHypVIrugd3h7+/PidenCeMnoGWrVvwwCvLzsXz5cvi190PP4CDz+XTp0hldu3bB3n37UFbGLd4Mw6Bjx46IjIjkxAnheyoFqpl7M6xetRojRo6ElZWVxeJkMplw7fo1vPvOe9i2fZvgl1zs/P394ePtLTi329nZmDt3LrZv38GJV/ps5afYsmWz4HwbOjVEUI+enFh98fTwQPcegYLb78KCAny8+GMsX7HM4h+PrKwsTJ06BV9+sV5wPiqVCn1f7suJEcJX7wXK398fGzZsQGBgIORyOX8zUHGLdebM75gyZQoSkxJgNBr5KaLX9qW2sLe358RYlkVKSgoSExM4cb7EpCTk5ORwYgq5Aq4WrsYskcllGD58+D82heIF/q4WBfXoCWcnZ06MZVkcPHQYW7/eyolbsnLNami1l/lhuLm5w8/Pjx8mxKzephlIJBKEhoYiZn4snJ2dBX+NK+nKdIg7EI/5MR8hMzOTv7nWWXrUXhNVPZb/6N8fYcKESM5g8oPSUqxYtgxrP1/LybWkd0gf2DXgjl1ZmiP1pP3ns3Q+H876AFPemAqFQmGO1eRcAGDlpysxYuRITux+YSE+nPMh9uzZw4kTUslylahlcrkckyInYsWyFXBxcbFYnFiWRXFxMbZu2YJZH86sl+JUl2ysbQVPukwGA7LvZnNiVYlPiMOuXbs4jV+c6kvDhs6c4oQangsAGAzCq2CJRAKpVMoPE2ImrBS1TK1WY370fHw4e06Vc2YqZ4YvXbIEiz9ZjPy8PH4KIRapVBrYN2gIiYRb6GQyGRwaOEGpEK5GUCqUFveRSKSwb9CwRvtYa2zh6OBssVnKV6k0grzKZmdrL/h+VPbp4TxL/XteSRUyVTQ/WFtcXVzw2cpVGDx4CKRSqeCHj4rB8PT0dMybF4U9e/dApxM+mq5LI0aMQNOmbpyYwWDAg5IS6MvK/rFlZ2dj2/ZtnP0BoH07P7Rr355zhWA0mXDh3HmcPHWSk2tJt26B6NQpAD4+PuamUChw+/ZtTl5N+s+ChUz66PlLOTk52LxlMyf2pOcCAK+EhcHX15cT05WWIi4+DpcuXeLEayI0ZDhC+45E2uXfUfKg2Bxv7uGLiPAZKC4qRGZWBmefDn7dMXb021Cr1Pgr/U9z3MHeCZPGfYAHD4ot7jNi8ATB57w+chrC+o5E5469BK2Nb4AgPzRkOIYNjhDkdu7YC57NvHHh4ino9X8/UKjsU49u/cx5Qd3D0LljMFiWxY3Mq+bc51GdjkEtW7Ic3j4+YBhAKpVAIpFAwlRctFUUq5Opqdj3wz7cvXcXrMkEli2/ojKZTGBR/q/JZIK+TI/8gnzo9XruhzwhS2M4lsZhaipiXATmzJ0LlUpljrEsi7379mHatDc4uZYkxCfC29ubE9uxfQdmzHyPE3uS/ld339deG4WY+QugVqs58fiEeISHj+HELPH08MDmzVvh6enJid+4cQOTp0x6olvXgf1Gw9fHHxu2LMG9nL9vOb2av4RRwydjf9xOnDh9iLNPJ/8gDAh7HUajEfvjduHYyfKHFo4Ozpg4dhYSD/1gcZ9eQQMFn2OtsYVCrkTB/VyE9R4JDw9v7Nq7EUXFhSgozBPMa6uqv1Xh94lhGDjYO6Ff7xFo4emDXw58hxOnDvJ3e27U6S3e+7Nm4JX+oQh7JRQv93sZffr2Mc+TCendC/1CX8YPP/6AadPeRFxcPA4fPoLk5CM4cuQojh1LQcqx4zhxPBUnU0/h9OkzSExIQviY8GfiEvfchXPIzc3lxBiGQWBgN4SFhnHifGPDx6JJ48acmK5Mh8xbT2dcLvVEquDKDQACOnRE+Jhwflhg+vR34O7uzg/jsvbyExWnJ1FaWoI7dzPRO3gQWnm15W+utvtFBcjJu2NesG40GpCbfw/5BbmC4lQbyif4ZuOb79fjVtYNtG/b9Zn4PjyuOi1Q/0Sv1+NYyjFMf2c6vt+5C6U6HRim/J1P/CaTyeDh4YHo+TGImR8j+GsuNqdPn8bFtDTBL6mjQ0PExi7A6NGvceKVJkVOwoz3Z8DaxoYTLywsxNlzT+fLnH71KpKTDwume9jY2mJe1DwsWrgIrq6unG2omFKyZctWDBlSfov/sOLiYiQmPHq6RV0yGo34af83yM2/h4GvvA4XZ8sz5OuCSqXB5PEfYvZ7y83t/ekfo5m7cCJsVQwGA7KyMmBraw+NWrhS4XnxVAtUpdycHMQuWoAd27fhwYMH/M1mDMNAqVDg1VGjsDB2YZ0VKQ8PD/x1+a8atUULF/EPg61btyD7jnBpjqurK5YuWY6Lf1xEYkISEuIScDDpELSXtPgoOhqODg05+UajEQlxCf84f6oubd6yGdrLwrlMao0G48aNL7/iTTmOhLgEJMQl4PSpM9izey/69O4jfJppMmH//v2Csa76Vlx8H9/u3gC9vgzho6fDybERP6VO6Mt0OHHqIA4f+dXcjhw9gJwc4VXqo0gkUhiNBhhNwiekzwtRFChULJlYunwZvt9VfiVVFYZhIJfLMXTYMCz5ZKngSqM2yGQyqDWaGjWlhUmPiYkJ2Lhhg2DpCirOw65BA7Rq1QrePj7w8vKy+JSTZVkcO3YM86LnceL1TavVYuHHi3D1muVBWaVCCbembvD28YG3jw9cXV0FhQkV55OcnIwPZn/A3/RYCu7nQSKRCCadWltbAyYTCgrzOXG+u/eysGPnegDAgLDRkFdxu+ToWL1JstWhN+hx9sJxHE2NN7fjp5NQeP/RfX2YRm2Dpk2bIz8/D0XFwt+v54VoChQqitTipZ9g7+49/1ikpFIpBg0ahBXLPoW9gwM/RTTWfr4W82OjH+ulbaU6Hfbs2YOIyAiLS0nqW2JiAiIixiM5OfmxXhJ4v7AQX321CZGTImvtfLTpf4JlTRgY+jqaNHKHVCpDcw8fBHXvj8KiAty8dY2/i8Dt7Jv44edtUMqVUMi5870qSZnam6/FMAxsbeyrNc2gksrq7+kJPq3aY8yoN2Fn0wDJKb/BYKjdB0diIqoChYrbvah/z0VU1Gz8/vtZFBcXQ6/Xw2AwcJrRaITRaETfvn2wfNkK/mFEZfv2HejRswfWrF6F9PR0i6v8K7Esi4L8fBw6dAgREePx5lvTau3LXBu0Wi1eHTUS4WPDsf/AAeTnCZ9UPcxoNCIzMxM7tu/AgEEDEDUvqlbPJ+v2//DT/m9gbWOLKRPmYP6cdRg7+m0Y9Hp8u3tDta8uLmnPIT5pn2CcrS6oVBqM/9e7eGdqLKeNGfUWrKwsD1uEBA8y5706dCIAYOu3q3FJe46f+lyp02kGpGrdugXC1dUZri6N4OnhgbS0i7hz7y7+/PNPaLVafrqoubq6olNAAKxUVmjTui30Bj3OXziP/LwCxCfE8dPrjFKhhEZti4L7uY91hUfEhwoUIUS0RHeLRwghlegKijw3rDW2kMsVyC/IhamKR+/lA9QNUKYvQ0nJo8fClAol1GqbRx4PNTjmk/ZPpdJAIVdYnKFeSSaTwdbaHoyEgclkqvKzJBIp7GztLS7cB4D79/MtjpVW9k8mK39VUsmDYkE/axMVKPJccGjghIixM2CjscOBhN1ITtnPTwEqvuQTxsxARsZf+OG37fzNHFUtb+GrzjFr2j8rlRpbt6/C7eyb5m0D+42Gm1sLbPx6uaAoSCRS9A0egk4dgznvWdOV6ZB06EccPRHHKWqVS2jUamtz7GE//rJNsNynuYcPhg0aD2vN3xNDWZZF+rVL2LHrc+h0pZz82mC5fBLyjPFp1Q4AcPNWBtq07gilUjgv7Wmqaf9sNHYYPigCGnX15vl19u+JTh2DcfLMIUR/PBVRsZMQu2Q60tLOIKTnIHh7WX4xYOrJg4iKnSRo/OIkk8kRHDgApaUlWLFmLqJiJ2HegsnY9/NWvNjEA218O3LyawsVKPLM06ht4N+uO66mpyH56K9oYOcIr+at+WlPzeP07+at67C3c8TQgeMsTnh9mFKhRNs2nXA7+yYOJP79H9nqdKX4LeF7ZN/JRJNGwrWQNWUyGWFlpYajgwskEilYlsWZc8ex9ssYnP8jlZ9eK6hAkWdeS6/WUKs0OHM+BenX05CXfw8B7Xuax0metsfp363M64hP2gfPZq0Q2mdElRM4AUCjtoWtrT2ysjIE0yuKiguxftMiHEiy/NZSv7ZdOWsCZ7+3HKOGT+GnwWDQ40DSbuh0pQh/7S3Mn7MO709fjKH9wyGXKyyOV9UGKlDkmSaTyeHXuituZ2fiRuZV6HSlOP/HSTRyeREvNvbgp9e7J+lfyqlEpJxIRId2gejfb5T5FUV8RpMRRqNB8HK86si8dY2zJvDwkV9x7vxxfhoA4MbNq/h0bRQ+XROF/XE7kZN7Bz6t2mFqZBQ6daib/9CDChR5pnl5tsaLTTzQzN0L0bPXYsG8L/Fy72FQvmCFzgHBgisPK6WqyoFhvuquv3vUMWvav4exLIv9id/j1O/J6NAuEF4tLN8WPnhQhKKiQjRu7CYY27LR2OHdNxdgYL/RnHilu3ezOGsCj6bGI00rfGuGtcYWIwdHom3rjsjJu4MjJ+Lx1X9XYNUX0SgozIVPq/b8XWoFFSjyzGIYBu3adsG9nCys+TIGn62bZ27n/ziJZk1bwMX5Re4+EgYMGCiUL3DWwTk0cBKM9UiZ8rfA8tfNPfwUCw8dk+9x+sfHsix+jduJ9GuXYGdrec2prkyHM+eOwalhI4wYHAlHB2dIJFI4Ojhj4Cv/gkZljbS/LC+J4f8cKhv/HVNGkxHOzo0R3GMgPJt5QyaTQalQwqv5S9CorJFzr2ZvYqiuOn3lLyF1qUkjdwR164fU04dx8VL5q3UrW0FhLvzadIHJaMKVaxfN+6hUGvj7dUPTFz05r9v1b9cdmbcykJP79+txWjZ/Ce7uXmjXpgsn19WlKc6eTxEc8+7dLFy+csEcf5z+yeUKtG/bFQUFueZjmUwmpF9LQ3MPHzAMg9/Pp3BeCwwAt7IyoCstRWvfDgjqForgHv3RqUMw5HIFfjnwLdIuc6+Kqvo5VLbCwjzOa4/1+jJkZd+AT8t26NopBMGB/RHUPQzNPXyhTf8Dv8R9VyeLlmkeFCHPmbpek1g5yVOvL8P9ogL+5lpFBYoQIlo0BkUIES0qUIQQ0aICRQgRLSpQhBDRogJFCBEtKlCEENGiAkUIES0qUIQQ0aICRQgRLSpQhBDRogJFCBEtKlCEENGiAkUIES0qUIQQ0aICRQgRLSpQhBDRogJFCBGt/wOShlBnYgiLMgAAAABJRU5ErkJggg==" alt="Echo United Alliances" width="127" height="30"></a>
@@ -3341,7 +3490,39 @@ function routeCard(o,d,priceLabel,sub){
   el.onclick=()=>{document.getElementById("from").value=o;document.getElementById("to").value=d;submitSearch();};
   return el;
 }
-DATA.popular.forEach(([o,d,n,p])=>document.getElementById("routes").appendChild(routeCard(o,d,p?money(p):"—")));
+/* where people are heading: eight cities, with the cheapest one-way economy
+   fare into each from anywhere in the network. A tap fills in "To". */
+const HOME_DESTS=[["JFK","New York","United States","nyc"],["CDG","Paris","France","paris"],["FCO","Rome","Italy","rome"],
+  ["HND","Tokyo","Japan","tokyo"],["SFO","San Francisco","United States","sf"],["CHC","Christchurch","New Zealand","chc"],
+  ["CUN","Cancún","Mexico","cun"],["HYD","Hyderabad","India","hyd"]];
+(function(){
+  const row=document.getElementById("routes");
+  ensureSchedule(iso(new Date()));
+  const pre={};HOME_DESTS.forEach(([c])=>pre[c]={n:0,p:Infinity});
+  for(const o in ALL)(ALL[o]||[]).forEach(e=>{const x=pre[e.to];if(!x||e.unsched||!e.wd||!e.wd.length)return;
+    x.n+=e.wd.length;if(e.pr&&e.pr.eco>0&&e.pr.eco<x.p)x.p=e.pr.eco;});
+  HOME_DESTS.forEach(([c,city,country,img],i)=>{const x=pre[c];
+    const b=document.createElement("button");b.type="button";b.className="dst";
+    b.innerHTML=`<img src="dest-${img}.webp" alt="" loading="lazy" decoding="async" width="240" height="320" onerror="this.remove()">
+      <span class="dst-no">${String(i+1).padStart(2,"0")}</span>
+      <div class="dst-t"><small>${country} · ${c}</small><b>${city}</b>
+        <span>${isFinite(x.p)?`from <i>${money(x.p)}</i> one way`:""}</span><em>${x.n.toLocaleString()} flights a week</em></div>`;
+    b.setAttribute("aria-label",`${city}${isFinite(x.p)?`, fares from ${money(x.p)}`:""}`);
+    b.onclick=()=>{document.getElementById("to").value=c;
+      const f=document.getElementById("from");
+      if(parseCode(f.value).length===3&&parseCode(f.value)!==c){submitSearch();return;}
+      if(parseCode(f.value)===c)f.value="";
+      document.querySelector("#view-home .hero").scrollIntoView({behavior:"smooth",block:"start"});
+      setTimeout(()=>f.focus({preventScroll:true}),350);};
+    row.appendChild(b);});
+  const L=document.getElementById("dst-l"),R=document.getElementById("dst-r");
+  const edges=()=>{L.disabled=row.scrollLeft<4;R.disabled=row.scrollLeft+row.clientWidth>=row.scrollWidth-4;};
+  const step=d=>{const card=row.querySelector(".dst");const w=card?card.getBoundingClientRect().width+14:240;
+    row.scrollBy({left:d*w*Math.max(1,Math.floor(row.clientWidth/w)-1),behavior:"smooth"});};
+  L.onclick=()=>step(-1);R.onclick=()=>step(1);
+  row.addEventListener("scroll",edges,{passive:true});addEventListener("resize",edges);setTimeout(edges,50);
+  row.addEventListener("keydown",e=>{if(e.key==="ArrowRight"){e.preventDefault();step(1);}else if(e.key==="ArrowLeft"){e.preventDefault();step(-1);}});
+})();
 DATA.deals.forEach(([o,d,p,code])=>document.getElementById("deals").appendChild(routeCard(o,d,money(p),code+" · from")));
 
 let trip="round";
@@ -5042,6 +5223,7 @@ function renderAirport(code){
           ${rws.map(r=>`<div class="ap-rw"><span>${r.i1} / ${r.i2}</span><b>${r.len.toLocaleString()} m</b></div>`).join("")}
           ${arrIds.size?`<div class="ap-inuse"><span class="rw-lab use">&nbsp;</span> Landing today: ${[...arrIds].join(", ")}<br>
             <span class="rw-lab dep">&nbsp;</span> Taking off: ${[...depIds].join(", ")}</div>`:""}</div>`:""}
+        <div class="ap-card" id="ap-wx"><h3>Weather</h3><div class="ph">Checking the weather…</div></div>
         <div class="ap-card"><h3>Airlines here</h3>
           ${als.map(i=>{const a=AL[i];return `<div class="ap-al"><span class="lg-logo"><img src="${a.logo||""}" alt=""></span>${a.name}${(a.hubs||[]).includes(code)?`<span class="ap-tag">HUB</span>`:""}<span>${per[i]} departures a week</span></div>`;}).join("")||`<div class="ap-none">None scheduled.</div>`}</div>
         ${lounges.length||srHere?`<div class="ap-card"><h3>Lounges</h3>${lounges.map(a=>{const lg=loungeHere(LOUNGE_NAMES[a.code],a,code,"lounge"+a.code);
@@ -5052,6 +5234,7 @@ function renderAirport(code){
     b.querySelectorAll("[data-apb]").forEach(x=>x.onclick=()=>{AP.tab=x.dataset.apb;AP.shown=30;b.innerHTML=apBoardHtml();wire();});
     const m=b.querySelector("[data-apmore]");if(m)m.onclick=()=>{AP.shown+=30;b.innerHTML=apBoardHtml();wire();};};
   wire();
+  apWeather(code);
   AP.timer=setInterval(()=>{if(location.hash.indexOf("#/airport")!==0){clearInterval(AP.timer);AP.timer=null;return;}
     const c=document.getElementById("ap-clock");if(c)c.textContent=clk(utcToLocal(code,Date.now()).min);
     const b=document.getElementById("ap-board");if(b){b.innerHTML=apBoardHtml();wire();}},60000);
@@ -5073,6 +5256,258 @@ function renderAirport(code){
     map.fitBounds(L.latLngBounds(pts),{padding:[26,26],maxZoom:15});
     setTimeout(()=>map.invalidateSize(),60);
   }
+}
+
+
+/* ---------- help ----------
+   A searchable list of answers, the visitor's own setup (handy when reporting
+   a problem), and two fixes that never touch trips or sign-in. */
+function helpSetup(){
+  const ua=navigator.userAgent,br=/Edg\//.test(ua)?"Edge":/OPR\//.test(ua)?"Opera":/Firefox\//.test(ua)?"Firefox":/Chrome\//.test(ua)?"Chrome":/Safari\//.test(ua)?"Safari":"Other";
+  const os=/iPhone|iPad/.test(ua)?"iOS":/Android/.test(ua)?"Android":/Windows/.test(ua)?"Windows":/Mac OS/.test(ua)?"Mac":/Linux/.test(ua)?"Linux":"";
+  const src={supabase:"Live",saved:"Saved copy","data.json":"Backup file"}[TL_PAYLOAD.SOURCE]||String(TL_PAYLOAD.SOURCE||"—");
+  let thm="device";try{thm=localStorage.getItem("tl_theme")||"device";}catch(_){}
+  const sw="serviceWorker" in navigator?(navigator.serviceWorker.controller?"On":"Not yet"):"Not supported";
+  return [["Timetable",TL_PAYLOAD.STAMP?String(TL_PAYLOAD.STAMP).slice(0,16).replace("T"," "):"—"],["Loaded from",src],
+    ["Connection",navigator.onLine?"Online":"Offline"],["Offline copy",sw],["Signed in",STORE.live()?"Yes":"No"],
+    ["Appearance",{device:"Match device",light:"Light",dark:"Dark"}[thm]||thm],["Browser",`${br}${os?" on "+os:""}`],
+    ["Screen",`${innerWidth} × ${innerHeight}`]];
+}
+function renderHelp(q){
+  const me=document.getElementById("hp-me");
+  me.innerHTML=helpSetup().map(([k,v])=>`<dt>${k}</dt><dd>${escapeHtml(v)}</dd>`).join("");
+  if(renderHelp.wired)return; renderHelp.wired=true;
+  const find=document.getElementById("hp-find"),qs=[...document.querySelectorAll("#hp-list .hp-q")];
+  const filter=()=>{const w=find.value.trim().toLowerCase().split(/\s+/).filter(Boolean);let n=0;
+    qs.forEach(d=>{const hay=(d.textContent+" "+d.dataset.k).toLowerCase(),hit=w.every(x=>hay.includes(x));d.hidden=!hit;if(hit)n++;
+      if(w.length&&hit&&n<=2)d.open=true;else if(!w.length)d.open=false;});
+    document.querySelectorAll("#hp-list .hp-grp").forEach(g=>{let x=g.nextElementSibling,any=false;
+      while(x&&!x.classList.contains("hp-grp")){if(!x.hidden)any=true;x=x.nextElementSibling;}g.hidden=!any;});
+    document.getElementById("hp-none").hidden=n>0;};
+  find.addEventListener("input",filter);
+  if(q&&q.get("q")){find.value=q.get("q");filter();}
+  document.getElementById("hp-copy").onclick=async e=>{const t=helpSetup().map(([k,v])=>k+": "+v).join("\n")+"\nPage: "+location.href;
+    try{await navigator.clipboard.writeText(t);e.target.textContent="Copied";}catch(_){e.target.textContent="Couldn't copy";}
+    setTimeout(()=>{e.target.textContent="Copy these details";},1800);};
+  document.getElementById("hp-data").onclick=e=>{e.target.disabled=true;e.target.textContent="Reloading…";
+    try{localStorage.removeItem("tl_data_v1");}catch(_){}
+    location.reload();};
+  document.getElementById("hp-sw").onclick=async e=>{e.target.disabled=true;e.target.textContent="Clearing…";
+    try{if("serviceWorker" in navigator)for(const r of await navigator.serviceWorker.getRegistrations())await r.unregister();}catch(_){}
+    try{if(window.caches)for(const k of await caches.keys())await caches.delete(k);}catch(_){}
+    location.reload();};
+}
+
+/* ---------- where can I go? ----------
+   From one airport: every destination reachable nonstop, or with one
+   connection at a sensible time, with the cheapest economy fare and the
+   quickest travel time. Fares add up the legs; it's a starting point, and
+   each result opens the real search. */
+const EX={map:null,layer:null,from:null};
+function exCode(v){v=String(v||"").trim().toUpperCase();const m=v.match(/\(([A-Z0-9]{3})\)$/);return m?m[1]:(/^[A-Z0-9]{3}$/.test(v)?v:null);}
+function exReach(o,nonstop){
+  ensureSchedule(iso(new Date()));
+  const best={},ok=e=>e&&!e.unsched&&e.wd&&e.wd.length&&e.pr&&e.pr.eco>0&&AINFO[e.to];
+  const put=(d,fare,mins,via)=>{if(d===o)return;const b=best[d];
+    if(!b)best[d]={fare,mins,via,fastest:mins,fastVia:via};
+    else{if(fare<b.fare||(fare===b.fare&&mins<b.mins)){b.fare=fare;b.mins=mins;b.via=via;}if(mins<b.fastest){b.fastest=mins;b.fastVia=via;}}};
+  const first=(ALL[o]||[]).filter(ok);
+  first.forEach(e=>put(e.to,e.pr.eco,e.dur,null));
+  if(!nonstop)first.forEach(e=>(ALL[e.to]||[]).forEach(f=>{
+    if(!ok(f)||f.to===o)return;
+    const gap=((f.dep-e.arr)%1440+1440)%1440; if(gap<LAY_MIN||gap>LAY_MAX)return;
+    put(f.to,e.pr.eco+f.pr.eco,e.dur+gap+f.dur,e.to);}));
+  return best;
+}
+function renderExplore(q){
+  const inp=document.getElementById("ex-from"),mx=document.getElementById("ex-max"),hr=document.getElementById("ex-hrs"),ns=document.getElementById("ex-ns");
+  if(!EX.wired){EX.wired=true;
+    airportPicker(inp);
+    const go=()=>{const c=exCode(inp.value)||EX.from||"IAH";
+      history.replaceState(null,"",`#/explore?from=${c}&max=${mx.value}&hrs=${hr.value}${ns.checked?"&ns=1":""}`);drawExplore(c);};
+    inp.addEventListener("change",go);mx.addEventListener("input",go);hr.addEventListener("input",go);ns.addEventListener("change",go);}
+  const c=exCode(q.get("from"))||EX.from||"IAH";
+  if(q.get("max"))mx.value=q.get("max"); if(q.get("hrs"))hr.value=q.get("hrs"); ns.checked=q.get("ns")==="1";
+  inp.value=AINFO[c]?`${cityOf(c)} (${c})`:"";
+  drawExplore(c);
+}
+function drawExplore(o){
+  const mx=+document.getElementById("ex-max").value,hrs=+document.getElementById("ex-hrs").value,ns=document.getElementById("ex-ns").checked;
+  document.getElementById("ex-max-l").textContent=money(mx);
+  document.getElementById("ex-hrs-l").textContent=hrs+(hrs===1?" hour":" hours");
+  const sum=document.getElementById("ex-sum"),list=document.getElementById("ex-list");
+  if(!AINFO[o]){sum.textContent="Pick an airport to start from.";list.innerHTML="";return;}
+  if(EX.from!==o){EX.from=o;EX.all=null;}
+  const key=o+"|"+ns; if(!EX.all||EX.key!==key){EX.all=exReach(o,ns);EX.key=key;}
+  const rows=Object.entries(EX.all).filter(([,b])=>b.fare<=mx&&b.mins<=hrs*60).sort((x,y)=>x[1].fare-y[1].fare);
+  const tomorrow=addDays(todayISO(),1),fares=rows.map(r=>r[1].fare),lo=Math.min(...fares,0),hi=Math.max(...fares,1);
+  const col=f=>{const t=(f-lo)/Math.max(1,hi-lo);return t<.33?"#1d7a44":t<.66?"#c47d12":"#b23b3b";};
+  sum.innerHTML=rows.length?`<b>${rows.length}</b> place${rows.length===1?"":"s"} from ${cityOf(o)} for ${money(mx)} or less, within ${hrs} hours${ns?", nonstop":""}.`
+    :`Nothing from ${cityOf(o)} fits — try a bigger budget or more time.`;
+  list.innerHTML=rows.slice(0,300).map(([d,b])=>`<a class="ex-row" href="#/search?from=${o}&to=${d}&cabin=eco&trip=oneway&d=${tomorrow}">
+    <b>${cityOf(d)} <span style="color:var(--faint);font-weight:600">${d}</span></b><span class="p">${money(b.fare)}</span>
+    <small>${b.via?`via ${cityOf(b.via)}`:"Nonstop"} · ${durFmt(b.mins)}</small></a>`).join("");
+  if(typeof L==="undefined")return;
+  if(!EX.map){EX.map=L.map("ex-map",{zoomControl:true,scrollWheelZoom:false,worldCopyJump:false});baseMap(EX.map);EX.layer=L.layerGroup().addTo(EX.map);}
+  EX.layer.clearLayers();
+  const A=AINFO[o],pts=[[A[0],A[1]]];
+  L.circleMarker([A[0],A[1]],{radius:7,color:"#14211b",weight:3,fillColor:"#fff",fillOpacity:1}).bindTooltip(`${cityOf(o)} · start here`,{direction:"top"}).addTo(EX.layer);
+  rows.forEach(([d,b])=>{const B=AINFO[d];pts.push([B[0],B[1]]);
+    L.circleMarker([B[0],B[1]],{radius:5,color:"#fff",weight:1.5,fillColor:col(b.fare),fillOpacity:.95})
+      .bindTooltip(`<b>${cityOf(d)}</b> · ${money(b.fare)}<br>${b.via?"via "+b.via:"Nonstop"} · ${durFmt(b.mins)}`,{direction:"top"})
+      .on("click",()=>{location.hash=`#/search?from=${o}&to=${d}&cabin=eco&trip=oneway&d=${tomorrow}`;}).addTo(EX.layer);});
+  EX.map.fitBounds(L.latLngBounds(pts),{padding:[24,24],maxZoom:6});
+  setTimeout(()=>EX.map.invalidateSize(),60);
+}
+
+/* ---------- weather ----------
+   From Open-Meteo (free, no key). Fahrenheit for American English browsers,
+   Celsius for everyone else. Kept for half an hour. */
+const WX={};
+const WX_F=/^en-(US|LR)|^my/i.test(navigator.language||"");
+function wxIcon(c){return c===0?"☀︎":c<=2?"⛅︎":c===3?"☁︎":c<=48?"🌫︎":c<=67||(c>=80&&c<=82)?"☂︎":c<=77||c===85||c===86?"❄︎":c>=95?"⚡︎":"☁︎";}
+function wxText(c){return c===0?"Clear":c<=2?"Partly cloudy":c===3?"Cloudy":c<=48?"Fog":c<=57?"Drizzle":c<=67?"Rain":c<=77?"Snow":c<=82?"Showers":c<=86?"Snow showers":c>=95?"Thunderstorms":"Cloudy";}
+async function weatherFor(code){
+  const hit=WX[code]; if(hit&&Date.now()-hit.t<30*6e4)return hit.p;
+  const A=AINFO[code]; if(!A)return null;
+  const u=`https://api.open-meteo.com/v1/forecast?latitude=${A[0]}&longitude=${A[1]}&current=temperature_2m,weather_code,wind_speed_10m`+
+    `&daily=weather_code,temperature_2m_max,temperature_2m_min&forecast_days=10&timezone=auto${WX_F?"&temperature_unit=fahrenheit&wind_speed_unit=mph":""}`;
+  const p=fetch(u).then(r=>{if(!r.ok)throw new Error("weather "+r.status);return r.json();});
+  WX[code]={t:Date.now(),p};
+  p.catch(()=>{delete WX[code];});
+  return p;
+}
+const deg=t=>Math.round(t)+"°";
+async function apWeather(code){
+  const box=document.getElementById("ap-wx"); if(!box)return;
+  try{const w=await weatherFor(code); if(AP.code!==code||!w)return;
+    const c=w.current,d=w.daily,names=["Today","Tomorrow",fmtDate(d.time[2]).split(",")[0]];
+    box.innerHTML=`<h3>Weather</h3><div class="wx-now"><div class="wx-ic">${wxIcon(c.weather_code)}</div>
+      <div><b>${deg(c.temperature_2m)}</b><span>${wxText(c.weather_code)} · wind ${Math.round(c.wind_speed_10m)} ${WX_F?"mph":"km/h"}</span></div></div>
+      <div class="wx-days">${[0,1,2].map(i=>`<div><small>${names[i]}</small><i>${wxIcon(d.weather_code[i])}</i>${deg(d.temperature_2m_max[i])} / ${deg(d.temperature_2m_min[i])}</div>`).join("")}</div>`;
+  }catch(_){box.innerHTML=`<h3>Weather</h3><div class="ph">The forecast isn't available right now.</div>`;}
+}
+/* on a trip card: the weather where each part of the trip lands, on the day it lands */
+async function tripWeather(el,b){
+  if(!b)return;
+  const today=todayISO(),parts=tripParts(b),out=[];
+  for(const P of parts){const legs=P.legs||[];if(!legs.length||!P.base)continue;
+    const L=legs[legs.length-1],date=addDays(P.base,(L.off||0)+(L.ad||0));
+    const days=Math.round((new Date(date+"T12:00")-new Date(today+"T12:00"))/864e5);
+    if(days<0||days>9)continue;
+    try{const w=await weatherFor(L.to);const i=w.daily.time.indexOf(date);if(i<0)continue;
+      out.push(`${wxIcon(w.daily.weather_code[i])} <b>${cityOf(L.to)}</b> on ${fmtDate(date)}: ${wxText(w.daily.weather_code[i]).toLowerCase()}, ${deg(w.daily.temperature_2m_max[i])} / ${deg(w.daily.temperature_2m_min[i])}`);}catch(_){}
+  }
+  el.innerHTML=out.join("<br>");
+}
+
+/* ---------- jet-lag planner ----------
+   General guidance worked out from the time zones and flight times: shift
+   sleep an hour a day before you go, sleep or stay awake on board depending
+   on the time at the other end, and the right light on arrival. */
+function jetlagPart(P,bed,wake){
+  const legs=P.legs||[]; if(!legs.length||!P.base)return null;
+  const f=legs[0],l=legs[legs.length-1];
+  const t0=localToUtc(f.from,P.base,f.dep), date1=addDays(P.base,(l.off||0)), t1=localToUtc(l.from,date1,l.dep)+(l.dur||90)*6e4;
+  const diff=Math.round((tzOffsetAt(l.to,t1)-tzOffsetAt(f.from,t0))/60);
+  const east=diff>0, hrs=Math.abs(diff>12?diff-24:diff<-12?diff+24:diff), dir=(diff>12||diff<-12)?!east:east;
+  const arrMin=utcToLocal(l.to,t1).min, depDate=P.base;
+  const T=m=>clk(((m%1440)+1440)%1440);
+  if(hrs<3)return {title:`${cityOf(f.from)} → ${cityOf(l.to)}`,sum:`Only ${hrs} hour${hrs===1?"":"s"} of time difference — not much jet lag to plan for. Keep to your usual hours.`,days:[]};
+  const pre=Math.min(3,Math.ceil(hrs/2)),days=[];
+  for(let k=pre;k>=1;k--){const sh=(pre-k+1)*(dir?-60:60);
+    days.push([fmtDate(addDays(depDate,-k)),`Bed ${T(bed+sh)}, up ${T(wake+sh)}. ${dir?"Get bright light soon after you wake; keep evenings dim.":"Stay in the light into the evening; keep mornings dim."}`]);}
+  const board=arrMin>=300&&arrMin<720?"You land in the morning there, so sleep on the flight — the second half especially."
+    :arrMin>=1020||arrMin<120?"You land in the evening there: stay awake on board and go to bed at local bedtime."
+    :"You land in the afternoon there: a short nap early in the flight at most, then stay up.";
+  days.push(["On board",`Set your watch to ${cityOf(l.to)} time. ${board} Drink water; go easy on alcohol.`]);
+  days.push([`Arrival, ${fmtDate(utcToLocal(l.to,t1).date)}`,`Live on local time from the start. ${dir?"Get outside in the morning light":"Get outside in the late-afternoon light"}, keep naps under 20 minutes, and no coffee after 2pm.`]);
+  days.push(["The next few days",`Your body clock moves about ${dir?"an hour":"an hour and a half"} a day, so expect ${Math.max(1,Math.round(hrs/(dir?1:1.5)))} day${hrs>1?"s":""} to feel settled.`]);
+  return {title:`${cityOf(f.from)} → ${cityOf(l.to)}`,sum:`${hrs} hours ${dir?"ahead":"behind"} at ${cityOf(l.to)} — flying ${dir?"east, the harder way":"west, the easier way"}.`,days};
+}
+function openJetlag(b){
+  if(!b)return;
+  const opt=(sel)=>Array.from({length:48},(_,i)=>i*30).map(m=>`<option value="${m}"${m===sel?" selected":""}>${clk(m)}</option>`).join("");
+  const draw=(bed,wake)=>tripParts(b).map(P=>jetlagPart(P,bed,wake)).filter(Boolean).map(x=>`<h3 style="margin:14px 0 6px">${x.title}</h3>
+      <p class="jl-sum">${x.sum}</p>${x.days.map(([h,t])=>`<div class="jl-day"><b>${h}</b><span>${t}</span></div>`).join("")}`).join("");
+  document.getElementById("sheet").innerHTML=`<div class="top"><div class="r"><div><div class="od" style="font-size:24px">Jet-lag plan</div>
+      <div class="sub">${b.ref} · general guidance, not medical advice</div></div><button class="x" id="mx">×</button></div></div>
+    <div class="body"><div class="jl-set">Usually asleep <select id="jl-bed">${opt(1380)}</select> to <select id="jl-wake">${opt(420)}</select></div>
+      <div id="jl-body">${draw(1380,420)}</div><button class="cont">Done</button></div>`;
+  showModal();
+  const re=()=>{document.getElementById("jl-body").innerHTML=draw(+document.getElementById("jl-bed").value,+document.getElementById("jl-wake").value);};
+  document.getElementById("jl-bed").onchange=re;document.getElementById("jl-wake").onchange=re;
+}
+
+/* ---------- what's that plane? ----------
+   With the visitor's permission, their position (kept in the browser), and
+   the TerraLink flights passing closest to it right now. */
+(function(){
+  const btn=document.getElementById("trk-near"); if(!btn)return;
+  let me=null;
+  btn.onclick=()=>{
+    const res=document.getElementById("st-res");
+    if(!navigator.geolocation){res.innerHTML=`<div class="nores"><b>No location here</b>This browser can't share where you are.</div>`;return;}
+    btn.disabled=true;btn.textContent="Finding you…";
+    navigator.geolocation.getCurrentPosition(pos=>{
+      btn.disabled=false;btn.textContent="What's that plane? Near me";
+      const la=pos.coords.latitude,lo=pos.coords.longitude;
+      initTracker(); TRK.planes=airborneNow(); TRK.planes.forEach(pl=>{pl.key=trkKey(pl.e,pl.t0);pl.est=flightEst(pl.e,pl.frac);});
+      const up=TRK.planes.filter(pl=>!pl.est.ground),pool=up.length?up:TRK.planes;   /* the ones in the sky; parked ones only if nothing is up */
+      const near=pool.map(pl=>({pl,km:gcKm(la,lo,pl.lat,pl.lon)})).sort((a,b)=>a.km-b.km).slice(0,8);
+      const mi=WX_F, dist=k=>mi?`${Math.round(k*.621).toLocaleString()} mi`:`${Math.round(k).toLocaleString()} km`;
+      const comp=b=>["north","north-east","east","south-east","south","south-west","west","north-west"][Math.round(b/45)%8];
+      STATUS_HITS=near.map(n=>n.pl.e);
+      res.innerHTML=`<div class="near"><h3>Closest to you right now</h3>${near.map((n,i)=>{const e=n.pl.e,a=AL[e.ai]||{code:""},x=n.pl.est;
+        return `<button type="button" class="near-row" data-hit="${i}"><b>${a.code}${e.fn} · ${cityOf(e.from)} → ${cityOf(e.to)}</b><span class="d">${dist(n.km)}</span>
+          <small>${x.ground?"On the ground":`${x.alt.toLocaleString()} ft, ${x.spd} kt`} · to your ${comp(gcBearing(la,lo,n.pl.lat,n.pl.lon))} · ${a.name}</small></button>`;}).join("")}</div>`;
+      if(TRK.map&&typeof L!=="undefined"){
+        if(me)me.remove();
+        me=L.marker([la,lo],{icon:L.divIcon({className:"",html:'<div class="me-dot"></div>',iconSize:[20,20],iconAnchor:[10,10]}),interactive:false}).addTo(TRK.map);
+        const pts=[[la,lo]].concat(near.slice(0,3).map(n=>[n.pl.lat,n.pl.lon]));
+        TRK.map.fitBounds(L.latLngBounds(pts),{padding:[50,50],maxZoom:8});
+      }
+    },err=>{btn.disabled=false;btn.textContent="What's that plane? Near me";
+      res.innerHTML=`<div class="nores"><b>Location not shared</b>${err&&err.code===1?"Allow location for this site to see the planes near you.":"Your location couldn't be found just now."}</div>`;},
+    {enableHighAccuracy:false,timeout:15000,maximumAge:300000});
+  };
+})();
+
+/* ---------- ops (operator only) ----------
+   From the game's own figures, kept in Supabase where only the operator's
+   account can read them: weekly profit and passengers by route, aircraft with
+   nothing to fly, aircraft that fly little, and flights that sit on top of
+   each other. */
+const OPS={data:null,ai:null};
+async function renderOps(){
+  const el=document.getElementById("ops-body");
+  if(!STORE.live()){el.innerHTML=`<div class="nores"><b>Sign in</b>Ops is for the operator's account.</div>`;return;}
+  if(!OPS.data){el.innerHTML=`<div class="ph">Loading the figures…</div>`;
+    try{const {data,error}=await AUTH.client.rpc("ops_data");if(error)throw error;OPS.data=data;}
+    catch(e){el.innerHTML=`<div class="nores"><b>${/not allowed|42501|permission/i.test(String(e&&(e.message||e.code)))?"Not for this account":"Couldn't load the figures"}</b>${escapeHtml(String(e&&e.message||""))}</div>`;return;}}
+  const D=OPS.data,codes=Object.keys(D.airlines||{});
+  if(!OPS.ai||!D.airlines[OPS.ai])OPS.ai=codes[0];
+  const A=D.airlines[OPS.ai],n=x=>Math.round(x).toLocaleString(),al=AL.find(a=>a.code===OPS.ai)||{name:OPS.ai};
+  const rt=r=>`<tr><td><a class="lnk" href="#/route?a=${r[0]}&b=${r[1]}">${r[0]}–${r[1]}</a></td><td class="n">${r[2]}</td><td class="n">${n(r[3])}</td><td class="n">${n(r[4])}</td><td class="n">${n(r[4]/Math.max(1,r[2]))}</td></tr>`;
+  const head=`<tr><th>Route</th><th class="n">Flights/wk</th><th class="n">Pax/wk</th><th class="n">Profit/wk</th><th class="n">Per flight</th></tr>`;
+  const regs=l=>`<div class="op-regs">${l.map(([r,m])=>`<a href="#/status?q=${r}" title="${m}">${r}</a>`).join("")||"<span class=ph>None</span>"}</div>`;
+  el.innerHTML=`<div class="op-chips">${codes.map(c=>`<button type="button" class="mchip" data-opai="${c}" aria-pressed="${c===OPS.ai}">${(AL.find(a=>a.code===c)||{name:c}).name}</button>`).join("")}</div>
+    <div class="op-tiles">
+      <div class="op-t"><b>${n(A.profit)}</b><span>profit a week</span></div>
+      <div class="op-t"><b>${n(A.pax)}</b><span>passengers a week</span></div>
+      <div class="op-t"><b>${A.flying} / ${A.aircraft}</b><span>aircraft flying</span></div>
+      <div class="op-t"><b>${A.hours.toFixed(1)}</b><span>hours a day per flying aircraft</span></div>
+      <div class="op-t"><b>${A.routes}</b><span>routes</span></div></div>
+    <div class="op-grid">
+      <div class="op-card"><h3>Earning most</h3><table class="op-tab">${head}${A.top.map(rt).join("")}</table></div>
+      <div class="op-card"><h3>Earning least</h3><table class="op-tab">${head}${A.bottom.map(rt).join("")}</table></div>
+      <div class="op-card"><h3>Not flying · ${A.idle.length}</h3>${regs(A.idle)}</div>
+      <div class="op-card"><h3>Flying under 8 hours a day · ${A.light.length}</h3>${regs(A.light.map(x=>[x[0],x[1]+" · "+x[2].toFixed(1)+" h/day"]))}</div>
+      <div class="op-card" style="grid-column:1/-1"><h3>Flights on top of each other · ${A.overlap.length}</h3>
+        ${A.overlap.length?`<table class="op-tab"><tr><th>Route</th><th>Flights</th><th>Day</th><th class="n">Apart</th></tr>${A.overlap.slice(0,40).map(o=>`<tr><td><a class="lnk" href="#/route?a=${o[0]}&b=${o[1]}">${o[0]}–${o[1]}</a></td><td>${OPS.ai}${o[2]} ${clk(o[3])} · ${OPS.ai}${o[4]} ${clk(o[5])}</td><td>${o[6].length===7?"Daily":o[6].map(d=>["Mon","Tue","Wed","Thu","Fri","Sat","Sun"][d]).join(" ")}</td><td class="n">${o[7]} min</td></tr>`).join("")}</table>`:`<div class="ph">None — every route's departures are at least 45 minutes apart.</div>`}</div>
+    </div>
+    <p class="op-note">Profit and passengers are the game's weekly figures for each flight's aircraft assignment, from the capture of ${D.stamp}. Flying hours come from the timetable, both directions. "On top of each other" means two of ${al.name}'s own departures on the same route less than 45 minutes apart on the same day.</p>`;
+  el.querySelectorAll("[data-opai]").forEach(b=>b.onclick=()=>{OPS.ai=b.dataset.opai;renderOps();});
 }
 
 /* ---------- route pages ----------
@@ -6265,7 +6700,8 @@ function tripCard(b,ix){
       </div><div class="tpanel-host"></div>`:""}
       ${ahead&&!cxl?loungeRowsHtml(b):""}
       ${cxl?"":checkinHtml(b,ix)}
-      ${ahead&&!cxl?`<div class="tman"><button type="button" class="tbtn" data-ics="${ix}">Add to calendar</button></div>`:""}
+      ${ahead&&!cxl?`<div class="tman"><button type="button" class="tbtn" data-ics="${ix}">Add to calendar</button><button type="button" class="tbtn" data-jl="${ix}">Jet-lag plan</button></div>
+        <div class="wx-trip" data-wxtrip="${ix}"></div>`:""}
       ${cxl?"":`<div class="bpwrap" data-bp="${ix}"></div>`}
     </div>
   </details>`;
@@ -6302,6 +6738,8 @@ async function renderTrips(openRef){
   list.querySelectorAll("[data-car-ix]").forEach(bt=>bt.onclick=()=>toggleCar(bt));
   list.querySelectorAll("[data-ck]").forEach(bt=>bt.onclick=()=>openCheckin(bt));
   list.querySelectorAll("[data-ics]").forEach(bt=>bt.onclick=()=>addToCalendar(TRIPS[+bt.dataset.ics]));
+  list.querySelectorAll("[data-jl]").forEach(bt=>bt.onclick=()=>openJetlag(TRIPS[+bt.dataset.jl]));
+  list.querySelectorAll("[data-wxtrip]").forEach(el=>tripWeather(el,TRIPS[+el.dataset.wxtrip]));
   renderYourFlight(TRIPS);
   if(openRef){const d=list.querySelector(`details.trip[data-ref="${openRef}"]`);if(d)d.open=true;}
   /* draw the passes only when a trip is actually opened — each one is a canvas */
@@ -6760,11 +7198,12 @@ async function refreshOperator(){
   const link=document.getElementById("nav-desk"), n=document.getElementById("desk-count");
   const seq=++OP_SEQ, uid=AUTH.user?AUTH.user.id:null;
   const st=document.getElementById("nav-stats");
-  if(!STORE.live()){link.hidden=true;st.hidden=true;OP_UID=null;return;}
+  const opl=document.getElementById("nav-ops");
+  if(!STORE.live()){link.hidden=true;st.hidden=true;opl.hidden=true;OP_UID=null;return;}
   if(OP_UID!==uid){link.hidden=true;st.hidden=true;n.hidden=true;}
   try{const r=await charterCall({action:"whoami"});
     if(seq!==OP_SEQ)return;
-    OP_UID=uid; link.hidden=!r.operator; document.getElementById("nav-stats").hidden=!r.operator;
+    OP_UID=uid; link.hidden=!r.operator; document.getElementById("nav-stats").hidden=!r.operator; document.getElementById("nav-ops").hidden=!r.operator;
     n.textContent=r.waiting?String(r.waiting):""; n.hidden=!r.waiting;}
   catch(e){if(seq===OP_SEQ&&e&&(e.status===401||e.status===403)){link.hidden=true;st.hidden=true;}}
 }
@@ -8413,10 +8852,10 @@ if(FRAMED){
 })();
 
 /* ---------- router ---------- */
-const VIEWS=["home","results","map","where","fleet","news","alliance","airport","route","log","tv","status","trips","club","cars","charter","desk","stats","seatback","book","confirmed"];
+const VIEWS=["home","results","map","where","fleet","news","alliance","airport","route","log","tv","explore","ops","help","status","trips","club","cars","charter","desk","stats","seatback","book","confirmed"];
 /* what the loading screen says while it flies you to each page */
-const VIEW_LOADING={route:"Loading the route",log:"Loading your flight log",tv:"Loading the board",alliance:"Loading Echo United Alliances",airport:"Loading the airport",home:"Loading",results:"Finding flights",map:"Loading the route map",where:"Loading destinations",
-  fleet:"Loading the fleet",news:"Loading what's new",status:"Loading flight status",trips:"Loading your trips",
+const VIEW_LOADING={explore:"Finding everywhere you can go",ops:"Loading the ops desk",route:"Loading the route",log:"Loading your flight log",tv:"Loading the board",alliance:"Loading Echo United Alliances",airport:"Loading the airport",home:"Loading",results:"Finding flights",map:"Loading the route map",where:"Loading destinations",
+  fleet:"Loading the fleet",news:"Loading what's new",help:"Loading help",status:"Loading flight status",trips:"Loading your trips",
   club:"Loading TerraClub",cars:"Loading cars",charter:"Loading charters",desk:"Loading the charter desk",stats:"Loading stats",
   seatback:"Loading seatback",book:"Loading your booking",confirmed:"Confirming your booking"};
 let SHOWN_VIEW=null;
@@ -8674,9 +9113,12 @@ function route(){
   else if(path==="where"){show("where");}
   else if(path==="fleet"){show("fleet");}
   else if(path==="news"){show("news");renderNews();}
+  else if(path==="help"){show("help");renderHelp(new URLSearchParams(qs||""));}
   else if(path==="alliance"){show("alliance");renderAlliance();}
   else if(path==="route"){const q=new URLSearchParams(qs||"");show("route");renderRoute((q.get("a")||"").toUpperCase(),(q.get("b")||"").toUpperCase());}
   else if(path==="log"){show("log");renderLog();}
+  else if(path==="explore"){show("explore");renderExplore(new URLSearchParams(qs||""));}
+  else if(path==="ops"){show("ops");renderOps();}
   else if(path==="tv"){show("tv");openTv((new URLSearchParams(qs||"").get("c")||"").toUpperCase());}
   else if(path==="airport"){show("airport");renderAirport((new URLSearchParams(qs||"").get("c")||"").toUpperCase());}
   else if(path==="status"){show("status");
@@ -8814,6 +9256,10 @@ route();
     window.TL_PAYLOAD=build(c);
     var s=document.createElement("script");s.text=document.getElementById("tl-app").textContent;document.body.appendChild(s);
     if(LIVE){var l=document.createElement("script");l.src="live.js";document.body.appendChild(l);}
+    /* installable and offline: the service worker keeps the page, the
+       timetable and the libraries so trips and passes open with no signal */
+    if(LIVE&&"serviceWorker" in navigator&&!/[?&]fast\b/.test(location.search))
+      navigator.serviceWorker.register("sw.js").catch(function(){});
     requestAnimationFrame(hideSplash);
     return window.TL_PAYLOAD.SOURCE;
   }).catch(function(e){console.error("[TerraLink]",e);failSplash();});
