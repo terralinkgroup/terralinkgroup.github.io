@@ -2,7 +2,7 @@
  "name": "TerraLink",
  "short_name": "TerraLink",
  "start_url": "./",
- "display": "browser",
+ "display": "standalone",
  "background_color": "#ffffff",
  "theme_color": "#ffffff",
  "icons": [
@@ -22,5 +22,6 @@
    "type": "image/png",
    "purpose": "maskable"
   }
- ]
+ ],
+ "description": "Book flights across the TerraLink network, check in and follow your flight."
 }
