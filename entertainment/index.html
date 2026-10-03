@@ -324,6 +324,17 @@ html[data-contrast="high"] :focus-visible{outline:3px solid #fff;outline-offset:
 .sleep.wake{background:radial-gradient(circle at 50% 30%,#3a2d1a,#020305 70%)}
 .sleep.wake .t{color:#ffd9a0}
 
+/* ---- radio ---- */
+.rd{margin-top:14px;background:#0f1218;border:1px solid #2a303b;border-radius:14px;padding:14px}
+.rd-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.rd-top .btn[aria-pressed="true"]{background:#ffbf4d}
+.rd-st{font-family:ui-monospace,Menlo,Consolas,monospace;color:#ffbf4d;font-size:14px}
+.rd-log{margin-top:12px;display:flex;flex-direction:column;gap:8px;max-height:300px;overflow:auto}
+.rd-l{display:grid;grid-template-columns:52px 36px 1fr;gap:8px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;line-height:1.45;color:#cfe3d6}
+.rd-l span{color:#6f8a76}.rd-l b{color:#9be7a8}.rd-l.crew b{color:#7cc4ff}.rd-l.other b{color:#b39dff}.rd-l p{margin:0}
+.rd-none{color:#6f8a76;font-size:13px;margin:0}
+.rd-note{font-size:11.5px;color:#6f8a76;margin:10px 0 0}
+
 </style>
 </head>
 <body>
@@ -407,7 +418,9 @@ html[data-contrast="high"] :focus-visible{outline:3px solid #fff;outline-offset:
   <div class="wn-side"><div class="chips"><button type="button" class="chip" data-side="L" aria-pressed="true">Left window</button><button type="button" class="chip" data-side="R" aria-pressed="false">Right window</button></div>
     <div><button type="button" class="btn ghost" id="wn-bl">Pull the blind</button></div><div class="wn-info" id="wn-info"></div></div></div></section>
 <section class="pane" id="p-cockpit"><h2 class="h1">Cockpit<span class="jp">コックピット</span></h2><p class="lede">The flight deck's main display, drawn from the site's estimates for your flight.</p>
-  <div class="ck"><canvas id="ck-cv" width="800" height="600"></canvas><div class="ck-panel" id="ck-panel"></div></div></section>
+  <div class="ck"><canvas id="ck-cv" width="800" height="600"></canvas><div><div class="ck-panel" id="ck-panel"></div>
+    <div class="rd"><div class="rd-top"><button type="button" class="btn" id="rd-tg" aria-pressed="false">Radio chatter: off</button><span class="rd-st" id="rd-st">Radio off</span></div>
+    <div class="rd-log" id="rd-log" aria-live="polite"></div><p class="rd-note">Simulated air traffic control for your flight — made up, not real ATC. Uses your device's built-in voices.</p></div></div></div></section>
 <section class="pane" id="p-books"><h2 class="h1">Audiobooks<span class="jp">朗読</span></h2><p class="lede">Classics read aloud by LibriVox volunteers, from the Internet Archive. Chapters play in order — pick up wherever you like.</p><div class="books" id="bk-list"></div></section>
 <section class="pane" id="p-kids"><h2 class="h1">Kids' corner<span class="jp">キッズ</span></h2><p class="lede">Cartoons, colouring and a matching game with the airlines' logos.</p><div class="chips kids-tabs" id="kd-tabs"></div><div id="kd-body"></div></section>
 <section class="pane" id="p-arrival"><h2 class="h1">Destination guide<span class="jp">到着地ガイド</span></h2><p class="lede" id="gd-lede"></p><div class="gd" id="gd-body"></div></section>
@@ -1392,7 +1405,7 @@ function ckTarget(){
 function ckPull(){const w=win();if(w&&w.TL_IFE&&ST.f){try{const x=w.TL_IFE.info(ST.f);if(x)ST.info=x;}catch(_){}}CK.tgt=ckTarget();if(!CK.cur)CK.cur=Object.assign({},CK.tgt);ckPanel();}
 function ckDraw(){
   const cv=$("ck-cv");if(!cv)return;const g=cv.getContext("2d"),W=cv.width,H=cv.height,c=CK.cur,t=CK.tgt||ckTarget();
-  ["spd","alt","vs","pitch"].forEach(k=>c[k]=lerp(c[k],t[k],.04));c.hdg=c.hdg+((((t.hdg-c.hdg)%360)+540)%360-180)*.04;
+  ["spd","alt","vs","pitch"].forEach(k=>c[k]=lerp(c[k],t[k],.04));c.ground=t.ground;c.hdg=c.hdg+((((t.hdg-c.hdg)%360)+540)%360-180)*.04;
   const roll=c.ground?0:Math.sin(performance.now()/2600)*1.4, cx=W/2, cy=H*.46, ppd=8;
   g.fillStyle="#000";g.fillRect(0,0,W,H);
   /* attitude */
@@ -1586,6 +1599,129 @@ function openSleep(){
   $("sl-s").innerHTML=`How long a nap?<div style="display:flex;gap:8px;justify-content:center;margin-top:12px">${[20,45,90].map(m=>`<button type="button" class="btn" data-nap="${m}">${m} min</button>`).join("")}</div>`;
   $("sl-s").querySelectorAll("[data-nap]").forEach(b=>b.onclick=()=>sleepStart(+b.dataset.nap));
 }
+
+/* ---------- radio chatter (cockpit) ----------
+   Made-up but realistic air traffic control for your flight: the right
+   facility for where you are (Ground, Departure, Centre, Oceanic, Approach,
+   Tower), your airline's callsign, your runways and levels, and the other
+   TerraLink aircraft really nearby. Spoken with the browser's own voices,
+   with squelch and static; a transcript runs alongside. Simulated — not real
+   ATC. */
+const RADIO={on:false,timer:null,busy:false,used:[],station:null,freq:null,log:[],hiss:null,voices:null};
+const TELE={SR:"Starliner",AX:"Astra",VX:"Velora",GU:"Essequibo",AG:"Amerigo",UA:"United","7S":"Hoshizora",MX:"Meridian"};
+const DIG=["zero","one","two","three","four","five","six","seven","eight","niner"];
+const sayDig=s=>String(s).split("").map(c=>/\d/.test(c)?DIG[+c]:c==="."?"decimal":c).join(" ");
+const csSay=(code,fn)=>`${TELE[code]||code} ${sayDig(fn)}`, csTxt=(code,fn)=>`${TELE[code]||code} ${fn}`;
+const flTxt=ft=>ft>=18000?`flight level ${Math.round(ft/100)}`:`${Math.round(ft/100)*100} feet`;
+const flSay=ft=>ft>=18000?`flight level ${sayDig(Math.round(ft/100))}`:(()=>{const th=Math.floor(ft/1000),h=Math.round(ft%1000/100);return `${sayDig(th)} thousand${h?` ${DIG[h]} hundred`:""}`;})();
+const rwSay=id=>id?String(id).replace(/(\d+)([LRC]?)/,(_,n,s)=>sayDig(n)+(s==="L"?" left":s==="R"?" right":s==="C"?" center":"")):"the active";
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const FIXES=["LUBOR","NATEX","PIKUT","ROSAL","TEBRO","VEKAR","MIDOS","OBTIX","KESEL","ARNOV","DELTU","SOVAR","GIPLO","UMREX","BAVIN","TOLKA"];
+function freqFor(name){let h=0;for(const ch of name)h=(h*31+ch.charCodeAt(0))>>>0;return (118+h%17)+"."+String([0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95][h%20]).padStart(2,"0").slice(0,2);}
+function station(){
+  const i=ST.info,p=i&&i.pos;
+  if(!i)return null;
+  if(!p){return i.status&&/land|arriv/i.test(i.status)?{n:`${i.toCity} Ground`,k:"gnd-arr"}:{n:`${i.fromCity} Ground`,k:"gnd"};}
+  if(p.ground)return i.frac>.5?{n:`${i.toCity} Ground`,k:"gnd-arr"}:{n:`${i.fromCity} Tower`,k:"twr-dep"};
+  const left=i.left||0;
+  if(p.vs<0&&p.alt<4500)return {n:`${i.toCity} Tower`,k:"twr-arr"};
+  if(p.vs<0&&left<35)return {n:`${i.toCity} Approach`,k:"app"};
+  if(p.vs>0&&p.alt<18000&&i.frac<.2)return {n:`${i.fromCity} Departure`,k:"dep"};
+  const b=i.below||{},la=p.lat,lo=p.lon;let n;
+  if(!b.land){
+    n=b.name==="the Atlantic"?(lo<-30?"Gander Oceanic":"Shanwick Oceanic"):b.name==="the Pacific"?(la>45?"Anchorage Oceanic":lo>100&&lo<160?"Fukuoka Oceanic":la<-10?"Auckland Oceanic":"Oakland Oceanic")
+      :b.name==="the Indian Ocean"?(la>0?"Mumbai Oceanic":"Melbourne Centre"):b.name==="the Gulf of Mexico"?"Houston Center":b.name==="the Caribbean Sea"?"San Juan Center":b.name==="Hudson Bay"?"Winnipeg Centre":b.name==="the Arctic Ocean"?"Edmonton Centre":`${(i.nearCity||[])[0]||"Oceanic"} Control`;
+  }else{const c=(i.nearCity||[])[0]||"Area",cc=(i.nearCity||[])[2]||"";n=cc==="US"?`${c} Center`:cc==="CA"||cc==="AU"||cc==="NZ"||cc==="IN"?`${c} Centre`:`${c} Control`;}
+  return {n,k:p.vs>0?"climb":p.vs<0?"desc":"cruise",oceanic:/Oceanic/.test(n)};
+}
+function exchanges(){
+  const i=ST.info,p=i&&i.pos,S=station();if(!i||!S)return [];
+  const cs=csSay(i.code,String(i.fno).replace(/^\D+|^7S/,"")),ct=csTxt(i.code,String(i.fno).replace(/^[A-Z0-9]{2}/,"")),st=S.n,fr=freqFor(st);
+  const L=(who,txt,say)=>({who,txt,say:say||txt});
+  const alt=p?p.alt:0,fl=Math.max(1000,Math.round(alt/1000)*1000),fx=pick(FIXES),out=[],mi=k=>{const n=Math.max(2,Math.round(k*.54));return n+(n===1?" mile":" miles");};
+  const near=(()=>{try{const w=win();return p&&w&&w.TL_IFE&&w.TL_IFE.nearby?w.TL_IFE.nearby(p.lat,p.lon,600,i.fno).filter(o=>o.alt>=3000):[];}catch(_){return [];}})();
+  if(S.k==="gnd"){
+    out.push([L("crew",`${st}, ${ct}, gate ${i.depGate}, request taxi.`,`${st}, ${cs}, gate ${i.depGate}, request taxi.`),
+      L("atc",`${ct}, ${st}, runway ${i.depRwy||"active"}, taxi via Alpha, hold short of runway ${i.depRwy||"active"}.`,`${cs}, ${st}, runway ${rwSay(i.depRwy)}, taxi via alpha, hold short of runway ${rwSay(i.depRwy)}.`),
+      L("crew",`Runway ${i.depRwy||"active"} via Alpha, hold short, ${ct}.`,`Runway ${rwSay(i.depRwy)} via alpha, hold short, ${cs}.`)]);
+    out.push([L("crew",`${st}, ${ct}, request pushback, gate ${i.depGate}.`,`${st}, ${cs}, request pushback, gate ${i.depGate}.`),L("atc",`${ct}, push and start approved, tail south.`,`${cs}, push and start approved, tail south.`),L("crew",`Push and start approved, ${ct}.`,`Push and start approved, ${cs}.`)]);
+  }
+  if(S.k==="twr-dep")out.push([L("atc",`${ct}, wind ${pick(["240","250","270","300","180"])} at ${pick([6,8,9,12])}, runway ${i.depRwy||"active"}, cleared for takeoff.`,`${cs}, wind ${sayDig(pick(["240","250","270","300","180"]))} at ${pick(["six","eight","niner","twelve"])}, runway ${rwSay(i.depRwy)}, cleared for takeoff.`),
+    L("crew",`Cleared for takeoff runway ${i.depRwy||"active"}, ${ct}.`,`Cleared for takeoff runway ${rwSay(i.depRwy)}, ${cs}.`)]);
+  if(S.k==="dep"||S.k==="climb"){const tgt=Math.min(41000,Math.ceil((alt+6000)/1000)*1000);
+    out.push([L("crew",`${st}, ${ct}, passing ${flTxt(alt)} for ${flTxt(tgt)}.`,`${st}, ${cs}, passing ${flSay(alt)} for ${flSay(tgt)}.`),
+      L("atc",`${ct}, ${st}, radar contact, climb and maintain ${flTxt(tgt+4000)}.`,`${cs}, ${st}, radar contact, climb and maintain ${flSay(tgt+4000)}.`),
+      L("crew",`Climb and maintain ${flTxt(tgt+4000)}, ${ct}.`,`Climb and maintain ${flSay(tgt+4000)}, ${cs}.`)]);
+    out.push([L("atc",`${ct}, turn left heading ${String(Math.round((p.brg+340)%360)).padStart(3,"0")}, proceed direct ${fx} when able.`,`${cs}, turn left heading ${sayDig(String(Math.round((p.brg+340)%360)).padStart(3,"0"))}, proceed direct ${fx.split("").join(" ")} when able.`),
+      L("crew",`Left ${String(Math.round((p.brg+340)%360)).padStart(3,"0")}, direct ${fx} when able, ${ct}.`,`Left heading ${sayDig(String(Math.round((p.brg+340)%360)).padStart(3,"0"))}, direct ${fx.split("").join(" ")} when able, ${cs}.`)]);}
+  if(S.k==="cruise"||S.k==="climb"||S.k==="desc"){
+    const nfr=freqFor(st+fx),mach=pick([82,83,84,85]);
+    if(S.k==="cruise")out.push([L("crew",`${st}, ${ct}, ${flTxt(fl)}.`,`${st}, ${cs}, ${flSay(fl)}.`),L("atc",`${ct}, ${st}, roger, maintain ${flTxt(fl)}.`,`${cs}, ${st}, roger, maintain ${flSay(fl)}.`)]);
+    out.push([L("crew",`${st}, ${ct}, any reports of rides at ${flTxt(fl)}?`,`${st}, ${cs}, any reports of rides at ${flSay(fl)}?`),
+      L("atc",`${ct}, smooth reported ahead at your level, occasional light chop a little lower.`,`${cs}, smooth reported ahead at your level, occasional light chop a little lower.`),L("crew",`Thanks, ${ct}.`,`Thanks, ${cs}.`)]);
+    out.push([L("atc",`${ct}, proceed direct ${fx}, rest of route unchanged.`,`${cs}, proceed direct ${fx.split("").join(" ")}, rest of route unchanged.`),L("crew",`Direct ${fx}, ${ct}.`,`Direct ${fx.split("").join(" ")}, ${cs}.`)]);
+    if(S.k==="cruise")out.push([L("atc",`${ct}, maintain Mach .${mach} or greater.`,`${cs}, maintain mach point ${sayDig(mach)} or greater.`),L("crew",`Mach .${mach} or greater, ${ct}.`,`Mach point ${sayDig(mach)} or greater, ${cs}.`)]);
+    if(S.oceanic){const la=Math.round(Math.abs(p.lat)),lo=Math.round(Math.abs(p.lon)),z=new Date(),hh=String(z.getUTCHours()).padStart(2,"0")+String(z.getUTCMinutes()).padStart(2,"0");
+      out.push([L("crew",`${st}, ${ct}, position ${la}${p.lat>=0?"N":"S"} ${String(lo).padStart(3,"0")}${p.lon>=0?"E":"W"} at ${hh}Z, ${flTxt(fl)}, estimating ${fx} at ${String(z.getUTCHours()+1).padStart(2,"0").slice(-2)}${String(z.getUTCMinutes()).padStart(2,"0")}Z.`,
+        `${st}, ${cs}, position ${sayDig(la)} ${p.lat>=0?"north":"south"}, ${sayDig(String(lo).padStart(3,"0"))} ${p.lon>=0?"east":"west"}, at ${sayDig(hh)} zulu, ${flSay(fl)}, estimating ${fx.split("").join(" ")} at ${sayDig(String((z.getUTCHours()+1)%24).padStart(2,"0")+String(z.getUTCMinutes()).padStart(2,"0"))}.`),
+        L("atc",`${ct}, ${st}, roger, position report received.`,`${cs}, ${st}, roger.`)]);}
+    out.push([L("atc",`${ct}, contact ${st} on ${nfr}.`,`${cs}, contact ${st} on ${sayDig(nfr)}.`),L("crew",`${nfr}, ${ct}, good day.`,`${sayDig(nfr)}, ${cs}, good day.`)]);
+    near.slice(0,3).forEach(o=>{const oc=csSay(o.code,o.fn),ot=csTxt(o.code,o.fn),of=Math.round(o.alt/1000)*1000,up=Math.min(39000,of+4000);
+      if(of<33000)out.push([L("atc",`${ot}, ${st}, climb and maintain ${flTxt(up)}.`,`${oc}, ${st}, climb and maintain ${flSay(up)}.`),L("other",`Up to ${flTxt(up)}, ${ot}.`,`Up to ${flSay(up)}, ${oc}.`)]);
+      else out.push([L("other",`${st}, ${ot}, ${flTxt(of)}.`,`${st}, ${oc}, ${flSay(of)}.`),L("atc",`${ot}, ${st}, good ${new Date().getUTCHours()<12?"morning":"evening"}, maintain ${flTxt(of)}.`,`${oc}, ${st}, maintain ${flSay(of)}.`)]);
+      if(o.km>=20&&o.km<160&&Math.abs(of-fl)>=1000)out.push([L("atc",`${ct}, traffic ${pick(["one","two","ten","eleven"])} o'clock, ${mi(o.km)}, ${ot}, ${of>fl?"above":"below"} you at ${flTxt(of)}.`,`${cs}, traffic ${pick(["one","two","ten","eleven"])} o'clock, ${mi(o.km)}, ${oc}, ${of>fl?"above":"below"} you at ${flSay(of)}.`),L("crew",`Looking, ${ct}.`,`Looking, ${cs}.`)]);});
+  }
+  if(S.k==="desc"||S.k==="app"){const tgt=Math.max(3000,Math.floor((alt-8000)/1000)*1000);
+    out.push([L("atc",`${ct}, descend and maintain ${flTxt(tgt)}, expect ILS runway ${i.arrRwy||"active"}.`,`${cs}, descend and maintain ${flSay(tgt)}, expect I L S runway ${rwSay(i.arrRwy)}.`),
+      L("crew",`Down to ${flTxt(tgt)}, expecting ILS ${i.arrRwy||""}, ${ct}.`,`Down to ${flSay(tgt)}, expecting I L S runway ${rwSay(i.arrRwy)}, ${cs}.`)]);}
+  if(S.k==="app")out.push([L("atc",`${ct}, turn right heading ${String(Math.round((p.brg+20)%360)).padStart(3,"0")}, cleared ILS runway ${i.arrRwy||"active"} approach.`,`${cs}, turn right heading ${sayDig(String(Math.round((p.brg+20)%360)).padStart(3,"0"))}, cleared I L S runway ${rwSay(i.arrRwy)} approach.`),
+      L("crew",`Right ${String(Math.round((p.brg+20)%360)).padStart(3,"0")}, cleared ILS ${i.arrRwy||""}, ${ct}.`,`Right heading ${sayDig(String(Math.round((p.brg+20)%360)).padStart(3,"0"))}, cleared I L S runway ${rwSay(i.arrRwy)}, ${cs}.`)]);
+  if(S.k==="twr-arr")out.push([L("crew",`${st}, ${ct}, established ILS ${i.arrRwy||""}.`,`${st}, ${cs}, established I L S runway ${rwSay(i.arrRwy)}.`),
+      L("atc",`${ct}, ${st}, wind ${pick(["220","240","270","310"])} at ${pick([7,9,11])}, runway ${i.arrRwy||"active"}, cleared to land.`,`${cs}, ${st}, wind ${sayDig(pick(["220","240","270","310"]))} at ${pick(["seven","niner","eleven"])}, runway ${rwSay(i.arrRwy)}, cleared to land.`),
+      L("crew",`Cleared to land ${i.arrRwy||""}, ${ct}.`,`Cleared to land runway ${rwSay(i.arrRwy)}, ${cs}.`)]);
+  if(S.k==="gnd-arr")out.push([L("atc",`${ct}, welcome to ${i.toCity}, taxi to the gate via Bravo.`,`${cs}, welcome to ${i.toCity}, taxi to the gate via bravo.`),L("crew",`Via Bravo to the gate, ${ct}. Thanks for your help.`,`Via bravo to the gate, ${cs}. Thanks for your help.`)]);
+  RADIO.station=st;RADIO.freq=fr;
+  return out;
+}
+/* squelch and static */
+function squelch(len){if(!musInit())return;const c=MUS.ctx,s=c.createBufferSource(),f=c.createBiquadFilter(),g=c.createGain();NOISE=NOISE||noiseBuf(false);s.buffer=NOISE;
+  f.type="bandpass";f.frequency.value=1800;f.Q.value=.8;g.gain.setValueAtTime(.09,c.currentTime);g.gain.exponentialRampToValueAtTime(.0005,c.currentTime+len);
+  s.connect(f);f.connect(g);g.connect(c.destination);s.start();s.stop(c.currentTime+len+.02);}
+function hissOn(on){if(!musInit())return;const c=MUS.ctx;if(c.state==="suspended")c.resume();
+  if(on&&!RADIO.hiss){const s=c.createBufferSource(),f=c.createBiquadFilter(),g=c.createGain();NOISE=NOISE||noiseBuf(false);s.buffer=NOISE;s.loop=true;f.type="bandpass";f.frequency.value=2400;f.Q.value=.6;g.gain.value=.012;s.connect(f);f.connect(g);g.connect(c.destination);s.start();RADIO.hiss={s,g};}
+  if(!on&&RADIO.hiss){try{RADIO.hiss.s.stop();}catch(_){}RADIO.hiss=null;}}
+function voices(){if(RADIO.voices)return RADIO.voices;const vs=("speechSynthesis" in window)?speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang)):[];
+  if(!vs.length)return null;const us=vs.filter(v=>/en-US/i.test(v.lang)),gb=vs.filter(v=>/en-(GB|AU|IE|IN)/i.test(v.lang));
+  RADIO.voices={atc:us[0]||vs[0],crew:gb[0]||us[1]||vs[1]||vs[0],other:us[2]||gb[1]||vs[2]||vs[0]};return RADIO.voices;}
+function say(line){return new Promise(res=>{
+  radioLog(line);
+  const V=voices();if(!V||!("speechSynthesis" in window)){setTimeout(res,1800+line.txt.length*45);return;}
+  squelch(.14);const u=new SpeechSynthesisUtterance(line.say);u.voice=V[line.who]||V.atc;u.rate=line.who==="atc"?1.12:1.18;u.pitch=line.who==="atc"?.92:line.who==="other"?1.12:1.02;u.volume=.95;
+  let done=false;const fin=()=>{if(done)return;done=true;squelch(.08);setTimeout(res,700);};u.onend=fin;u.onerror=fin;setTimeout(fin,15000);
+  setTimeout(()=>speechSynthesis.speak(u),150);});}
+function radioLog(line){const z=new Date(),t=String(z.getUTCHours()).padStart(2,"0")+String(z.getUTCMinutes()).padStart(2,"0")+"Z";
+  RADIO.log.unshift({t,who:line.who,txt:line.txt});RADIO.log=RADIO.log.slice(0,8);radioPaint();}
+function radioPaint(){
+  const b=$("rd-log");if(!b)return;
+  $("rd-st").textContent=RADIO.on?`${RADIO.station||"—"} · ${RADIO.freq||"---.--"}`:"Radio off";
+  $("rd-tg").textContent=RADIO.on?"Radio chatter: on":"Radio chatter: off";$("rd-tg").setAttribute("aria-pressed",String(RADIO.on));
+  b.innerHTML=RADIO.log.map(l=>`<div class="rd-l ${l.who}"><span>${l.t}</span><b>${l.who==="atc"?"ATC":l.who==="crew"?"US":"TFC"}</b><p>${esc(l.txt)}</p></div>`).join("")||`<p class="rd-none">${RADIO.on?"Listening…":"Listen in on your pilots talking to air traffic control. Best with headphones."}</p>`;
+}
+async function radioNext(){
+  if(!RADIO.on||RADIO.busy)return;
+  if(!$("p-cockpit").classList.contains("on")||SL.on){RADIO.timer=setTimeout(radioNext,4000);return;}
+  const ex=exchanges();if(!ex.length){radioPaint();RADIO.timer=setTimeout(radioNext,8000);return;}
+  const fresh=ex.filter(x=>!RADIO.used.includes(x[0].txt.slice(0,40)));const pickd=pick(fresh.length?fresh:ex);
+  RADIO.used.push(pickd[0].txt.slice(0,40));RADIO.used=RADIO.used.slice(-6);
+  RADIO.busy=true;for(const line of pickd){if(!RADIO.on)break;await say(line);}RADIO.busy=false;
+  if(RADIO.on)RADIO.timer=setTimeout(radioNext,9000+Math.random()*14000);
+}
+function radioToggle(){
+  RADIO.on=!RADIO.on;clearTimeout(RADIO.timer);
+  if(RADIO.on){hissOn(true);if("speechSynthesis" in window){speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=()=>{RADIO.voices=null;};}radioPaint();RADIO.timer=setTimeout(radioNext,600);}
+  else{hissOn(false);try{speechSynthesis.cancel();}catch(_){}RADIO.busy=false;radioPaint();}
+}
+$("rd-tg").onclick=radioToggle;radioPaint();
 
 /* ---------- start ---------- */
 paint(); go(location.hash.slice(1)||"home"); loadFrame();
