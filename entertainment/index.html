@@ -7,6 +7,7 @@
 <meta name="description" content="Inflight entertainment on TerraLink: the moving map, films and TV, music, games and the menu.">
 <meta name="theme-color" content="#0b0f16">
 <meta name="color-scheme" content="dark">
+<script>try{var d=document.documentElement,x=localStorage.getItem("tl_text"),c=localStorage.getItem("tl_contrast"),l=localStorage.getItem("tl_lang");if(x==="l"||x==="xl")d.setAttribute("data-text",x);if(c==="high")d.setAttribute("data-contrast","high");if(l)d.setAttribute("lang",l);}catch(e){}</script>
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Schibsted+Grotesk:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;600&display=swap">
@@ -103,6 +104,17 @@ main{position:fixed;top:var(--top);left:var(--rail);right:0;bottom:0}
 .poster:hover{transform:translateY(-3px);transition:transform .2s}
 .poster.wide{aspect-ratio:16/10}
 .posters.tv{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.poster.yt img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.poster.yt::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 35%,rgba(0,0,0,.78))}
+.poster.yt b,.poster.yt small,.poster.yt .y{z-index:1}
+.poster.yt .y{background:rgba(0,0,0,.45);padding:3px 6px;border-radius:5px}
+.shelf-h .stat{font-size:12px}
+.elsewhere{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:14px}
+.ew{display:flex;flex-direction:column;gap:4px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;text-decoration:none;color:var(--ink)}
+.ew:hover{border-color:var(--accent)}
+.ew span{font-size:13px;color:var(--muted);line-height:1.45}
+.ew-find{display:flex;gap:8px;max-width:520px}
+.ew-find input{flex:1;min-width:0;background:var(--bg2);border:1px solid var(--line);border-radius:10px;color:var(--ink);font:inherit;padding:10px 12px}
 
 /* player */
 .player{position:fixed;inset:0;z-index:50;background:#05070b;display:flex;flex-direction:column;padding:18px}
@@ -231,6 +243,87 @@ main{position:fixed;top:var(--top);left:var(--rail);right:0;bottom:0}
   .menucard{padding:28px 20px 24px}
   .player{padding:10px}
 }
+/* ---- rail scrolls when there are more tabs than room ---- */
+.rail{overflow-y:auto;scrollbar-width:none}
+.rail::-webkit-scrollbar{display:none}
+.rail button{flex:none}
+@media(max-width:700px){.rail{overflow-x:auto;overflow-y:hidden}.rail button{flex:0 0 64px}}
+html[data-text="l"] body{zoom:1.12}
+html[data-text="xl"] body{zoom:1.25}
+html[data-contrast="high"]{--muted:#d3dae6;--faint:#b3bccb;--line:#56627a}
+html[data-contrast="high"] :focus-visible{outline:3px solid #fff;outline-offset:2px}
+
+/* ---- your flight extras on Home ---- */
+.fx{margin-top:10px;padding-top:10px;border-top:1px solid var(--line);font-size:13.5px;color:var(--muted);display:flex;flex-direction:column;gap:5px}
+.fx b{color:var(--ink);font-weight:600}
+.reserved{display:inline-block;margin-left:6px;font:700 10px/1 var(--ui);letter-spacing:.08em;text-transform:uppercase;background:var(--paper-ink);color:var(--paper);padding:4px 6px;border-radius:4px;vertical-align:2px}
+
+/* ---- window ---- */
+.wn{display:grid;grid-template-columns:auto minmax(0,1fr);gap:28px;align-items:start}
+.wn-frame{position:relative;width:min(340px,80vw);aspect-ratio:26/35;border-radius:46% / 38%;overflow:hidden;
+  box-shadow:0 0 0 14px #d9dde3,0 0 0 16px #b7bdc6,0 0 0 30px #eceff3,0 22px 50px rgba(0,0,0,.55),inset 0 0 30px rgba(0,0,0,.35);margin:30px}
+.wn-frame canvas{width:100%;height:100%;display:block}
+.wn-blind{position:absolute;left:0;right:0;top:0;height:0;background:linear-gradient(#e9ecf0,#cfd5dc);transition:height .9s ease;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+.wn-blind::after{content:"";position:absolute;left:42%;right:42%;bottom:8px;height:6px;border-radius:3px;background:#9aa3ae}
+.wn-blind.down{height:100%}
+.wn-side{display:flex;flex-direction:column;gap:14px;max-width:440px}
+.wn-info{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;font-size:14.5px;color:var(--muted);line-height:1.55}
+.wn-info b{color:var(--ink)}
+.wn-big{font-family:var(--display);font-size:26px;color:var(--ink);line-height:1.15;margin-bottom:6px}
+@media(max-width:800px){.wn{grid-template-columns:1fr;justify-items:center}.wn-frame{margin:24px auto}}
+
+/* ---- cockpit ---- */
+.ck{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:22px;align-items:start}
+.ck canvas{width:100%;aspect-ratio:4/3;background:#000;border-radius:14px;border:6px solid #1b1f26;box-shadow:0 0 0 2px #2c323c,0 18px 40px rgba(0,0,0,.5)}
+.ck-panel{background:#0f1218;border:1px solid #2a303b;border-radius:14px;padding:16px;font-family:ui-monospace,Menlo,Consolas,monospace;color:#9be7a8;font-size:13.5px;line-height:1.7}
+.ck-panel b{color:#e9f7ec;font-weight:600}
+.ck-panel .amber{color:#ffbf4d}
+@media(max-width:900px){.ck{grid-template-columns:1fr}}
+
+/* ---- arrival guide ---- */
+.gd{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.gd .box p{margin:0 0 4px}
+.gd .big{font-family:var(--display);font-size:34px;color:var(--ink);line-height:1.1}
+.ph-row{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:14px}
+.ph-row span{color:var(--faint)}.ph-row b{color:var(--ink);font-weight:600}
+.wxd{display:flex;gap:10px;margin-top:8px}
+.wxd div{flex:1;background:var(--bg2);border-radius:10px;padding:8px;text-align:center;font-size:13px}
+.wxd i{display:block;font-style:normal;font-size:22px}
+
+/* ---- books ---- */
+.books{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px}
+.book{position:relative;aspect-ratio:3/4;border:0;border-radius:4px 12px 12px 4px;padding:16px 14px;text-align:left;color:#fff;display:flex;flex-direction:column;justify-content:space-between;
+  background:linear-gradient(90deg,rgba(0,0,0,.28) 0 7px,transparent 7px),linear-gradient(160deg,var(--a),var(--b));box-shadow:0 10px 24px rgba(0,0,0,.35)}
+.book b{font-family:var(--display);font-size:21px;line-height:1.1}
+.book small{font-size:12px;opacity:.85}
+.book span{font-size:11px;letter-spacing:.08em;text-transform:uppercase;opacity:.75}
+
+/* ---- kids ---- */
+.kids-tabs{margin-bottom:16px}
+.color-wrap{display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:18px;align-items:start}
+.color-wrap svg{width:100%;background:#fff;border-radius:14px}
+.color-wrap svg [data-r]{cursor:pointer;stroke:#222;stroke-width:2.2}
+.pal{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.pal button{aspect-ratio:1;border-radius:50%;border:3px solid transparent}
+.pal button[aria-pressed="true"]{border-color:#fff;box-shadow:0 0 0 2px var(--accent)}
+.presets{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.mem{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:520px}
+.mem button{aspect-ratio:1;border-radius:12px;border:0;background:var(--card2);position:relative;padding:8px;perspective:600px}
+.mem button.up,.mem button.done{background:#fff}
+.mem img{max-width:100%;max-height:100%;object-fit:contain;opacity:0;transition:opacity .2s}
+.mem button.up img,.mem button.done img{opacity:1}
+.mem button.done{outline:3px solid #3fbf7f}
+@media(max-width:800px){.color-wrap{grid-template-columns:1fr}}
+
+/* ---- sleep ---- */
+.sleep{position:fixed;inset:0;z-index:60;background:#020305;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:#5e6675;text-align:center;padding:20px}
+.sleep[hidden]{display:none}
+.sleep .t{font-size:clamp(54px,12vw,120px);font-weight:300;color:#7d8696;font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.sleep .s{font-size:15px;max-width:420px;line-height:1.5}
+.sleep .btn{background:#1a1f28;color:#aab2c0}
+.sleep.wake{background:radial-gradient(circle at 50% 30%,#3a2d1a,#020305 70%)}
+.sleep.wake .t{color:#ffd9a0}
+
 </style>
 </head>
 <body>
@@ -244,11 +337,16 @@ main{position:fixed;top:var(--top);left:var(--rail);right:0;bottom:0}
 <nav class="rail" id="rail" aria-label="Sections">
   <button type="button" data-tab="home"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>Home</button>
   <button type="button" data-tab="map"><svg viewBox="0 0 24 24"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg>Map</button>
+  <button type="button" data-tab="window"><svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="6"/><path d="M8.5 13.5h7"/></svg>Window</button>
+  <button type="button" data-tab="cockpit"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 13l4-4M4 13h2M18 13h2M12 5v2"/></svg>Cockpit</button>
   <button type="button" data-tab="movies"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18M7 5v4M12 5v4M17 5v4"/></svg>Films</button>
   <button type="button" data-tab="tv"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M8 21h8M9 2l3 4 3-4"/></svg>TV</button>
+  <button type="button" data-tab="books"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5M8 7h7"/></svg>Books</button>
   <button type="button" data-tab="music"><svg viewBox="0 0 24 24"><path d="M9 18V5l11-2v13"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/></svg>Music</button>
   <button type="button" data-tab="games"><svg viewBox="0 0 24 24"><rect x="2.5" y="7" width="19" height="11" rx="5"/><path d="M7 11v3M5.5 12.5h3"/><circle cx="16" cy="11.5" r=".6"/><circle cx="18" cy="13.5" r=".6"/></svg>Games</button>
+  <button type="button" data-tab="kids"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L3.5 9.2l5.9-.9z"/></svg>Kids</button>
   <button type="button" data-tab="menu"><svg viewBox="0 0 24 24"><path d="M7 3v8a2 2 0 0 1-2 2v8M7 3v8M4 3v6M10 3v6M17 3c-2 2-2 6 0 8v10"/></svg>Menu</button>
+  <button type="button" data-tab="arrival"><svg viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Arrival</button>
   <a class="back" href="../">← TerraLink</a>
 </nav>
 
@@ -269,7 +367,7 @@ main{position:fixed;top:var(--top);left:var(--rail);right:0;bottom:0}
 
 <section class="pane" id="p-movies">
   <h2 class="h1">Films<span class="jp">映画</span></h2>
-  <p class="lede">Classics that belong to everyone — comedies, musicals, silents and a few scares, from the Internet Archive's public-domain collection.</p>
+  <p class="lede">New animated films that are free to share, trailers for what's coming to cinemas, and classics that belong to everyone.</p>
   <div id="mv-list"></div>
 </section>
 
@@ -304,12 +402,22 @@ main{position:fixed;top:var(--top);left:var(--rail);right:0;bottom:0}
   <div class="cab" id="mn-cab"></div>
   <div class="menu-wrap"><div class="menucard" id="mn-card"></div><div class="side" id="mn-side"></div></div>
 </section>
+<section class="pane" id="p-window"><h2 class="h1">Look outside<span class="jp">窓の外</span></h2><p class="lede" id="wn-lede"></p>
+  <div class="wn"><div class="wn-frame"><canvas id="wn-cv" width="520" height="700"></canvas><div class="wn-blind" id="wn-blind"></div></div>
+  <div class="wn-side"><div class="chips"><button type="button" class="chip" data-side="L" aria-pressed="true">Left window</button><button type="button" class="chip" data-side="R" aria-pressed="false">Right window</button></div>
+    <div><button type="button" class="btn ghost" id="wn-bl">Pull the blind</button></div><div class="wn-info" id="wn-info"></div></div></div></section>
+<section class="pane" id="p-cockpit"><h2 class="h1">Cockpit<span class="jp">コックピット</span></h2><p class="lede">The flight deck's main display, drawn from the site's estimates for your flight.</p>
+  <div class="ck"><canvas id="ck-cv" width="800" height="600"></canvas><div class="ck-panel" id="ck-panel"></div></div></section>
+<section class="pane" id="p-books"><h2 class="h1">Audiobooks<span class="jp">朗読</span></h2><p class="lede">Classics read aloud by LibriVox volunteers, from the Internet Archive. Chapters play in order — pick up wherever you like.</p><div class="books" id="bk-list"></div></section>
+<section class="pane" id="p-kids"><h2 class="h1">Kids' corner<span class="jp">キッズ</span></h2><p class="lede">Cartoons, colouring and a matching game with the airlines' logos.</p><div class="chips kids-tabs" id="kd-tabs"></div><div id="kd-body"></div></section>
+<section class="pane" id="p-arrival"><h2 class="h1">Destination guide<span class="jp">到着地ガイド</span></h2><p class="lede" id="gd-lede"></p><div class="gd" id="gd-body"></div></section>
 </main>
+<div class="sleep" id="sleep" hidden role="dialog" aria-label="Sleep"><div class="t" id="sl-t">--:--</div><div class="s" id="sl-s"></div><button type="button" class="btn" id="sl-x">Wake up</button></div>
 
 <div class="player" id="player" hidden role="dialog" aria-modal="true" aria-labelledby="pl-title">
   <div class="pl-top"><div><b id="pl-title"></b><span id="pl-meta"></span></div><button type="button" class="xbtn" id="pl-x" aria-label="Close">×</button></div>
   <div class="pl-frame" id="pl-frame"></div>
-  <div class="pl-foot"><span>Streaming from the Internet Archive (archive.org).</span><a id="pl-open" href="#" target="_blank" rel="noopener">Open on archive.org ↗</a></div>
+  <div class="pl-foot"><span id="pl-src">Streaming from the Internet Archive (archive.org).</span><a id="pl-open" href="#" target="_blank" rel="noopener">Open on archive.org ↗</a></div>
 </div>
 
 <script>
@@ -325,24 +433,42 @@ const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()
    frame answers questions about the flight (TL_IFE.info), so every time here
    matches the timetable exactly. */
 const Q=new URLSearchParams(location.search);
-const ST={f:(Q.get("f")||store.get("tl_ife_f")||"").toUpperCase().replace(/[^A-Z0-9-]/g,"").slice(0,10),
-  cab:["eco","prem","biz","first"].includes(Q.get("c"))?Q.get("c"):(store.get("tl_ife_c")||"eco"),info:null,ready:false,tries:0};
-if(Q.get("f"))store.set("tl_ife_f",ST.f);
+const clean=v=>String(v||"").toUpperCase().replace(/[^A-Z0-9-]/g,"").slice(0,10);
+/* which flight: one passed in the link wins; otherwise a trip in My trips
+   that's boarding or in the air right now; otherwise the last one used here */
+const ST={f:clean(Q.get("f")),mem:clean(store.get("tl_ife_f")),
+  cab:["eco","prem","biz","first"].includes(Q.get("c"))?Q.get("c"):(store.get("tl_ife_c")||"eco"),
+  info:null,ready:false,tries:0,phase:Q.get("f")?"ready":"detect",auto:null,busted:false};
+if(ST.f)store.set("tl_ife_f",ST.f);
 const frame=$("mapf");
-function loadFrame(){
-  ST.info=null;ST.ready=false;ST.tries=0;
-  if(!ST.f){frame.removeAttribute("src");paint();return;}
-  frame.src=`../index.html?fast&embed#/seatback?q=${encodeURIComponent(ST.f)}`;
+const frameUrl=bust=>`../index.html?fast&embed${bust?"&r="+Date.now():""}#/seatback?q=${encodeURIComponent(ST.f)}`;
+function loadFrame(){ST.info=null;ST.ready=false;ST.tries=0;frame.src=frameUrl(false);paint();}
+function win(){try{return frame.contentWindow;}catch(_){return null;}}
+async function ask(){
+  const w=win();
+  /* a stale copy of this page where the site should be: fetch the site afresh, once */
+  try{if(w&&w.document&&w.document.getElementById("p-home")&&!ST.busted){ST.busted=true;ST.tries=0;frame.src=frameUrl(true);return;}}catch(_){}
+  if(!(w&&w.TL_IFE)){if(++ST.tries<120)setTimeout(ask,500);else{ST.ready=true;ST.phase="ready";paint();}return;}
+  if(ST.phase==="detect"){
+    ST.phase="checking";paint();
+    let cur=null;try{cur=await w.TL_IFE.current();}catch(_){}
+    if(cur&&cur.f){ST.f=cur.f;ST.auto=cur;if(!Q.get("c"))ST.cab=cur.cab;store.set("tl_ife_f",ST.f);}
+    else if(!ST.f&&ST.mem)ST.f=ST.mem;
+    ST.phase="ready";
+    if(ST.f){try{w.location.hash="#/seatback?q="+encodeURIComponent(ST.f);}catch(_){}}
+  }
+  ST.ready=true;
+  try{ST.info=ST.f?w.TL_IFE.info(ST.f):null;}catch(_){ST.info=null;}
   paint();
 }
-function ask(){
-  let w=null;try{w=frame.contentWindow;}catch(_){}
-  if(!ST.f)return;
-  if(w&&w.TL_IFE){ST.ready=true;try{ST.info=w.TL_IFE.info(ST.f);}catch(_){ST.info=null;}paint();return;}
-  if(++ST.tries<120)setTimeout(ask,500); else{ST.ready=true;paint();}
+function setFlight(f){
+  ST.f=clean(f);ST.auto=null;store.set("tl_ife_f",ST.f);
+  const w=win();
+  if(w&&w.TL_IFE&&ST.f){try{w.location.hash="#/seatback?q="+encodeURIComponent(ST.f);ST.info=w.TL_IFE.info(ST.f);}catch(_){ST.info=null;}ST.ready=true;paint();}
+  else loadFrame();
 }
-frame.addEventListener("load",()=>{if(ST.f)ask();});
-setInterval(()=>{if(ST.ready&&ST.f){let w=null;try{w=frame.contentWindow;}catch(_){}if(w&&w.TL_IFE){try{ST.info=w.TL_IFE.info(ST.f);}catch(_){}paint();}}},30000);
+frame.addEventListener("load",()=>{ST.tries=0;ask();});
+setInterval(()=>{if(ST.ready&&ST.f){const w=win();if(w&&w.TL_IFE){try{ST.info=w.TL_IFE.info(ST.f);}catch(_){}paint();}}},30000);
 setInterval(()=>{if(!ST.info)paintClock();},20000);
 
 function mix(hex,w,t){const p=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16));const a=p(hex),b=p(w);return "#"+a.map((v,i)=>Math.round(v+(b[i]-v)*t).toString(16).padStart(2,"0")).join("");}
@@ -356,6 +482,7 @@ function theme(i){
 function paintClock(){$("t-clock-c").textContent="";$("t-clock").textContent=new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit",hour12:false});$("t-clock-l").textContent="Your time";}
 function paint(){
   const i=ST.info; theme(i);
+  ST.meal=null;if(i){const w=win();try{ST.meal=(ST.auto&&ST.auto.meal)||(w&&w.TL_IFE&&w.TL_IFE.meal?w.TL_IFE.meal(i.fno):null);}catch(_){}}
   const plate=$("plate");
   plate.innerHTML=i&&i.logo?`<img src="${i.logo}" alt="${esc(i.airline)}">`:`<b>TerraLink</b>`;
   if(i){
@@ -364,24 +491,33 @@ function paint(){
     $("t-clock").textContent=i.nowTo; $("t-clock-c").textContent=i.inAir?`${i.toCity} · `:""; $("t-clock-l").textContent=i.inAir?`${i.leftText} to go`:`Time in ${i.toCity}`;
     $("t-prog").style.width=i.inAir?(i.frac*100).toFixed(1)+"%":"0";
   }else{$("t-fno").textContent=ST.f&&ST.ready?`${ST.f} — not found`:ST.f?`${ST.f}`:"Entertainment";
-    $("t-route").textContent=ST.f&&!ST.ready?"Finding your flight…":"Films, TV, music and games";paintClock();$("t-prog").style.width="0";}
+    $("t-route").textContent=ST.phase!=="ready"?"Checking My trips for your flight…":ST.f&&!ST.ready?"Finding your flight…":"Films, TV, music and games";paintClock();$("t-prog").style.width="0";}
   paintHome(); paintMenu(); paintMap();
+  if($("p-window").classList.contains("on"))wnInfo();if($("p-arrival").classList.contains("on"))paintArrival();
 }
 
 /* ---------- tabs ---------- */
-const TABS=["home","map","movies","tv","music","games","menu"];
+const TABS=["home","map","window","cockpit","movies","tv","books","music","games","kids","menu","arrival"];
 function go(t){
   if(!TABS.includes(t))t="home";
   TABS.forEach(x=>$("p-"+x).classList.toggle("on",x===t));
   document.querySelectorAll("#rail [data-tab]").forEach(b=>{if(b.dataset.tab===t)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current");});
   if(t==="map"){try{frame.contentWindow.dispatchEvent(new Event("resize"));}catch(_){}}
   if(t!=="games")snkPause();
+  cancelAnimationFrame(WN.raf);cancelAnimationFrame(CK.raf);
+  if(t==="window"){wnInfo();wnLoop();}
+  if(t==="cockpit"){CK.last=0;ckLoop();}
+  if(t==="arrival")paintArrival();
+  if(t==="kids")kdPaint();
+  TLI18N.soon();
 }
 document.querySelectorAll("#rail [data-tab]").forEach(b=>b.onclick=()=>{location.hash=b.dataset.tab;});
 addEventListener("hashchange",()=>go(location.hash.slice(1)));
 
 /* ---------- home ---------- */
-const ICON={map:'<path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/>',movies:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18M7 5v4M12 5v4M17 5v4"/>',
+const ICON={window:'<rect x="6" y="2.5" width="12" height="19" rx="6"/><path d="M8.5 13.5h7"/>',cockpit:'<circle cx="12" cy="13" r="8"/><path d="M12 13l4-4M4 13h2M18 13h2M12 5v2"/>',
+  books:'<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5M8 7h7"/>',kids:'<path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L3.5 9.2l5.9-.9z"/>',
+  arrival:'<path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>',sleep:'<path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/>',map:'<path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/>',movies:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18M7 5v4M12 5v4M17 5v4"/>',
   tv:'<rect x="3" y="6" width="18" height="12" rx="2"/><path d="M8 21h8M9 2l3 4 3-4"/>',music:'<path d="M9 18V5l11-2v13"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/>',
   games:'<rect x="2.5" y="7" width="19" height="11" rx="5"/><path d="M7 11v3M5.5 12.5h3"/>',menu:'<path d="M7 3v8a2 2 0 0 1-2 2v8M7 3v8M4 3v6M10 3v6M17 3c-2 2-2 6 0 8v10"/>'};
 function cabName(k){const i=ST.info;return i&&i.cabins&&i.cabins[k]||({eco:"Economy",prem:"Premium",biz:"Business",first:"First"}[k]);}
@@ -392,23 +528,30 @@ function paintHome(){
     :`Sit back — films, TV, music and games are all here. Add your flight number to see the moving map.`;
   const fb=$("h-flight");
   if(i){fb.style.setProperty("--f",i.inAir?(i.frac*100).toFixed(1)+"%":"0%");
-    fb.innerHTML=`<div class="k">Your flight · ${esc(i.fno)}</div>
+    fb.innerHTML=`<div class="k">Your flight · ${esc(i.fno)}${ST.auto?` · from My trips${ST.auto.ref?" ("+esc(ST.auto.ref)+")":""}`:""}</div>
       <div class="route"><b>${esc(i.from)}</b><i></i><b>${esc(i.to)}</b></div>
       <div class="row"><span>Departs <b>${esc(i.dep)}</b></span><span>Arrives <b>${esc(i.arr)}</b>${i.arrDay?` <small>+${i.arrDay}</small>`:""}</span></div>
       <div class="row" style="margin-top:6px"><span>${esc(i.durText)} · ${Number(i.km).toLocaleString()} km</span><span>${esc(cabName(ST.cab))}</span></div>
+      ${(()=>{const a=ST.auto,meal=ST.meal;const rows=[];
+        if(meal)rows.push(`<span>Your meal: <b>${esc(meal)}</b></span>`);
+        if(a&&a.bags)rows.push(`<span>Bags: <b>${esc(a.bags.text)}</b></span>`);
+        if(a&&a.conn)rows.push(`<span>Next: <b>${esc(a.conn.fno)}</b> to ${esc(a.conn.toCity)} at ${esc(a.conn.dep)}, gate ${esc(a.conn.gate)}</span>`);
+        return rows.length?`<div class="fx">${rows.join("")}</div>`:"";})()}
       <div style="margin-top:10px"><button type="button" class="linkish" id="h-chg">Change flight</button></div>`;}
   else fb.innerHTML=`<div class="k">Your flight</div><form class="fform" id="h-form"><input id="h-in" placeholder="e.g. SR408" value="${esc(ST.f)}" maxlength="10" autocomplete="off" aria-label="Flight number"><button class="btn">Set</button></form>
-      <div class="fmsg">${ST.f&&ST.ready?`We couldn't find ${esc(ST.f)} in the timetable. Check the airline code and number.`:ST.f?"Finding your flight…":"The flight number is on your boarding pass."}</div>`;
-  const chg=$("h-chg"); if(chg)chg.onclick=()=>{ST.info=null;ST.f="";ST.ready=false;store.set("tl_ife_f","");paint();setTimeout(()=>$("h-in")&&$("h-in").focus(),0);};
-  const form=$("h-form"); if(form)form.onsubmit=ev=>{ev.preventDefault();ST.f=$("h-in").value.toUpperCase().replace(/[^A-Z0-9-]/g,"").slice(0,10);store.set("tl_ife_f",ST.f);loadFrame();};
-  const T=[["map","Moving map",i?(i.inAir?`${i.leftText} to ${i.toCity}`:"Live once airborne"):"Add your flight"],["movies","Films",`${FILMS.length} classics`],["tv","TV and shorts",`${SHOWS.length} series and cartoons`],
-    ["music","Music",MUS.st?`Playing: ${MUS.st.name}`:"Four live channels"],["games","Games","Trivia, sudoku, snake, mines"],["menu","Menu",cabName(ST.cab)]];
+      <div class="fmsg">${ST.phase!=="ready"?"Checking My trips for a flight that's boarding or in the air…":ST.f&&ST.ready?`We couldn't find ${esc(ST.f)} in the timetable. Check the airline code and number.`:ST.f?"Finding your flight…":"Nothing in My trips is flying right now. The flight number is on your boarding pass."}</div>`;
+  const chg=$("h-chg"); if(chg)chg.onclick=()=>{ST.info=null;ST.f="";ST.auto=null;store.set("tl_ife_f","");paint();setTimeout(()=>$("h-in")&&$("h-in").focus(),0);};
+  const form=$("h-form"); if(form)form.onsubmit=ev=>{ev.preventDefault();setFlight($("h-in").value);};
+  const T=[["map","Moving map",i?(i.inAir?`${i.leftText} to ${i.toCity}`:"Live once airborne"):"Add your flight"],["window","Look outside",i&&i.below?`Over ${i.below.name}`:"Your view from the seat"],
+    ["movies","Films",`${OPEN.length} new · ${TRAILERS.length} trailers · ${FILMS.length} classics`],["tv","TV and shorts",`${SHOWS.length} series and cartoons`],["music","Music",MUS.st?`Playing: ${MUS.st.name}`:"Four live channels"],
+    ["books","Audiobooks","Six classics, read aloud"],["games","Games","Trivia, sudoku, snake, mines"],["kids","Kids' corner","Cartoons, colouring, memory"],
+    ["cockpit","Cockpit","The flight deck display"],["arrival","Destination guide",i?i.toCity:"Where you're landing"],["menu","Menu",cabName(ST.cab)],["sleep","Sleep",i&&i.inAir?"Wake me before landing":"Dim the screen and rest"]];
   $("h-tiles").innerHTML=T.map(([k,n,s])=>`<button type="button" class="tile" data-go="${k}"><svg viewBox="0 0 24 24">${ICON[k]}</svg><div><b>${n}</b><small>${esc(s)}</small></div></button>`).join("");
-  $("h-tiles").querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>{location.hash=b.dataset.go;});
+  $("h-tiles").querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>{if(b.dataset.go==="sleep")openSleep();else location.hash=b.dataset.go;});
 }
 function paintMap(){
   const none=$("map-none");
-  if(ST.f&&(ST.info||!ST.ready)){none.style.display="none";return;}
+  if(ST.f&&(ST.info||!ST.ready)&&ST.phase==="ready"){none.style.display="none";return;}
   none.style.display="block";
   none.innerHTML=`<div style="max-width:440px;margin:60px auto;text-align:center"><h2 class="h1">Moving map</h2>
     <p class="lede" style="margin:8px auto 18px">${ST.f?`We couldn't find ${esc(ST.f)}.`:"Tell us your flight and the map follows it across the world."}</p>
@@ -445,7 +588,52 @@ function posters(list,wide,start){
   return `<div class="posters${wide?" tv":""}">${list.map((x,k)=>`<button type="button" class="poster${wide?" wide":""}" data-i="${k}" style="--a:${x.c[0]};--b:${x.c[1]}">
     <span class="n">№ ${String(k+start).padStart(2,"0")}</span><span class="y">${x.y}</span><b>${esc(x.t)}</b><small>${esc(x.g)}${x.m?` · ${x.m} min`:""}</small></button>`).join("")}</div>`;
 }
-$("mv-list").innerHTML=`<div class="shelf-h"><h3>Feature films</h3></div>`+posters(FILMS,false,1);
+/* new and animated: Blender Studio's open movies, free to show under Creative
+   Commons (credit: Blender Foundation, studio.blender.org). Coming soon: the
+   studios' own trailers, embedded the way YouTube allows. Free elsewhere:
+   links out to services that hold the licences. */
+const OPEN=[
+  {t:"Sprite Fright",y:2021,g:"Animated comedy-horror · 10 min",yt:"_cMxraX_5RE",d:"Rowdy teenagers on a woodland trip meet some very small, very cross locals."},
+  {t:"Charge",y:2022,g:"Animated action · 4 min",yt:"UXqq0ZvbOnk",d:"In an energy-starved future, an old man breaks into a battery plant."},
+  {t:"Wing It!",y:2023,g:"Animated comedy · 4 min",yt:"u9lj-c29dxI",kids:1,d:"A cat and a dog try to get a home-made rocket off the ground."},
+  {t:"Spring",y:2019,g:"Animated fantasy · 8 min",yt:"WhWc3b3KhnY",kids:1,d:"A shepherd girl and her dog face ancient spirits to keep the cycle of life going."},
+  {t:"Agent 327: Operation Barbershop",y:2017,g:"Animated spy caper · 4 min",yt:"mN0zPOpADL4",d:"Europe's most secret agent goes undercover in a barbershop."},
+  {t:"Cosmos Laundromat",y:2015,g:"Animated drama · 12 min",yt:"Y-rmzh0PI3c",d:"A depressed sheep on an island is offered a second chance at life."},
+  {t:"Tears of Steel",y:2012,g:"Science fiction · 12 min",yt:"R6MlUcmOul8",d:"Scientists in Amsterdam try to save the world from robots, with a broken heart."},
+  {t:"Sintel",y:2010,g:"Animated fantasy · 15 min",yt:"eRsGyueVLvQ",d:"A girl searches the world for the baby dragon she raised."},
+  {t:"Big Buck Bunny",y:2008,g:"Animated comedy · 10 min",yt:"aqz-KE-bpKQ",kids:1,d:"A gentle giant rabbit takes on three bullies of the forest."},
+];
+const TRAILERS=[
+  {t:"Dune: Part Three",y:"December 2026",g:"Trailer · Warner Bros.",yt:"lDkxvEX4L8E",d:"The final chapter of Denis Villeneuve's Dune."},
+  {t:"Avengers: Doomsday",y:"December 2026",g:"Teaser · Marvel Studios, via IGN",yt:"xLYuvLspFgQ",d:"The Avengers face Doctor Doom."},
+  {t:"Jumanji: Open World",y:"December 2026",g:"Trailer · Sony Pictures",yt:"6O8MxphAFIQ",d:"The game goes open world."},
+  {t:"The Hunger Games: Sunrise on the Reaping",y:"November 2026",g:"Teaser · Lionsgate",yt:"MPjxijuBuSo",d:"The 50th Hunger Games, and a young Haymitch Abernathy."},
+  {t:"Hexed",y:"November 2026",g:"Teaser · Walt Disney Animation Studios",yt:"mtC4sjABZNw",d:"Disney Animation's new original film."},
+  {t:"The Cat in the Hat",y:"November 2026",g:"Trailer · Warner Bros.",yt:"jz8pLlPhSeY",d:"Dr. Seuss's cat, animated by Warner Bros. Pictures Animation."},
+  {t:"Street Fighter",y:"October 2026",g:"Trailer · Paramount Pictures",yt:"Xt4X4FvXk2A",d:"The fighting game, on the big screen."},
+];
+const ELSEWHERE=[
+  {n:"Tubi",u:"https://tubitv.com/",d:"Thousands of films free with ads — recent hits come and go every month.",s:"https://tubitv.com/search/"},
+  {n:"Pluto TV",u:"https://pluto.tv/",d:"Free with ads: film channels running all day, plus on-demand."},
+  {n:"YouTube — free with ads",u:"https://www.youtube.com/feed/storefront",d:"Full films the studios put on YouTube for free."},
+  {n:"Kanopy and Hoopla",u:"https://www.kanopy.com/",d:"Free with a public-library card — no ads.",x:"https://www.hoopladigital.com/"},
+  {n:"Plex",u:"https://watch.plex.tv/",d:"Free films and live channels, with ads."},
+];
+const thumb=id=>`https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+function ytCards(list,attr){
+  return `<div class="posters tv">${list.map((x,k)=>`<button type="button" class="poster wide yt" data-${attr}="${k}" style="--a:#1b2231;--b:#3a4660">
+    <img src="${thumb(x.yt)}" alt="" loading="lazy" onerror="this.remove()"><span class="y">${esc(String(x.y))}</span><b>${esc(x.t)}</b><small>${esc(x.g)}</small></button>`).join("")}</div>`;
+}
+$("mv-list").innerHTML=`<div class="shelf-h"><h3>New and animated</h3><span class="stat">Blender Studio open movies · CC BY</span></div>`+ytCards(OPEN,"op")+
+  `<div class="shelf-h"><h3>Coming soon to cinemas</h3><span class="stat">Official trailers</span></div>`+ytCards(TRAILERS,"tr")+
+  `<div class="shelf-h"><h3>Feature films</h3><span class="stat">Public-domain classics</span></div>`+posters(FILMS,false,1)+
+  `<div class="shelf-h"><h3>Free to watch elsewhere</h3><span class="stat">Opens in a new tab</span></div>
+  <div class="elsewhere">${ELSEWHERE.map(e=>`<a class="ew" href="${e.u}" target="_blank" rel="noopener"><b>${esc(e.n)} ↗</b><span>${esc(e.d)}</span></a>`).join("")}</div>
+  <form class="ew-find" id="ew-find"><input id="ew-q" placeholder="Where can I stream…  e.g. Paddington" aria-label="Film title"><button class="btn">Find it</button></form>
+  <p class="note" style="margin-top:8px">Find it searches JustWatch, which lists where a film streams legally in your country. What's free varies by country.</p>`;
+$("mv-list").querySelectorAll("[data-op]").forEach(b=>b.onclick=()=>play(OPEN[+b.dataset.op]));
+$("mv-list").querySelectorAll("[data-tr]").forEach(b=>b.onclick=()=>play(TRAILERS[+b.dataset.tr]));
+$("ew-find").onsubmit=ev=>{ev.preventDefault();const q=$("ew-q").value.trim();if(q)window.open("https://www.justwatch.com/us/search?q="+encodeURIComponent(q),"_blank","noopener");};
 $("tv-list").innerHTML=posters(SHOWS,true,1);
 $("mv-list").querySelectorAll("[data-i]").forEach(b=>b.onclick=()=>play(FILMS[+b.dataset.i]));
 $("tv-list").querySelectorAll("[data-i]").forEach(b=>b.onclick=()=>play(SHOWS[+b.dataset.i]));
@@ -460,6 +648,12 @@ let PL_TOKEN=0;
 async function play(x){
   const my=++PL_TOKEN; if(MUS.on)musStop(true);
   $("pl-title").textContent=x.t; $("pl-meta").textContent=[x.y,x.g,x.m?x.m+" min":""].filter(Boolean).join(" · ")+" — "+x.d;
+  if(x.yt){$("player").hidden=false;$("pl-x").focus();
+    const blender=OPEN.includes(x);
+    $("pl-src").textContent=blender?"© Blender Foundation · studio.blender.org · Creative Commons Attribution. Playing from YouTube.":"Official trailer, playing from YouTube.";
+    $("pl-open").textContent="Open on YouTube ↗";$("pl-open").href="https://www.youtube.com/watch?v="+encodeURIComponent(x.yt);
+    $("pl-frame").innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(x.yt)}?autoplay=1&rel=0&playsinline=1" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen title="${esc(x.t)}" referrerpolicy="strict-origin-when-cross-origin"></iframe>`;return;}
+  $("pl-src").textContent="Streaming from the Internet Archive (archive.org).";$("pl-open").textContent="Open on archive.org ↗";
   $("pl-frame").innerHTML=`<div class="msg">Finding the film…</div>`; $("pl-open").href="https://archive.org/";
   $("player").hidden=false; $("pl-x").focus();
   try{const id=await resolveId(x); if(my!==PL_TOKEN)return;
@@ -728,6 +922,10 @@ function mines(level){
    Each airline's own kitchen, by cabin. Hoshizora's menus are printed in
    Japanese and English. ASTRA sells food on board; its business cabin is
    included. */
+/* ---------- TerraLink menus ----------
+   Shared by the site (meal pre-order, boarding passes, postcards) and the
+   entertainment app. i = {code, from, to, fromCity, toCity, fromCC, toCC, fromLL, toLL}. */
+const TLMENU=(function(){
 const MENUS={
  SR:{kit:"Starliner Kitchen",
   eco:[["Main",[["Braised short rib","Mashed potatoes, glazed carrots"],["Lemon and herb chicken","Orzo, roasted peppers"],["Chickpea and spinach curry","Basmati rice · vegetarian"]]],["With",[["Garden salad, warm roll, chocolate chip cookie",""]]],["Before landing",[["Turkey and Swiss croissant","or fruit and Greek yogurt"]]]],
@@ -776,26 +974,617 @@ const MENUS={
   drinks:{eco:"煎茶、ほうじ茶、柚子ソーダ · Sencha, hojicha, yuzu soda; beer and sake.",biz:"日本酒・ジャパニーズウイスキー · Sake, Japanese whisky and wine.",first:"Rare sake, Japanese whisky and Champagne."},
   note:"ご希望のお食事は客室乗務員にお申し付けください · Tell the crew what you'd like."},
 };
+/* ---------- the menu follows the trip ----------
+   Every flight gets a dish from where it's going — or, flying home, from
+   where it's been. Economy gets it as one of the mains; the premium cabins
+   get a course of their own. [place, economy dish, desc, premium dish, desc, sweet] */
+const TASTE={
+ IN:["India","Chicken biryani","Raita, onion salad","Dum chicken biryani","Saffron rice, slow-cooked dum, burani raita","Gulab jamun"],
+ JP:["Japan","Chicken katsu curry","Japanese curry, steamed rice","Wagyu sukiyaki","Tofu, shiitake, glass noodles","Matcha roll cake"],
+ GB:["Britain","Chicken and leek pie","Buttery mash, garden peas","Beef Wellington","Madeira jus, honey-roast carrots","Sticky toffee pudding"],
+ BR:["Brazil","Feijoada","Black beans, pork, rice, farofa, orange","Moqueca","Fish and prawns in coconut and dendê oil","Brigadeiros"],
+ CA:["Canada","Maple-glazed salmon","Wild rice, green beans","Alberta beef tenderloin","Peppercorn sauce, fondant potato","Butter tart"],
+ SR:["Suriname","Roti kerrie","Chicken curry, potato, long beans, roti","Pom","Oven-baked tayer root and chicken, citrus","Bojo cake"],
+ GY:["Guyana","Cook-up rice","Black-eyed peas, coconut, stewed chicken","Pepperpot","Cassareep-braised beef, homemade bread","Black cake"],
+ GF:["French Guiana","Chicken colombo","Creole curry, rice","Blaff","Snapper poached in lime and chilli","Coconut flan"],
+ AU:["Australia","Lamb and rosemary pie","Mushy peas, tomato relish","Seared barramundi","Lemon myrtle butter, kipfler potatoes","Lamington"],
+ MX:["Mexico","Chicken enchiladas","Salsa verde, Mexican rice, black beans","Mole poblano","Turkey in mole, sesame, warm tortillas","Tres leches cake"],
+ PH:["the Philippines","Chicken adobo","Soy and vinegar braise, garlic rice","Kare-kare","Oxtail in peanut sauce, bagoong","Leche flan"],
+ QA:["Qatar","Chicken machboos","Spiced rice, dakkous tomato sauce","Lamb ouzi","Slow-roasted lamb, saffron rice, nuts","Umm Ali"],
+ ES:["Spain","Chicken paella","Saffron rice, peppers, peas","Seafood paella","Prawns, mussels, squid, socarrat","Crema catalana"],
+ ZA:["South Africa","Bobotie","Spiced mince, yellow rice, chutney","Braaied lamb chops","Chakalaka, pap","Malva pudding"],
+ DE:["Germany","Chicken schnitzel","Potato salad, lingonberries","Sauerbraten","Red cabbage, potato dumplings","Apple strudel"],
+ FR:["France","Coq au vin","Mushrooms, lardons, mash","Duck confit","Pommes sarladaises, cherry jus","Tarte Tatin"],
+ IT:["Italy","Lasagne al forno","Beef ragù, béchamel","Risotto alla milanese","Saffron, osso buco","Tiramisù"],
+ ID:["Indonesia","Nasi goreng","Fried rice, chicken satay, prawn crackers","Beef rendang","Coconut rice, sambal","Klepon"],
+ SG:["Singapore","Hainanese chicken rice","Ginger, chilli and dark soy","Chilli crab","Steamed mantou to mop it up","Kueh lapis"],
+ MA:["Morocco","Chicken tagine","Preserved lemon, olives, couscous","Lamb tagine with prunes","Almonds, saffron couscous","Orange and cinnamon salad"],
+ EC:["Ecuador","Seco de pollo","Chicken stewed in naranjilla, rice, plantain","Encocado de camarón","Prawns in coconut, green plantain","Tres leches"],
+ SA:["Saudi Arabia","Chicken kabsa","Spiced rice, tomato salsa","Lamb mandi","Smoked rice, roasted nuts","Dates and Arabic coffee"],
+ KR:["Korea","Bibimbap","Rice, vegetables, beef, gochujang","Galbi-jjim","Braised short ribs, jujube, chestnut","Hotteok"],
+ NZ:["New Zealand","Lamb and kumara pie","Minted peas","Canterbury lamb rack","Kumara mash, salsa verde","Pavlova"],
+ CO:["Colombia","Ajiaco","Chicken and potato soup, avocado, rice","Bandeja paisa","Beans, chicharrón, arepa, egg","Arequipe flan"],
+ AR:["Argentina","Beef empanadas","Chimichurri, green salad","Bife de chorizo","Chimichurri, provoleta, papas","Alfajores"],
+ PE:["Peru","Ají de gallina","Creamy chilli chicken, rice, olives","Lomo saltado","Beef, onion, tomato, chips, rice","Suspiro limeño"],
+ VE:["Venezuela","Pabellón criollo","Shredded beef, black beans, rice, plantain","Asado negro","Sweet-dark beef roast, rice","Quesillo"],
+ CL:["Chile","Pastel de choclo","Corn and beef bake","Chilean sea bass","Merkén butter, quinoa","Leche asada"],
+ KE:["Kenya","Chicken pilau","Spiced rice, kachumbari","Nyama choma","Grilled goat, ugali, sukuma wiki","Mandazi"],
+ NG:["Nigeria","Jollof rice","Chicken, fried plantain","Suya beef","Yaji spice, onion, tomato","Puff-puff"],
+ ET:["Ethiopia","Doro wat","Chicken stew, egg, injera","Tibs","Sautéed beef, awaze, injera","Ethiopian coffee"],
+ AE:["the Emirates","Chicken machboos","Loomi, spiced rice","Lamb ouzi","Saffron rice, almonds","Luqaimat"],
+ TR:["Türkiye","Köfte","Bulgur pilaf, shepherd's salad","Hünkar beğendi","Lamb on smoked aubergine purée","Baklava"],
+ PT:["Portugal","Bacalhau à Brás","Salt cod, potato, egg, olives","Cataplana","Pork and clams, coriander","Pastel de nata"],
+ NL:["the Netherlands","Stamppot","Kale mash, smoked sausage","Hachee","Beef and onion stew, red cabbage","Stroopwafels"],
+ IE:["Ireland","Irish stew","Lamb, potato, carrot","Beef and Guinness pie","Champ, buttered cabbage","Baileys cheesecake"],
+ BE:["Belgium","Carbonnade flamande","Beef in beer, frites","Moules-frites","Mussels in white wine","Waffles with cream"],
+ CH:["Switzerland","Zürcher Geschnetzeltes","Veal in cream, rösti","Rösti with veal","Mushroom cream sauce","Chocolate mousse"],
+ AT:["Austria","Wiener schnitzel","Potato salad, lingonberries","Tafelspitz","Apple horseradish, chive sauce","Sachertorte"],
+ SE:["Sweden","Swedish meatballs","Mash, lingonberries, cream sauce","Gravlax","Dill potatoes, mustard sauce","Kanelbulle"],
+ FI:["Finland","Lohikeitto","Creamy salmon soup, rye bread","Reindeer sauté","Mash, lingonberries","Blueberry pie"],
+ NO:["Norway","Fiskesuppe","Creamy fish soup","Arctic char","Brown butter, dill potatoes","Cloudberry cream"],
+ DK:["Denmark","Frikadeller","Pork meatballs, potatoes, gravy","Stegt flæsk","Crispy pork, parsley sauce","Æbleskiver"],
+ IS:["Iceland","Lamb soup","Kjötsúpa with root vegetables","Icelandic lamb","Rhubarb, skyr","Skyr with berries"],
+ RU:["Russia","Beef stroganoff","Buckwheat, pickles","Pelmeni","Sour cream, dill","Medovik"],
+ HU:["Hungary","Goulash","Beef and paprika, nokedli","Chicken paprikash","Sour cream, dumplings","Dobos torte"],
+ GR:["Greece","Chicken souvlaki","Pitta, tzatziki, Greek salad","Moussaka","Lamb, aubergine, béchamel","Baklava"],
+ EG:["Egypt","Koshari","Lentils, rice, pasta, tomato","Molokhia with chicken","Vermicelli rice","Basbousa"],
+ CN:["China","Kung pao chicken","Peanuts, chillies, steamed rice","Peking duck","Pancakes, cucumber, hoisin","Mango pudding"],
+ HK:["Hong Kong","Char siu rice","Barbecue pork, greens","Steamed garoupa","Ginger, spring onion, soy","Egg tart"],
+ TW:["Taiwan","Beef noodle soup","Braised beef, pak choi","Three-cup chicken","Basil, sesame oil, rice","Pineapple cake"],
+ TH:["Thailand","Green curry chicken","Jasmine rice","Massaman beef","Peanuts, potato, roti","Mango sticky rice"],
+ MY:["Malaysia","Nasi lemak","Coconut rice, sambal, chicken rendang","Laksa","Prawns, coconut curry broth","Kuih"],
+ LK:["Sri Lanka","Chicken curry and rice","Dhal, pol sambol","Crab curry","String hoppers","Watalappan"],
+ MV:["the Maldives","Garudhiya","Tuna broth, rice, lime","Mas riha","Tuna curry, roshi","Bondibai"],
+ NP:["Nepal","Chicken momo","Tomato achar","Dal bhat","Lentils, rice, seasonal tarkari","Sel roti"],
+ UZ:["Uzbekistan","Plov","Lamb, carrot, rice","Samsa and plov","Lamb pastry, pilaf","Halva"],
+ PG:["Papua New Guinea","Chicken mumu","Kaukau, greens, coconut","Coconut prawns","Taro, greens","Banana pudding"],
+ FJ:["Fiji","Kokoda","Fish in coconut and lime, rice","Lovo chicken","Earth-oven chicken, taro","Cassava cake"],
+ PF:["Tahiti","Poisson cru","Tuna, coconut, lime, rice","Mahi-mahi","Vanilla sauce, breadfruit","Po'e"],
+ KY:["the Cayman Islands","Jerk chicken","Rice and peas, plantain","Cayman-style snapper","Tomato, onion, peppers","Heavy cake"],
+ TT:["Trinidad","Doubles and curry chicken","Channa, tamarind","Pelau","Chicken, pigeon peas, coconut","Coconut sweet bread"],
+ JM:["Jamaica","Jerk chicken","Rice and peas, festival","Curry goat","White rice, fried plantain","Gizzada"],
+ CU:["Cuba","Ropa vieja","Black beans, rice, plantain","Lechón asado","Mojo pork, yuca","Flan"],
+ DO:["the Dominican Republic","La bandera","Chicken, rice, beans","Sancocho","Seven-meat stew, avocado","Habichuelas con dulce"],
+ PR:["Puerto Rico","Arroz con pollo","Pigeon peas, tostones","Mofongo","Shrimp in creole sauce","Tembleque"],
+ BS:["the Bahamas","Cracked conch","Peas 'n' rice, coleslaw","Grilled grouper","Pigeon peas and rice","Guava duff"],
+ BB:["Barbados","Flying fish","Cou-cou, creole sauce","Pudding and souse","Pickled pork, sweet potato","Coconut bread"],
+ GU:["Guam","Chicken kelaguen","Red rice, finadene","Chamorro barbecue","Short ribs, red rice","Latiya"],
+ MP:["the Marianas","Chicken kelaguen","Red rice, finadene","Chamorro barbecue","Short ribs, red rice","Latiya"],
+ CR:["Costa Rica","Casado","Chicken, rice, beans, plantain, salad","Arroz con mariscos","Seafood rice, lime","Tres leches"],
+ SV:["El Salvador","Pupusas","Bean and cheese, curtido","Gallo en chicha","Chicken in sweet corn wine","Quesadilla salvadoreña"],
+ HN:["Honduras","Baleadas","Beans, cream, cheese","Sopa de caracol","Conch in coconut broth","Torrejas"],
+ PA:["Panama","Sancocho","Chicken soup, culantro, rice","Corvina","Ceviche and grilled corvina","Raspao"],
+ GT:["Guatemala","Pepián","Chicken in roasted chilli and seed sauce, rice","Kak'ik","Spiced turkey soup","Rellenitos"],
+ BO:["Bolivia","Salteñas","Juicy beef empanadas","Pique macho","Beef, sausage, peppers, chips","Api con pastel"],
+ UY:["Uruguay","Chivito","Steak sandwich, egg, ham","Asado","Grilled beef, chimichurri","Dulce de leche crêpes"],
+ TZ:["Tanzania","Chicken pilau","Spiced rice, kachumbari","Zanzibar fish curry","Coconut, coconut rice","Mandazi"],
+ MG:["Madagascar","Romazava","Beef and greens stew, rice","Zebu brochettes","Vanilla sauce","Koba"],
+ OM:["Oman","Chicken majboos","Spiced rice","Shuwa","Slow-cooked lamb, saffron rice","Halwa"],
+};
+const REGION={caribbean:["the Caribbean","Jerk chicken","Rice and peas, fried plantain","Curry goat","Roti, mango chutney","Rum cake"],
+ pacific:["the Pacific","Coconut fish curry","Steamed rice","Island-style mahi-mahi","Coconut, lime, taro","Coconut pudding"],
+ gulf:["the Gulf","Chicken machboos","Spiced rice","Lamb ouzi","Saffron rice, nuts","Luqaimat"],
+ africa:["Africa","Chicken yassa","Lemon and onion, rice","Jollof with grilled fish","Plantain","Thiakry"],
+ europe:["Europe","Chicken fricassée","Herbed rice","Braised beef","Root vegetables, red wine","Apple cake"],
+ latam:["Latin America","Arroz con pollo","Peppers, peas","Grilled churrasco","Chimichurri, yuca","Flan"]};
+const CARIB=new Set("SX CW LC AW VC GD VI BQ GP DM AG KN MQ HT BL AI VG BM TC".split(" "));
+const PACIFIC=new Set("AS WF FM CX".split(" ")), GULF=new Set("KW BH YE".split(" "));
+const AFRICA=new Set("CM GQ TD UG RE MU".split(" ")), EUROPE=new Set("LU CZ HR CY EE GL".split(" ")), LATAM=new Set("NI".split(" "));
+/* in the US, by city — and by region elsewhere */
+const US_CITY={"New York":["New York","Pastrami on rye","Pickles, coleslaw","Strip steak, New York style","Creamed spinach, hash browns","New York cheesecake"],
+ "Newark":["New York","Pastrami on rye","Pickles, coleslaw","Strip steak, New York style","Creamed spinach, hash browns","New York cheesecake"],
+ "Houston":["Texas","Texas brisket","Mac and cheese, pickles, white bread","Smoked prime rib","Jalapeño cornbread, slaw","Pecan pie"],
+ "Dallas":["Texas","Texas brisket","Mac and cheese, pickles","Chicken-fried steak","Cream gravy, green beans","Pecan pie"],
+ "Austin":["Texas","Breakfast tacos","Salsa roja","Smoked brisket","Tex-Mex rice","Pecan pie"],
+ "San Antonio":["Texas","Chicken fajitas","Flour tortillas, guacamole","Smoked brisket","Charro beans","Pecan pie"],
+ "Chicago":["Chicago","Italian beef","Giardiniera, au jus","Chicago strip steak","Garlic mash","Chocolate cream pie"],
+ "San Francisco":["San Francisco","Cioppino","Sourdough bread","Dungeness crab","Drawn butter, sourdough","Ghirardelli brownie"],
+ "Los Angeles":["Los Angeles","Fish tacos","Lime crema, slaw","Korean short rib tacos","Kimchi slaw","Churros"],
+ "Miami":["Miami","Cuban mojo pork","Black beans, rice, maduros","Grilled snapper","Mango salsa, coconut rice","Key lime pie"],
+ "Orlando":["Florida","Grouper sandwich","Key lime aioli","Grilled snapper","Mango salsa","Key lime pie"],
+ "New Orleans":["New Orleans","Chicken and sausage gumbo","Rice","Shrimp étouffée","Creole rice","Bread pudding"],
+ "Boston":["Boston","New England clam chowder","Oyster crackers","Lobster roll","Brown butter, chips","Boston cream pie"],
+ "Seattle":["Seattle","Smoked salmon chowder","Sourdough","Cedar-plank salmon","Wild rice","Marionberry cobbler"],
+ "Denver":["Denver","Green chile stew","Pork, flour tortilla","Colorado lamb","Rosemary, root vegetables","Peach crisp"],
+ "Honolulu":["Hawaiʻi","Loco moco","Rice, burger, egg, gravy","Ahi poke and kalua pork","Rice, lomi salmon","Haupia"],
+ "Atlanta":["Atlanta","Fried chicken","Collard greens, cornbread","Shrimp and grits","Andouille, tomato gravy","Peach cobbler"],
+ "Nashville":["Nashville","Hot chicken","Pickles, white bread, slaw","Smoked pork shoulder","Mac and cheese","Banana pudding"],
+ "Memphis":["Memphis","Pulled pork sandwich","Slaw, beans","Dry-rub ribs","Cornbread","Banana pudding"],
+ "Las Vegas":["Las Vegas","Prime rib sandwich","Horseradish cream","Steak Diane","Duchess potatoes","Chocolate soufflé"],
+ "Phoenix":["Arizona","Chimichanga","Rice, beans, guacamole","Carne asada","Grilled corn, salsa","Sopapillas"],
+ "Washington":["Washington","Crab cakes","Old Bay remoulade","Maryland crab cakes","Succotash","Smith Island cake"],
+ "Philadelphia":["Philadelphia","Cheesesteak","Fried onions","Roast pork Italian","Broccoli rabe, provolone","Butterscotch krimpet"],
+ "Detroit":["Detroit","Detroit-style pizza","Green salad","Coney dog platter","Chili, onions","Bumpy cake"],
+ "Minneapolis":["Minnesota","Wild rice soup","Chicken","Walleye","Wild rice pilaf","Blueberry pie"],
+ "Anchorage":["Alaska","Salmon chowder","Sourdough","Alaskan king crab","Drawn butter","Wild berry pie"],
+ "Salt Lake City":["Utah","Chicken pot pie","Green salad","Rocky Mountain trout","Wild rice","Scones with honey butter"],
+ "Portland":["Portland","Marionberry-glazed salmon","Wild rice","Dungeness crab","Butter","Marionberry pie"],
+ "Kansas City":["Kansas City","Burnt ends","Beans, slaw","Kansas City strip","Baked potato","Gooey butter cake"],
+ "St. Louis":["St. Louis","Toasted ravioli","Marinara","Pork steak","Barbecue, slaw","Gooey butter cake"],
+ "Charlotte":["the Carolinas","Pulled pork","Vinegar slaw, hushpuppies","Shrimp and grits","Andouille","Banana pudding"],
+ "Charleston":["the Lowcountry","Shrimp and grits","Andouille","Frogmore stew","Shrimp, corn, sausage","Hummingbird cake"]};
+const US_REGION=(la,lo)=>la>52?US_CITY.Anchorage:lo<-150?US_CITY.Honolulu:lo<-104?["the West","Chicken tortilla soup","Avocado","Tri-tip","Santa Maria beans","Olallieberry pie"]
+  :la<36?["the South","Fried chicken","Collards, cornbread","Shrimp and grits","Andouille","Pecan pie"]
+  :lo>-80&&la>39?["New England","Clam chowder","Oyster crackers","Lobster roll","Brown butter","Apple pie"]:["the Midwest","Pot roast","Mash, carrots","Prime rib","Horseradish, Yorkshire pudding","Apple pie"];
+/* some cities have a dish of their own, ahead of the country's */
+const AIRPORT_TASTE={
+ HYD:["Hyderabad","Hyderabadi chicken dum biryani","Mirchi ka salan, raita","Hyderabadi chicken dum biryani","Saffron, fried onions, sealed and cooked dum · mirchi ka salan, burani raita","Double ka meetha"],
+ DEL:["Delhi","Butter chicken","Dal makhani, jeera rice, naan","Old Delhi nihari","Slow-cooked lamb, khamiri roti","Shahi tukda"],
+ BOM:["Mumbai","Chicken Kolhapuri","Bhakri, rice","Bombay prawn curry","Coconut, kokum, rice","Kulfi"],
+ BLR:["Bengaluru","Bisi bele bath","Lentil rice, papad, raita","Donne chicken biryani","Mint and coriander rice","Mysore pak"],
+ MAA:["Chennai","Chettinad chicken","Rice, rasam, poriyal","Chettinad mutton varuval","Ghee rice, parotta","Payasam"],
+ CCU:["Kolkata","Kolkata chicken biryani","With the potato and egg","Kosha mangsho","Slow-cooked mutton, luchi","Rosogolla"],
+ COK:["Kerala","Kerala chicken stew","Appam","Karimeen pollichathu","Pearl spot in banana leaf, red rice","Palada payasam"],
+ TRV:["Kerala","Kerala chicken stew","Appam","Karimeen pollichathu","Pearl spot in banana leaf, red rice","Palada payasam"],
+ CCJ:["Malabar","Thalassery chicken biryani","Kaima rice, dates pickle","Malabar prawn curry","Ghee rice","Unnakaya"],
+ GOI:["Goa","Chicken cafreal","Poi bread, rice","Goan fish curry","Kokum, red rice","Bebinca"],
+ GOX:["Goa","Chicken cafreal","Poi bread, rice","Goan fish curry","Kokum, red rice","Bebinca"],
+ LKO:["Lucknow","Lucknowi chicken biryani","Burani raita","Galouti kebab and biryani","Ulte tawe ka paratha","Shahi tukda"],
+ AMD:["Gujarat","Gujarati thali","Dal, kadhi, rotli, rice","Undhiyu","Mixed winter vegetables, puri","Shrikhand"],
+ JAI:["Rajasthan","Dal baati churma","Ghee, garlic chutney","Laal maas","Fiery lamb curry, bajra roti","Ghevar"],
+ ATQ:["Amritsar","Amritsari chole kulcha","Onion, pickle","Tandoori chicken","Dal makhani, naan","Phirni"],
+ PNQ:["Pune","Misal pav","Spicy sprouts curry, pav","Mutton sukka","Bhakri","Puran poli"],
+};
+const HOME={SR:"US",AX:"US",UA:"US",AG:"US",VX:"IN",GU:"GY","7S":"JP"};
+function tasteFor(i){
+  if(!i)return null;
+  const home=HOME[i.code]||"";
+  let cc=i.toCC,city=i.toCity,ll=i.toLL||[],ap=i.to;
+  if(cc===home&&i.fromCC&&i.fromCC!==home){cc=i.fromCC;city=i.fromCity;ll=i.fromLL||[];ap=i.from;}
+  if(AIRPORT_TASTE[ap])return AIRPORT_TASTE[ap];
+  if(cc==="US")return US_CITY[city]||(ll.length?US_REGION(ll[0],ll[1]):null);
+  return TASTE[cc]||(CARIB.has(cc)?REGION.caribbean:PACIFIC.has(cc)?REGION.pacific:GULF.has(cc)?REGION.gulf:AFRICA.has(cc)?REGION.africa:EUROPE.has(cc)?REGION.europe:LATAM.has(cc)?REGION.latam:null);
+}
+
 const CAB_NOTES={eco:["Seatback screen and USB-C power","Free Starlink Wi-Fi for TerraClub members","Pillow and blanket on long flights"],
   prem:["More legroom and a wider seat","Noise-cancelling headphones","Amenity kit on long flights"],
   biz:["Lie-flat seat on long-haul aircraft","Lounge access before you fly","Turndown service and pyjamas on overnight flights"],
   first:["A private suite with a door on widebodies","Dine whenever you like","Chauffeur and lounge on the ground"]};
+
+/* the menu for one flight and cabin, with the trip's own dish worked in */
+function menuList(i,cab){
+  const M=MENUS[i&&MENUS[i.code]?i.code:"SR"];
+  const cabs=["eco",M.prem&&"prem","biz",M.first&&"first"].filter(Boolean);
+  if(!cabs.includes(cab))cab=cab==="first"?"biz":"eco";
+  const T=tasteFor(i);
+  let list=M[cab].map(([h,ds])=>[h,ds.slice()]);
+  if(T){
+    const up=cab==="biz"||cab==="first",buy=M.buy&&!up;
+    if(up){list.splice(Math.min(1,list.length),0,[`A taste of ${T[0]}`,[[T[3],T[4]]].concat(T[5]?[[T[5],"To finish"]]:[])]);}
+    else{const mi=list.findIndex(([h])=>/Main|主菜|Hot/.test(h)),k=mi<0?0:mi;
+      list[k][1]=[[T[1],T[2]+` · from ${T[0]}`].concat(buy?["13"]:[])].concat(list[k][1].slice(0,buy?3:2));}
+  }
+  return {M,cab,cabs,T,list};
+}
+/* what can be chosen ahead: the mains (and the trip's own course up front) */
+function mealChoices(i,cab){
+  const {list}=menuList(i,cab),out=[];
+  list.forEach(([h,ds])=>{if(/Main|主菜|Hot|taste|Included|Japanese|Western|和食|洋食|Kaiseki|懐石|Maharaja|Chef/i.test(h))
+    ds.forEach(([n,d])=>{if(n&&d!=="To finish"&&!out.includes(n))out.push(n);});});
+  return out;
+}
+return {MENUS,CAB_NOTES,tasteFor,menuList,mealChoices,HOME};
+})();
+
+const MENUS=TLMENU.MENUS,CAB_NOTES=TLMENU.CAB_NOTES,tasteFor=TLMENU.tasteFor;
 function paintMenu(){
   const i=ST.info,code=i&&MENUS[i.code]?i.code:"SR",M=MENUS[code];
   const cabs=["eco",M.prem&&"prem","biz",M.first&&"first"].filter(Boolean);
   if(!cabs.includes(ST.cab))ST.cab=ST.cab==="first"?"biz":"eco";
   $("mn-cab").innerHTML=cabs.map(k=>`<button type="button" class="chip" data-c="${k}" aria-pressed="${k===ST.cab}">${esc(cabName(k))}</button>`).join("");
   $("mn-cab").querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>{ST.cab=b.dataset.c;store.set("tl_ife_c",ST.cab);paintMenu();paintHome();});
-  const list=M[ST.cab];
+  const T=tasteFor(i);
+  /* the trip's own dish: one of the mains in Economy and Premium, a course of its own above */
+  let list=M[ST.cab].map(([h,ds])=>[h,ds.slice()]);
+  if(T){
+    const up=ST.cab==="biz"||ST.cab==="first",buy=M.buy&&!up;
+    if(up){list.splice(Math.min(1,list.length),0,[`A taste of ${T[0]}`,[[T[3],T[4]]].concat(T[5]?[[T[5],"To finish"]]:[])]);}
+    else{const mi=list.findIndex(([h])=>/Main|主菜|Hot/.test(h)),k=mi<0?0:mi;
+      list[k][1]=[[T[1],T[2]+` · from ${T[0]}`].concat(buy?["13"]:[])].concat(list[k][1].slice(0,buy?3:2));}
+  }
   $("mn-lede").textContent=i?`${i.airline} · ${i.fromCity} to ${i.toCity}. What's served on board, by cabin.`:"Add your flight on Home to see your airline's menu. Here's Starliner's.";
-  const dish=([n,d,p])=>`<div class="dish">${M.ja&&/[぀-ヿ一-龯]/.test(n)?`<b lang="ja" style="font-family:var(--jp);font-weight:600">${esc(n)}</b>`:`<b>${esc(n)}</b>`}${d?`<span>${esc(d)}</span>`:""}${p?` <i>· $${esc(p)}</i>`:""}</div>`;
-  $("mn-card").innerHTML=`<div class="kit">${esc(M.kit)}</div><h3>${esc(cabName(ST.cab))}</h3><div class="sub">${M.buy&&(ST.cab==="eco"||ST.cab==="prem")?"Buy on board":i?esc(i.fromCity+" — "+i.toCity):"Today's menu"}</div>
+  const dish=([n,d,p])=>`<div class="dish">${ST.meal&&n===ST.meal?`<span class="reserved">Reserved for you</span>`:""}${M.ja&&/[぀-ヿ一-龯]/.test(n)?`<b lang="ja" style="font-family:var(--jp);font-weight:600">${esc(n)}</b>`:`<b>${esc(n)}</b>`}${d?`<span>${esc(d)}</span>`:""}${p?` <i>· $${esc(p)}</i>`:""}</div>`;
+  $("mn-card").innerHTML=`<div class="kit">${esc(M.kit)}</div><h3>${esc(cabName(ST.cab))}</h3><div class="sub">${M.buy&&(ST.cab==="eco"||ST.cab==="prem")?"Buy on board":i?esc(i.fromCity+" — "+i.toCity):"Today's menu"}${T?`<br><span style="font-size:13px">With a taste of ${esc(T[0])} on this flight</span>`:""}</div>
     ${list.map(([h,ds])=>`<div class="course"><h4>${esc(h)}</h4>${ds.map(dish).join("")}</div>`).join("")}`;
   const dr=M.drinks[ST.cab]||M.drinks.eco;
   $("mn-side").innerHTML=`<div class="box"><h4>To drink</h4><p>${esc(dr)}</p></div>
     <div class="box"><h4>Your cabin</h4><ul>${CAB_NOTES[ST.cab].map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>
     ${M.note?`<div class="box"><h4>From the crew</h4><p>${esc(M.note)}</p></div>`:""}
     <div class="box"><h4>Allergies</h4><p>Dishes can contain nuts, gluten, dairy and shellfish. Tell the crew about any allergy before the meal service.</p></div>`;
+}
+
+/* ---------- languages ----------
+   English, Japanese, Hindi, Telugu and Spanish for the menus, buttons and
+   headings of the site and the entertainment app. Timetable text — cities,
+   times, fares — stays as it is. Shared by both pages; the choice is kept in
+   this browser (tl_lang). */
+const TLI18N=(function(){
+const K=["Book","Explore","Route map","Where we fly","Fleet","What's new","Alliance","Flight status","My trips","Cars","Charter","TerraClub","Entertainment ↗","Help","Sign in",
+"Match device","Light","Dark","Text size","Standard","Larger","Largest","High contrast","Language",
+"The TerraLink network","Seven carriers, one booking. Search live schedules, connections and fares across the TerraLink Group.","Airlines","Airports","Daily flights",
+"Round trip","One way","Multi-city","From","To","Depart","Return","Cabin","Economy","Premium","Business","First","Search flights","City or airport","+ Add a flight",
+"Popular destinations","Where TerraLink travellers are heading this week.","See the full route map →","Where can I go? Explore by budget →","Our airlines","Seven carriers, one booking.",
+"See every hub and destination →","Fare deals","The lowest economy fares in the network right now.","Useful links for you","Help and troubleshooting →","A proud member of",
+"Passengers","Seats","Fare","Total paid","Points earned","Distance","Change dates","Upgrade","Cancel trip","Add to calendar","Jet-lag plan","Inflight entertainment ↗","Trip postcard",
+"Meals","Checked bags","No preference","Your flight","Check in","Follow on the map","See it on the map","Seatback view","Boarding passes","Outbound","Download","Share","Done",
+"Your setup","Quick fixes","Reload the timetable","Clear the offline copy","Copy these details","The site","Booking and trips","Flight status and maps","Account","Search","Where can I go?",
+"Home","Map","Window","Cockpit","Films","TV","Books","Music","Games","Kids","Menu","Arrival","← TerraLink","Welcome aboard","Moving map","TV and shorts","Menu and your cabin",
+"Set","Change flight","Departs","Arrives","To drink","Your cabin","From the crew","Allergies","Play","Pause","Volume","Nothing playing","Sleep","Feature films","← Games",
+"Network trivia","Sudoku","Snake","Minesweeper","Easy","Medium","Hard","Start","Play again","Look outside","Pull the blind","Raise the blind","Left window","Right window",
+"Audiobooks","Kids' corner","Colouring","Memory match","Cartoons","Destination guide","Local time","Weather","Useful words","Money","When you land","Altitude","Speed","Heading",
+"Wake me before landing","Wake up","Upcoming","Flown","Cancelled","Print","Next","Back"];
+const V={
+ja:["予約","探す","路線図","就航地","機材","最新情報","アライアンス","運航状況","予約確認","レンタカー","チャーター","テラクラブ","エンタメ ↗","ヘルプ","ログイン",
+"端末に合わせる","ライト","ダーク","文字サイズ","標準","大","特大","ハイコントラスト","言語",
+"テラリンク・ネットワーク","7つの航空会社を、ひとつの予約で。テラリンク・グループの時刻表、乗り継ぎ、運賃をまとめて検索。","航空会社","空港","1日の便数",
+"往復","片道","複数都市","出発地","目的地","出発日","復路","クラス","エコノミー","プレミアム","ビジネス","ファースト","航空券を検索","都市名または空港","+ 区間を追加",
+"人気の行き先","今週、テラリンクの旅行者が向かう場所。","路線図をすべて見る →","どこへ行ける？予算で探す →","グループの航空会社","7つの航空会社を、ひとつの予約で。",
+"すべてのハブと就航地 →","お得な運賃","いま最も安いエコノミー運賃。","便利なリンク","ヘルプとトラブル対応 →","誇りある加盟アライアンス",
+"搭乗者","座席","運賃","お支払い合計","獲得ポイント","距離","日程変更","アップグレード","予約を取り消す","カレンダーに追加","時差ぼけ対策","機内エンタメ ↗","旅のポストカード",
+"お食事","お預け荷物","指定なし","ご搭乗便","チェックイン","地図で追跡","地図で見る","シートモニター表示","搭乗券","往路","ダウンロード","共有","完了",
+"ご利用環境","すぐできる対処","時刻表を再読み込み","オフライン用データを削除","詳細をコピー","サイトについて","予約と旅程","運航状況と地図","アカウント","検索","どこへ行ける？",
+"ホーム","マップ","窓の外","コックピット","映画","テレビ","朗読","音楽","ゲーム","キッズ","メニュー","到着地","← テラリンク","ご搭乗ありがとうございます","フライトマップ","テレビと短編","お食事とお座席",
+"設定","便を変更","出発","到着","お飲み物","お座席","乗務員より","アレルギー","再生","一時停止","音量","再生していません","おやすみ","長編映画","← ゲーム",
+"路線クイズ","数独","スネーク","マインスイーパー","やさしい","ふつう","むずかしい","スタート","もう一度","窓の外を見る","シェードを下ろす","シェードを上げる","左の窓","右の窓",
+"朗読（オーディオブック）","キッズコーナー","ぬりえ","神経衰弱","アニメ","到着地ガイド","現地時刻","天気","ひとこと","通貨","到着したら","高度","速度","機首方位",
+"着陸前に起こす","起きる","今後の予定","搭乗済み","取り消し済み","印刷","次へ","戻る"],
+hi:["बुक करें","खोजें","रूट मैप","हम कहाँ उड़ते हैं","विमान बेड़ा","नया क्या है","गठबंधन","उड़ान स्थिति","मेरी यात्राएँ","कारें","चार्टर","टेराक्लब","मनोरंजन ↗","सहायता","साइन इन",
+"डिवाइस के अनुसार","लाइट","डार्क","अक्षर का आकार","सामान्य","बड़ा","सबसे बड़ा","हाई कंट्रास्ट","भाषा",
+"टेरालिंक नेटवर्क","सात एयरलाइंस, एक बुकिंग। पूरे टेरालिंक ग्रुप के शेड्यूल, कनेक्शन और किराए एक साथ खोजें।","एयरलाइंस","हवाई अड्डे","रोज़ की उड़ानें",
+"आना-जाना","एक तरफ़ा","कई शहर","कहाँ से","कहाँ तक","प्रस्थान","वापसी","श्रेणी","इकॉनमी","प्रीमियम","बिज़नेस","फ़र्स्ट","उड़ानें खोजें","शहर या हवाई अड्डा","+ उड़ान जोड़ें",
+"लोकप्रिय गंतव्य","इस हफ़्ते टेरालिंक के यात्री कहाँ जा रहे हैं।","पूरा रूट मैप देखें →","मैं कहाँ जा सकता हूँ? बजट से खोजें →","हमारी एयरलाइंस","सात एयरलाइंस, एक बुकिंग।",
+"सभी हब और गंतव्य देखें →","किराए के ऑफ़र","नेटवर्क में अभी सबसे कम इकॉनमी किराए।","आपके काम के लिंक","सहायता और समस्या समाधान →","गर्व से सदस्य",
+"यात्री","सीटें","किराया","कुल भुगतान","अर्जित पॉइंट","दूरी","तारीख़ बदलें","अपग्रेड","यात्रा रद्द करें","कैलेंडर में जोड़ें","जेट-लैग योजना","इन-फ़्लाइट मनोरंजन ↗","यात्रा पोस्टकार्ड",
+"भोजन","चेक किया गया सामान","कोई पसंद नहीं","आपकी उड़ान","चेक इन","मैप पर देखें","मैप पर देखें","सीटबैक व्यू","बोर्डिंग पास","जाने की उड़ान","डाउनलोड","शेयर करें","हो गया",
+"आपकी सेटिंग","झटपट समाधान","टाइमटेबल फिर से लोड करें","ऑफ़लाइन कॉपी हटाएँ","ये जानकारी कॉपी करें","साइट","बुकिंग और यात्राएँ","उड़ान स्थिति और मैप","खाता","खोजें","मैं कहाँ जा सकता हूँ?",
+"होम","मैप","खिड़की","कॉकपिट","फ़िल्में","टीवी","ऑडियोबुक","संगीत","खेल","बच्चे","मेन्यू","आगमन","← टेरालिंक","आपका स्वागत है","उड़ान मैप","टीवी और शॉर्ट्स","मेन्यू और आपका केबिन",
+"सेट करें","उड़ान बदलें","प्रस्थान","आगमन","पेय","आपका केबिन","क्रू की ओर से","एलर्जी","चलाएँ","रोकें","आवाज़","कुछ नहीं चल रहा","नींद","फ़ीचर फ़िल्में","← खेल",
+"नेटवर्क क्विज़","सुडोकू","साँप","माइनस्वीपर","आसान","मध्यम","कठिन","शुरू करें","फिर से खेलें","बाहर देखें","शेड नीचे करें","शेड ऊपर करें","बाईं खिड़की","दाईं खिड़की",
+"ऑडियोबुक","बच्चों का कोना","रंग भरें","मेमोरी मैच","कार्टून","गंतव्य गाइड","स्थानीय समय","मौसम","काम के शब्द","मुद्रा","उतरने के बाद","ऊँचाई","गति","दिशा",
+"उतरने से पहले जगाएँ","जागें","आने वाली","पूरी हुई","रद्द","प्रिंट","आगे","पीछे"],
+te:["బుక్ చేయండి","అన్వేషించండి","రూట్ మ్యాప్","మేము ఎగిరే చోట్లు","విమానాలు","కొత్తవి","కూటమి","విమాన స్థితి","నా ప్రయాణాలు","కార్లు","చార్టర్","టెరాక్లబ్","వినోదం ↗","సహాయం","సైన్ ఇన్",
+"పరికరానికి తగినట్లు","లైట్","డార్క్","అక్షరాల పరిమాణం","సాధారణం","పెద్దది","అతి పెద్దది","హై కాంట్రాస్ట్","భాష",
+"టెరాలింక్ నెట్‌వర్క్","ఏడు విమాన సంస్థలు, ఒకే బుకింగ్. టెరాలింక్ గ్రూప్ అంతటా షెడ్యూల్‌లు, కనెక్షన్‌లు, ఛార్జీలు వెతకండి.","విమాన సంస్థలు","విమానాశ్రయాలు","రోజువారీ విమానాలు",
+"రాను-పోను","ఒక వైపు","పలు నగరాలు","ఎక్కడి నుండి","ఎక్కడికి","బయలుదేరే తేదీ","తిరుగు ప్రయాణం","తరగతి","ఎకానమీ","ప్రీమియం","బిజినెస్","ఫస్ట్","విమానాలు వెతకండి","నగరం లేదా విమానాశ్రయం","+ విమానం జోడించండి",
+"ప్రసిద్ధ గమ్యస్థానాలు","ఈ వారం టెరాలింక్ ప్రయాణికులు వెళ్తున్న చోట్లు.","పూర్తి రూట్ మ్యాప్ చూడండి →","నేను ఎక్కడికి వెళ్లగలను? బడ్జెట్‌తో వెతకండి →","మా విమాన సంస్థలు","ఏడు విమాన సంస్థలు, ఒకే బుకింగ్.",
+"అన్ని హబ్‌లు, గమ్యస్థానాలు చూడండి →","ఛార్జీ ఆఫర్లు","నెట్‌వర్క్‌లో ఇప్పుడు అతి తక్కువ ఎకానమీ ఛార్జీలు.","మీకు ఉపయోగపడే లింకులు","సహాయం, సమస్యల పరిష్కారం →","గర్వంగా సభ్యులం",
+"ప్రయాణికులు","సీట్లు","ఛార్జీ","మొత్తం చెల్లింపు","సంపాదించిన పాయింట్లు","దూరం","తేదీలు మార్చండి","అప్‌గ్రేడ్","ప్రయాణం రద్దు చేయండి","క్యాలెండర్‌కు జోడించండి","జెట్-లాగ్ ప్రణాళిక","విమానంలో వినోదం ↗","ప్రయాణ పోస్ట్‌కార్డ్",
+"భోజనం","చెక్ చేసిన లగేజీ","ప్రాధాన్యం లేదు","మీ విమానం","చెక్ ఇన్","మ్యాప్‌లో అనుసరించండి","మ్యాప్‌లో చూడండి","సీట్‌బ్యాక్ వ్యూ","బోర్డింగ్ పాస్‌లు","వెళ్లే ప్రయాణం","డౌన్‌లోడ్","షేర్ చేయండి","పూర్తయింది",
+"మీ సెటప్","త్వరిత పరిష్కారాలు","టైమ్‌టేబుల్ మళ్లీ లోడ్ చేయండి","ఆఫ్‌లైన్ కాపీ తొలగించండి","ఈ వివరాలు కాపీ చేయండి","సైట్","బుకింగ్ మరియు ప్రయాణాలు","విమాన స్థితి మరియు మ్యాప్‌లు","ఖాతా","వెతకండి","నేను ఎక్కడికి వెళ్లగలను?",
+"హోమ్","మ్యాప్","కిటికీ","కాక్‌పిట్","సినిమాలు","టీవీ","ఆడియో పుస్తకాలు","సంగీతం","ఆటలు","పిల్లలు","మెనూ","చేరిక","← టెరాలింక్","స్వాగతం","విమాన మ్యాప్","టీవీ మరియు షార్ట్స్","మెనూ మరియు మీ క్యాబిన్",
+"సెట్ చేయండి","విమానం మార్చండి","బయలుదేరుతుంది","చేరుతుంది","పానీయాలు","మీ క్యాబిన్","సిబ్బంది నుండి","అలర్జీలు","ప్లే","ఆపండి","శబ్దం","ఏదీ ప్లే కావడం లేదు","నిద్ర","ఫీచర్ సినిమాలు","← ఆటలు",
+"నెట్‌వర్క్ క్విజ్","సుడోకు","పాము","మైన్‌స్వీపర్","సులభం","మధ్యస్థం","కష్టం","ప్రారంభించండి","మళ్లీ ఆడండి","బయటికి చూడండి","షేడ్ దించండి","షేడ్ ఎత్తండి","ఎడమ కిటికీ","కుడి కిటికీ",
+"ఆడియో పుస్తకాలు","పిల్లల మూల","రంగులు వేయండి","జ్ఞాపకశక్తి ఆట","కార్టూన్లు","గమ్యస్థాన గైడ్","స్థానిక సమయం","వాతావరణం","ఉపయోగపడే మాటలు","కరెన్సీ","దిగిన తర్వాత","ఎత్తు","వేగం","దిశ",
+"దిగే ముందు లేపండి","లేవండి","రాబోయేవి","పూర్తయినవి","రద్దయినవి","ప్రింట్","తదుపరి","వెనక్కి"],
+es:["Reservar","Explorar","Mapa de rutas","Destinos","Flota","Novedades","Alianza","Estado del vuelo","Mis viajes","Coches","Chárter","TerraClub","Entretenimiento ↗","Ayuda","Iniciar sesión",
+"Según el dispositivo","Claro","Oscuro","Tamaño del texto","Normal","Grande","Muy grande","Alto contraste","Idioma",
+"La red TerraLink","Siete aerolíneas, una sola reserva. Busca horarios, conexiones y tarifas en todo el Grupo TerraLink.","Aerolíneas","Aeropuertos","Vuelos diarios",
+"Ida y vuelta","Solo ida","Varias ciudades","Origen","Destino","Salida","Regreso","Clase","Turista","Premium","Business","Primera","Buscar vuelos","Ciudad o aeropuerto","+ Añadir un vuelo",
+"Destinos populares","Adónde viajan los pasajeros de TerraLink esta semana.","Ver el mapa de rutas completo →","¿Adónde puedo ir? Explora según tu presupuesto →","Nuestras aerolíneas","Siete aerolíneas, una sola reserva.",
+"Ver todos los hubs y destinos →","Ofertas","Las tarifas turista más bajas de la red ahora mismo.","Enlaces útiles","Ayuda y solución de problemas →","Orgullosos miembros de",
+"Pasajeros","Asientos","Tarifa","Total pagado","Puntos ganados","Distancia","Cambiar fechas","Mejorar clase","Cancelar viaje","Añadir al calendario","Plan contra el jet lag","Entretenimiento a bordo ↗","Postal del viaje",
+"Comidas","Equipaje facturado","Sin preferencia","Tu vuelo","Facturar","Seguir en el mapa","Ver en el mapa","Vista de pantalla de asiento","Tarjetas de embarque","Ida","Descargar","Compartir","Listo",
+"Tu configuración","Arreglos rápidos","Recargar el horario","Borrar la copia sin conexión","Copiar estos datos","El sitio","Reservas y viajes","Estado del vuelo y mapas","Cuenta","Buscar","¿Adónde puedo ir?",
+"Inicio","Mapa","Ventanilla","Cabina de mando","Películas","TV","Audiolibros","Música","Juegos","Niños","Menú","Llegada","← TerraLink","Bienvenido a bordo","Mapa del vuelo","TV y cortos","Menú y tu cabina",
+"Fijar","Cambiar vuelo","Sale","Llega","Bebidas","Tu cabina","De la tripulación","Alergias","Reproducir","Pausa","Volumen","Nada en reproducción","Dormir","Largometrajes","← Juegos",
+"Trivia de la red","Sudoku","Serpiente","Buscaminas","Fácil","Medio","Difícil","Empezar","Jugar otra vez","Mirar afuera","Bajar la cortinilla","Subir la cortinilla","Ventanilla izquierda","Ventanilla derecha",
+"Audiolibros","Rincón infantil","Colorear","Memoria","Dibujos animados","Guía del destino","Hora local","Tiempo","Palabras útiles","Moneda","Al aterrizar","Altitud","Velocidad","Rumbo",
+"Despiértame antes de aterrizar","Despertar","Próximos","Volados","Cancelados","Imprimir","Siguiente","Atrás"]};
+const HERO={ja:"すべての空へ、<em>ひとつ</em>のリンクで。",hi:"हर मंज़िल तक, <em>एक</em> ही लिंक।",te:"మీరు ఎగిరే <em>ప్రతి</em> చోటికీ ఒకే లింక్.",es:"Un enlace a <em>todos</em> tus destinos."};
+const D={};Object.keys(V).forEach(l=>{D[l]={};K.forEach((k,i)=>{if(V[l][i])D[l][k]=V[l][i];});D[l]["@hero"]=HERO[l];});
+let LANG="en";try{LANG=localStorage.getItem("tl_lang")||"en";}catch(_){}
+if(!D[LANG])LANG="en";
+function apply(root){
+  root=root||document.body;if(!root)return;
+  const d=D[LANG]||null;if(!d&&!apply.used)return;if(d)apply.used=true;
+  document.documentElement.setAttribute("lang",LANG);
+  root.querySelectorAll("[data-i18n]").forEach(el=>{if(el.__lang===LANG)return;if(el.__html===undefined)el.__html=el.innerHTML;
+    el.innerHTML=(d&&d["@"+el.dataset.i18n])||el.__html;el.__lang=LANG;});
+  const W=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>{const p=n.parentElement;
+    return !p||p.closest("script,style,textarea,[data-noi18n],[data-i18n]")?2:1;}});
+  let n;while((n=W.nextNode())){
+    const en=n.__en!==undefined?n.__en:n.nodeValue,key=en.trim();if(!key||key.length>200)continue;
+    const v=d&&d[key];
+    if(v){if(n.__en===undefined)n.__en=n.nodeValue;const out=en.replace(key,v);if(n.nodeValue!==out)n.nodeValue=out;}
+    else if(n.__en!==undefined&&n.nodeValue!==n.__en)n.nodeValue=n.__en;}
+  root.querySelectorAll("[placeholder]").forEach(el=>{if(el.__ph===undefined)el.__ph=el.getAttribute("placeholder");const v=d&&d[el.__ph];el.setAttribute("placeholder",v||el.__ph);});
+}
+let timer=null;
+function soon(){clearTimeout(timer);timer=setTimeout(()=>apply(document.body),60);}
+if(typeof MutationObserver!=="undefined"&&document.body)new MutationObserver(()=>{if(LANG!=="en"||apply.used)soon();}).observe(document.body,{childList:true,subtree:true});
+soon();
+return {lang:()=>LANG,set(l){LANG=D[l]?l:"en";try{if(LANG==="en")localStorage.removeItem("tl_lang");else localStorage.setItem("tl_lang",LANG);}catch(_){}},
+  apply,soon,t:s=>(D[LANG]&&D[LANG][s])||s};
+})();
+
+/* =========================================================================
+   Window, cockpit, destination guide, audiobooks, kids' corner and sleep.
+   All of them read the same flight details (ST.info) as the rest of the app.
+   ========================================================================= */
+const R2D=180/Math.PI,D2R=Math.PI/180;
+const lerp=(a,b,t)=>a+(b-a)*t, clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const hexRgb=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16));
+const mixC=(a,b,t)=>{const A=hexRgb(a),B=hexRgb(b);return `rgb(${A.map((v,i)=>Math.round(lerp(v,B[i],t))).join(",")})`;};
+/* where the sun is, seen from a point on Earth (good to a fraction of a degree) */
+function sunPos(ms,lat,lon){
+  const d=ms/864e5-10957.5,g=(357.529+0.98560028*d)*D2R,q=280.459+0.98564736*d;
+  const L=(q+1.915*Math.sin(g)+0.020*Math.sin(2*g))*D2R,e=(23.439-0.00000036*d)*D2R;
+  const ra=Math.atan2(Math.cos(e)*Math.sin(L),Math.cos(L)),dec=Math.asin(Math.sin(e)*Math.sin(L));
+  const gmst=((18.697374558+24.06570982441908*d)%24+24)%24,H=(gmst*15+lon)*D2R-ra,la=lat*D2R;
+  const alt=Math.asin(Math.sin(la)*Math.sin(dec)+Math.cos(la)*Math.cos(dec)*Math.cos(H));
+  const az=Math.atan2(-Math.sin(H),Math.tan(dec)*Math.cos(la)-Math.sin(la)*Math.cos(H));
+  return {alt:alt*R2D,az:(az*R2D+360)%360};
+}
+/* the sky's colours by the sun's height: night, twilight, golden hour, day */
+const SKY=[[-18,"#03050d","#0a1230","#04070f"],[-8,"#0b1434","#3a2f5c","#0b1020"],[-2,"#1d2b5a","#c8714f","#1c2233"],[4,"#3a5f9a","#f2a65e","#3b4a63"],[12,"#2f6fb6","#a9d2f2","#2d5f86"],[90,"#1f63b3","#cfe6fa","#2b6390"]];
+function skyAt(alt){let i=0;while(i<SKY.length-2&&alt>SKY[i+1][0])i++;const a=SKY[i],b=SKY[i+1],t=clamp((alt-a[0])/(b[0]-a[0]),0,1);
+  return {top:mixC(a[1],b[1],t),hor:mixC(a[2],b[2],t),sea:mixC(a[3],b[3],t)};}
+
+/* ---------- the window ---------- */
+const WN={side:"L",raf:0,clouds:null,stars:null,lights:null,t0:performance.now()};
+function wnSeed(){
+  const r=(n=>()=>(n=(n*16807)%2147483647)/2147483647)(1234567);
+  WN.clouds=Array.from({length:18},()=>({x:r(),y:r(),w:.18+r()*.35,h:.025+r()*.05,s:.5+r()}));
+  WN.stars=Array.from({length:120},()=>({x:r(),y:r()*.5,b:.3+r()*.7}));
+  WN.lights=Array.from({length:90},()=>({x:r(),y:.58+r()*.42,b:.4+r()*.6}));
+}
+function wnState(){
+  const i=ST.info,now=Date.now();
+  if(i&&i.pos)return {lat:i.pos.lat,lon:i.pos.lon,brg:i.pos.brg,alt:i.pos.alt,air:!i.pos.ground,below:i.below};
+  if(i&&i.fromLL&&i.fromLL.length)return {lat:i.fromLL[0],lon:i.fromLL[1],brg:0,alt:0,air:false,below:null};
+  return {lat:29.98,lon:-95.34,brg:0,alt:0,air:false,below:null};
+}
+function wnDraw(){
+  const cv=$("wn-cv");if(!cv)return;const g=cv.getContext("2d"),W=cv.width,H=cv.height;
+  if(!WN.clouds)wnSeed();
+  const s=wnState(),sun=sunPos(Date.now(),s.lat,s.lon),sk=skyAt(sun.alt);
+  const facing=(s.brg+(WN.side==="L"?270:90))%360,rel=((sun.az-facing+540)%360)-180;
+  const hor=s.air?H*.56:H*.62, t=(performance.now()-WN.t0)/1000, dir=WN.side==="L"?1:-1;
+  /* sky */
+  let gr=g.createLinearGradient(0,0,0,hor);gr.addColorStop(0,sk.top);gr.addColorStop(1,sk.hor);g.fillStyle=gr;g.fillRect(0,0,W,hor+2);
+  if(sun.alt<-6){WN.stars.forEach(st=>{g.globalAlpha=st.b*clamp((-sun.alt-6)/8,0,1)*(.7+.3*Math.sin(t*2+st.x*40));g.fillStyle="#fff";g.fillRect(st.x*W,st.y*hor,1.6,1.6);});g.globalAlpha=1;}
+  /* the sun, when it's on this side */
+  if(Math.abs(rel)<55&&sun.alt>-4){const sx=W/2+rel/55*W*.55,sy=hor-sun.alt/30*hor;
+    const halo=g.createRadialGradient(sx,sy,4,sx,sy,170);halo.addColorStop(0,"rgba(255,244,214,.95)");halo.addColorStop(.12,"rgba(255,226,170,.55)");halo.addColorStop(1,"rgba(255,200,120,0)");
+    g.fillStyle=halo;g.fillRect(0,0,W,H);g.fillStyle="#fffaf0";g.beginPath();g.arc(sx,sy,14,0,7);g.fill();}
+  /* below: sea, land, ice, or the apron */
+  const land=s.below&&s.below.land, ice=Math.abs(s.lat)>64&&(land||Math.abs(s.lat)>72);
+  let ground=s.air?(ice?mixC("#e9eef3","#2a3242",clamp((4-sun.alt)/14,0,1)):land?mixC("#6e7f5a","#11161d",clamp((4-sun.alt)/14,0,1)):sk.sea):mixC("#7d8187","#1a1c20",clamp((4-sun.alt)/14,0,1));
+  gr=g.createLinearGradient(0,hor,0,H);gr.addColorStop(0,sk.hor);gr.addColorStop(.08,ground);gr.addColorStop(1,ground);
+  g.fillStyle=gr;g.fillRect(0,hor,W,H-hor);
+  if(s.air&&land&&sun.alt<-4){WN.lights.forEach(l=>{const x=((l.x+dir*t*.004)%1+1)%1;g.globalAlpha=l.b*clamp((-sun.alt-4)/8,0,1);g.fillStyle="#ffcf7a";g.fillRect(x*W,hor+(l.y-.58)*(H-hor)*2.2,2,2);});g.globalAlpha=1;}
+  if(!s.air){g.fillStyle=mixC("#5b5f66","#121418",clamp((4-sun.alt)/14,0,1));g.fillRect(0,hor+(H-hor)*.35,W,H);
+    g.strokeStyle="rgba(255,214,90,.7)";g.lineWidth=4;g.setLineDash([26,22]);g.beginPath();g.moveTo(0,hor+(H-hor)*.62);g.lineTo(W,hor+(H-hor)*.58);g.stroke();g.setLineDash([]);}
+  /* clouds below at cruise, drifting backwards past the window */
+  if(s.air){const cc=sun.alt>4?"rgba(255,255,255,.85)":sun.alt>-4?"rgba(250,196,170,.75)":"rgba(70,80,110,.55)";g.fillStyle=cc;
+    WN.clouds.forEach(c=>{const x=((c.x+dir*t*.012*c.s)%1.4+1.4)%1.4-.2,y=hor+12+c.y*(H-hor)*.8;g.beginPath();g.ellipse(x*W,y,c.w*W*.5,c.h*H*.5,0,0,7);g.fill();});}
+  /* the wing, on the near side, a little behind */
+  g.fillStyle=mixC("#cfd5dd","#1b2028",clamp((2-sun.alt)/12,0,1));g.beginPath();
+  if(WN.side==="L"){g.moveTo(W,H*.72);g.lineTo(W*.16,H*.87);g.lineTo(W*.12,H*.91);g.lineTo(W,H*.99);}else{g.moveTo(0,H*.72);g.lineTo(W*.84,H*.87);g.lineTo(W*.88,H*.91);g.lineTo(0,H*.99);}
+  g.closePath();g.fill();
+  if(sun.alt<-2&&s.air){const blink=Math.floor(t)%2===0;g.fillStyle=WN.side==="L"?(blink?"#ff3b3b":"#7a1d1d"):(blink?"#3bff6b":"#1d7a33");g.beginPath();g.arc(WN.side==="L"?W*.13:W*.87,H*.895,4,0,7);g.fill();}
+}
+function wnLoop(){wnDraw();WN.raf=requestAnimationFrame(wnLoop);}
+function wnInfo(){
+  const i=ST.info,s=wnState(),sun=sunPos(Date.now(),s.lat,s.lon);
+  const phase=sun.alt>8?"daylight":sun.alt>-2?(sun.az<180?"sunrise light":"sunset light"):sun.alt>-12?"twilight":"night";
+  const facing=(s.brg+(WN.side==="L"?270:90))%360,rel=((sun.az-facing+540)%360)-180;
+  const where=s.air?(s.below?`Over ${s.below.name}`:"In the air"):i?`On the ground at ${i.fromCity}`:"On the ground";
+  const offH=Math.round(s.lon/15),tl=new Date(Date.now()+offH*36e5),loc=String(tl.getUTCHours()).padStart(2,"0")+":"+String(tl.getUTCMinutes()).padStart(2,"0");
+  const sunTxt=sun.alt<-2?"The sun is below the horizon.":Math.abs(rel)<55?"The sun is on this side.":"The sun is on the other side of the aircraft.";
+  $("wn-info").innerHTML=`<div class="wn-big">${esc(where)}</div>${s.air?`<b>${s.alt.toLocaleString()} ft</b> · `:""}${esc(phase)} · about ${loc} down there<br>${esc(sunTxt)}
+    ${i?`<br><span style="color:var(--faint)">${esc(i.fno)} · ${esc(i.fromCity)} → ${esc(i.toCity)}</span>`:`<br><span style="color:var(--faint)">Add your flight on Home to see your own sky.</span>`}`;
+  $("wn-lede").textContent=s.air?"What you'd see from your seat right now, worked out from where the aircraft is and where the sun is.":"Once you're in the air, this shows the sky and what's below from your seat.";
+}
+document.querySelectorAll("[data-side]").forEach(b=>b.onclick=()=>{WN.side=b.dataset.side;document.querySelectorAll("[data-side]").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));wnInfo();});
+$("wn-bl").onclick=()=>{const bl=$("wn-blind"),down=!bl.classList.contains("down");bl.classList.toggle("down",down);$("wn-bl").textContent=TLI18N.t(down?"Raise the blind":"Pull the blind");};
+
+/* ---------- the cockpit ----------
+   A primary flight display: attitude, speed and altitude tapes, heading and
+   vertical speed, eased between the estimates the site makes. */
+const CK={raf:0,cur:null,tgt:null,last:0};
+function ckTarget(){
+  const i=ST.info,p=i&&i.pos;
+  if(!p)return {spd:0,alt:0,hdg:0,vs:0,pitch:0,ground:true};
+  const vs=p.vs>0?1800:p.vs<0?-1500:0;
+  return {spd:p.ground?18:p.spd,alt:p.alt,hdg:p.brg,vs,pitch:p.ground?0:p.vs>0?7:p.vs<0?-2.2:2.4,ground:!!p.ground};
+}
+function ckPull(){const w=win();if(w&&w.TL_IFE&&ST.f){try{const x=w.TL_IFE.info(ST.f);if(x)ST.info=x;}catch(_){}}CK.tgt=ckTarget();if(!CK.cur)CK.cur=Object.assign({},CK.tgt);ckPanel();}
+function ckDraw(){
+  const cv=$("ck-cv");if(!cv)return;const g=cv.getContext("2d"),W=cv.width,H=cv.height,c=CK.cur,t=CK.tgt||ckTarget();
+  ["spd","alt","vs","pitch"].forEach(k=>c[k]=lerp(c[k],t[k],.04));c.hdg=c.hdg+((((t.hdg-c.hdg)%360)+540)%360-180)*.04;
+  const roll=c.ground?0:Math.sin(performance.now()/2600)*1.4, cx=W/2, cy=H*.46, ppd=8;
+  g.fillStyle="#000";g.fillRect(0,0,W,H);
+  /* attitude */
+  g.save();g.beginPath();g.rect(cx-190,cy-170,380,340);g.clip();g.translate(cx,cy);g.rotate(-roll*D2R);g.translate(0,c.pitch*ppd);
+  g.fillStyle="#2f6fd0";g.fillRect(-500,-900,1000,900);g.fillStyle="#8a5a2b";g.fillRect(-500,0,1000,900);
+  g.strokeStyle="#fff";g.lineWidth=2;g.beginPath();g.moveTo(-500,0);g.lineTo(500,0);g.stroke();
+  g.fillStyle="#fff";g.font="600 13px ui-monospace,monospace";g.textAlign="center";
+  for(let d=-30;d<=30;d+=5){if(!d)continue;const y=-d*ppd,w=d%10?28:60;g.beginPath();g.moveTo(-w,y);g.lineTo(w,y);g.stroke();if(!(d%10)){g.fillText(Math.abs(d),-w-16,y+5);g.fillText(Math.abs(d),w+16,y+5);}}
+  g.restore();
+  g.strokeStyle="#ffbf4d";g.lineWidth=5;g.beginPath();g.moveTo(cx-120,cy);g.lineTo(cx-45,cy);g.lineTo(cx-45,cy+14);g.moveTo(cx+120,cy);g.lineTo(cx+45,cy);g.lineTo(cx+45,cy+14);g.stroke();
+  g.fillStyle="#ffbf4d";g.fillRect(cx-4,cy-4,8,8);
+  /* tapes */
+  const tape=(x,val,step,label,fmt)=>{g.fillStyle="rgba(60,64,72,.85)";g.fillRect(x,cy-170,92,340);g.strokeStyle="#fff";g.fillStyle="#fff";g.font="600 14px ui-monospace,monospace";g.textAlign="center";
+    for(let k=-4;k<=4;k++){const v=Math.round(val/step)*step+k*step;if(v<0)continue;const y=cy-(v-val)/step*44;if(Math.abs(y-cy)<24)continue;if(y<cy-165||y>cy+165)continue;g.fillText(fmt(v),x+46,y+5);}
+    g.fillStyle="#000";g.fillRect(x+6,cy-18,80,36);g.strokeStyle="#fff";g.lineWidth=2;g.strokeRect(x+6,cy-18,80,36);g.fillStyle="#9be7a8";g.font="700 18px ui-monospace,monospace";g.fillText(fmt(Math.round(val)),x+46,cy+7);
+    g.fillStyle="#9be7a8";g.font="600 12px ui-monospace,monospace";g.fillText(label,x+46,cy-180);};
+  tape(cx-300,c.spd,10,"KT",v=>String(v));tape(cx+208,c.alt,500,"FT",v=>v>=1000?String(Math.round(v/100)*100):String(v));
+  /* vertical speed */
+  g.fillStyle="#9be7a8";g.font="600 13px ui-monospace,monospace";g.textAlign="left";g.fillText((c.vs>=0?"+":"")+Math.round(c.vs/100)*100+" FPM",cx+208,cy+200);
+  /* heading */
+  g.fillStyle="rgba(60,64,72,.85)";g.fillRect(cx-190,H-92,380,58);g.fillStyle="#fff";g.textAlign="center";g.font="600 14px ui-monospace,monospace";
+  for(let k=-4;k<=4;k++){const h=(Math.round(c.hdg/10)*10+k*10+360)%360,x=cx+((((h-c.hdg)%360)+540)%360-180)*4.2;if(x<cx-180||x>cx+180)continue;
+    g.fillRect(x-1,H-92,2,10);g.fillText(String(h/10).padStart(2,"0"),x,H-62);}
+  g.fillStyle="#ffbf4d";g.beginPath();g.moveTo(cx,H-96);g.lineTo(cx-8,H-108);g.lineTo(cx+8,H-108);g.fill();
+  g.fillStyle="#9be7a8";g.font="700 16px ui-monospace,monospace";g.fillText(String(Math.round((c.hdg+360)%360)).padStart(3,"0")+"°",cx,H-14);
+  /* mode annunciator */
+  g.fillStyle="#9be7a8";g.font="600 14px ui-monospace,monospace";g.textAlign="left";
+  g.fillText(c.ground?"TAXI":t.vs>0?"CLB":t.vs<0?"DES":"CRZ",22,30);g.fillText("LNAV",120,30);g.fillText("VNAV",210,30);g.fillStyle="#ffbf4d";g.fillText(c.ground?"":"A/P",W-70,30);
+}
+function ckLoop(){if(!CK.cur){CK.last=performance.now();ckPull();}ckDraw();if(performance.now()-CK.last>3000){CK.last=performance.now();ckPull();}CK.raf=requestAnimationFrame(ckLoop);}
+function ckPanel(){
+  const i=ST.info,p=i&&i.pos;
+  $("ck-panel").innerHTML=i?`<b>${esc(i.fno)}</b> ${esc(i.from)}→${esc(i.to)}<br>${esc(i.model||"")}<br>
+      ${p?`ALT <b>${p.alt.toLocaleString()}</b> FT<br>GS <b>${p.spd}</b> KT<br>HDG <b>${String(Math.round(p.brg)).padStart(3,"0")}</b>°<br>${p.vs>0?"CLIMBING":p.vs<0?"DESCENDING":"CRUISE"}<br>`:"<span class=amber>NOT AIRBORNE</span><br>"}
+      ${i.inAir?`TIME TO DEST <b>${esc(i.leftText)}</b><br>`:""}DEST LOCAL <b>${esc(i.nowTo)}</b><br><br><span style="color:#6f8a76">Estimates from the timetable — not real aircraft data.</span>`
+    :`<span class=amber>NO FLIGHT</span><br>Add your flight on Home and the display comes alive once it's airborne.`;
+}
+
+/* ---------- destination guide ---------- */
+const LANGP={es:["Spanish","Hola","Gracias","Por favor","Adiós"],fr:["French","Bonjour","Merci","S'il vous plaît","Au revoir"],pt:["Portuguese","Olá","Obrigado / Obrigada","Por favor","Tchau"],
+  de:["German","Hallo","Danke","Bitte","Tschüss"],it:["Italian","Ciao","Grazie","Per favore","Arrivederci"],nl:["Dutch","Hallo","Dank je","Alsjeblieft","Doei"],
+  ja:["Japanese","こんにちは (konnichiwa)","ありがとう (arigatō)","お願いします (onegaishimasu)","さようなら (sayōnara)"],
+  hi:["Hindi","नमस्ते (namaste)","धन्यवाद (dhanyavaad)","कृपया (kripya)","फिर मिलेंगे (phir milenge)"],
+  te:["Telugu","నమస్కారం (namaskāram)","ధన్యవాదాలు (dhanyavādālu)","దయచేసి (dayachēsi)","వెళ్ళొస్తాను (veḷḷostānu)"],
+  ta:["Tamil","வணக்கம் (vaṇakkam)","நன்றி (naṉṟi)","தயவுசெய்து (tayavuceytu)","போய் வருகிறேன் (pōy varukiṟēṉ)"],
+  kn:["Kannada","ನಮಸ್ಕಾರ (namaskāra)","ಧನ್ಯವಾದ (dhanyavāda)","ದಯವಿಟ್ಟು (dayaviṭṭu)","ಹೋಗಿ ಬರ್ತೀನಿ (hōgi bartīni)"],
+  bn:["Bengali","নমস্কার (nomoshkar)","ধন্যবাদ (dhonnobad)","দয়া করে (doya kore)","আসি (ashi)"],
+  mr:["Marathi","नमस्कार (namaskār)","धन्यवाद (dhanyavād)","कृपया (kṛpayā)","येतो (yeto)"],
+  ml:["Malayalam","നമസ്കാരം (namaskāram)","നന്ദി (nandi)","ദയവായി (dayavāyi)","പോയി വരാം (pōyi varām)"],
+  gu:["Gujarati","નમસ્તે (namaste)","આભાર (ābhār)","કૃપા કરીને (kṛpā karīne)","આવજો (āvjo)"],
+  pa:["Punjabi","ਸਤ ਸ੍ਰੀ ਅਕਾਲ (sat srī akāl)","ਧੰਨਵਾਦ (dhannvād)","ਕਿਰਪਾ ਕਰਕੇ (kirpā karke)","ਫਿਰ ਮਿਲਾਂਗੇ (phir milāṅge)"],
+  ar:["Arabic","مرحبا (marhaban)","شكرا (shukran)","من فضلك (min fadlak)","مع السلامة (ma'a as-salama)"],
+  zh:["Mandarin","你好 (nǐ hǎo)","谢谢 (xièxie)","请 (qǐng)","再见 (zàijiàn)"],yue:["Cantonese","你好 (néih hóu)","唔該 / 多謝 (m̀h'gōi / dōjeh)","唔該 (m̀h'gōi)","拜拜 (bāaibaai)"],
+  ko:["Korean","안녕하세요 (annyeonghaseyo)","감사합니다 (gamsahamnida)","주세요 (juseyo)","안녕히 계세요 (annyeonghi gyeseyo)"],
+  th:["Thai","สวัสดี (sawasdee)","ขอบคุณ (khop khun)","กรุณา (karuna)","ลาก่อน (la gon)"],id:["Indonesian","Halo","Terima kasih","Tolong","Sampai jumpa"],
+  ms:["Malay","Helo","Terima kasih","Tolong","Selamat tinggal"],tl:["Filipino","Kumusta","Salamat","Pakiusap","Paalam"],sv:["Swedish","Hej","Tack","Snälla","Hej då"],
+  fi:["Finnish","Hei","Kiitos","Ole hyvä","Näkemiin"],no:["Norwegian","Hei","Takk","Vær så snill","Ha det"],da:["Danish","Hej","Tak","Vær så venlig","Farvel"],
+  is:["Icelandic","Halló","Takk","Vinsamlegast","Bless"],ru:["Russian","Здравствуйте (zdravstvuyte)","Спасибо (spasibo)","Пожалуйста (pozhaluysta)","До свидания (do svidaniya)"],
+  tr:["Turkish","Merhaba","Teşekkürler","Lütfen","Hoşça kal"],el:["Greek","Γεια σας (yia sas)","Ευχαριστώ (efharistó)","Παρακαλώ (parakaló)","Αντίο (adío)"],
+  hu:["Hungarian","Szia","Köszönöm","Kérem","Viszlát"],sw:["Swahili","Jambo","Asante","Tafadhali","Kwaheri"],am:["Amharic","ሰላም (selam)","አመሰግናለሁ (ameseginalehu)","እባክህ (ebakih)","ቻው (chaw)"],
+  pap:["Papiamento","Bon dia","Danki","Por fabor","Ayo"],ch:["Chamorro","Håfa adai","Si Yu'os ma'åse'","Pot fabot","Adios"],mi:["Māori","Kia ora","Ngā mihi","Tēnā koa","Ka kite anō"],
+  haw:["Hawaiian","Aloha","Mahalo","E ʻoluʻolu","A hui hou"],fj:["Fijian","Bula","Vinaka","Yalovinaka","Moce"],ty:["Tahitian","Ia ora na","Māuruuru","Ma te aroha","Nana"],
+  ht:["Haitian Creole","Bonjou","Mèsi","Tanpri","Orevwa"],uz:["Uzbek","Salom","Rahmat","Iltimos","Xayr"],ne:["Nepali","नमस्ते (namaste)","धन्यवाद (dhanyabād)","कृपया (kripayā)","फेरि भेटौँला (pheri bhetaunlā)"],
+  si:["Sinhala","ආයුබෝවන් (āyubōvan)","ස්තූතියි (stūtiyi)","කරුණාකර (karuṇākara)","ගිහින් එන්නම් (gihin ennam)"],dv:["Dhivehi","އައްސަލާމު ޢަލައިކުމް (assalaamu alaikum)","ޝުކުރިއްޔާ (shukuriyya)","ކޮށްދެއްވާ (koshdheyvaa)","ދާނަން (dhaanan)"],
+  mg:["Malagasy","Salama","Misaotra","Azafady","Veloma"],cs:["Czech","Dobrý den","Děkuji","Prosím","Na shledanou"],hr:["Croatian","Bok","Hvala","Molim","Doviđenja"],et:["Estonian","Tere","Aitäh","Palun","Head aega"]};
+const CC_LANG={MX:"es",ES:"es",AR:"es",CO:"es",PE:"es",CL:"es",VE:"es",EC:"es",BO:"es",UY:"es",CR:"es",SV:"es",HN:"es",PA:"es",GT:"es",NI:"es",CU:"es",DO:"es",PR:"es",GQ:"es",
+  FR:"fr",GF:"fr",GP:"fr",MQ:"fr",RE:"fr",BL:"fr",WF:"fr",BE:"fr",LU:"fr",MA:"ar",TD:"fr",CM:"fr",MU:"fr",HT:"ht",PF:"ty",BR:"pt",PT:"pt",DE:"de",AT:"de",CH:"de",IT:"it",NL:"nl",SR:"nl",SX:"nl",
+  AW:"pap",CW:"pap",BQ:"pap",JP:"ja",IN:"hi",QA:"ar",SA:"ar",AE:"ar",OM:"ar",KW:"ar",BH:"ar",YE:"ar",EG:"ar",CN:"zh",TW:"zh",HK:"yue",KR:"ko",TH:"th",ID:"id",MY:"ms",PH:"tl",
+  SE:"sv",FI:"fi",NO:"no",DK:"da",GL:"da",IS:"is",RU:"ru",TR:"tr",GR:"el",CY:"el",HU:"hu",KE:"sw",TZ:"sw",UG:"sw",ET:"am",GU:"ch",MP:"ch",NZ:"mi",FJ:"fj",UZ:"uz",NP:"ne",LK:"si",MV:"dv",MG:"mg",CZ:"cs",HR:"hr",EE:"et"};
+const AP_LANG={HYD:"te",VGA:"te",VTZ:"te",RJA:"te",TIR:"te",MAA:"ta",CJB:"ta",BLR:"kn",IXE:"kn",CCU:"bn",RDP:"bn",BOM:"mr",PNQ:"mr",IXU:"mr",COK:"ml",TRV:"ml",CCJ:"ml",AMD:"gu",STV:"gu",ATQ:"pa",HNL:"haw",OGG:"haw",KOA:"haw",LIH:"haw",ITO:"haw"};
+const CUR=Object.fromEntries("US:US dollar (USD)|GY:Guyanese dollar (GYD)|IN:Indian rupee (INR)|JP:Japanese yen (JPY)|GB:Pound sterling (GBP)|BR:Brazilian real (BRL)|CA:Canadian dollar (CAD)|SR:Surinamese dollar (SRD)|AU:Australian dollar (AUD)|MX:Mexican peso (MXN)|GF:Euro (EUR)|PH:Philippine peso (PHP)|BS:Bahamian dollar (BSD) — US dollars accepted|QA:Qatari riyal (QAR)|ES:Euro (EUR)|ZA:South African rand (ZAR)|TT:Trinidad and Tobago dollar (TTD)|DE:Euro (EUR)|GU:US dollar (USD)|FR:Euro (EUR)|VE:Bolívar (VES) — US dollars widely used|ID:Indonesian rupiah (IDR)|SG:Singapore dollar (SGD)|MA:Moroccan dirham (MAD)|EC:US dollar (USD)|SA:Saudi riyal (SAR)|KR:South Korean won (KRW)|JM:Jamaican dollar (JMD)|SX:Caribbean guilder (XCG)|NZ:New Zealand dollar (NZD)|CO:Colombian peso (COP)|AR:Argentine peso (ARS)|CW:Caribbean guilder (XCG)|PE:Peruvian sol (PEN)|LC:East Caribbean dollar (XCD)|KE:Kenyan shilling (KES)|BB:Barbadian dollar (BBD)|FI:Euro (EUR)|IT:Euro (EUR)|AE:UAE dirham (AED)|AW:Aruban florin (AWG)|CL:Chilean peso (CLP)|DO:Dominican peso (DOP)|VC:East Caribbean dollar (XCD)|CU:Cuban peso (CUP)|NG:Nigerian naira (NGN)|PT:Euro (EUR)|NL:Euro (EUR)|GD:East Caribbean dollar (XCD)|IE:Euro (EUR)|PR:US dollar (USD)|CR:Costa Rican colón (CRC)|PG:Papua New Guinean kina (PGK)|BE:Euro (EUR)|VI:US dollar (USD)|BQ:US dollar (USD)|TR:Turkish lira (TRY)|IS:Icelandic króna (ISK)|RU:Russian ruble (RUB)|TW:New Taiwan dollar (TWD)|HK:Hong Kong dollar (HKD)|GL:Danish krone (DKK)|ET:Ethiopian birr (ETB)|SV:US dollar (USD)|HN:Honduran lempira (HNL)|FJ:Fijian dollar (FJD)|GP:Euro (EUR)|CN:Chinese yuan (CNY)|DM:East Caribbean dollar (XCD)|AT:Euro (EUR)|BO:Boliviano (BOB)|AG:East Caribbean dollar (XCD)|PA:US dollar and balboa|CH:Swiss franc (CHF)|BM:Bermudian dollar (BMD)|TZ:Tanzanian shilling (TZS)|MV:Maldivian rufiyaa (MVR)|MP:US dollar (USD)|MQ:Euro (EUR)|EG:Egyptian pound (EGP)|LK:Sri Lankan rupee (LKR)|PF:CFP franc (XPF)|DK:Danish krone (DKK)|SE:Swedish krona (SEK)|OM:Omani rial (OMR)|TH:Thai baht (THB)|KY:Cayman Islands dollar (KYD)|KN:East Caribbean dollar (XCD)|HU:Hungarian forint (HUF)|MY:Malaysian ringgit (MYR)|UY:Uruguayan peso (UYU)|GQ:Central African CFA franc (XAF)|CM:Central African CFA franc (XAF)|UZ:Uzbek som (UZS)|MG:Malagasy ariary (MGA)|RE:Euro (EUR)|GT:Guatemalan quetzal (GTQ)|UG:Ugandan shilling (UGX)|KW:Kuwaiti dinar (KWD)|NI:Nicaraguan córdoba (NIO)|TD:Central African CFA franc (XAF)|NP:Nepalese rupee (NPR)|YE:Yemeni rial (YER)|BH:Bahraini dinar (BHD)|GR:Euro (EUR)|HT:Haitian gourde (HTG)|NO:Norwegian krone (NOK)|WF:CFP franc (XPF)|AS:US dollar (USD)|LU:Euro (EUR)|BL:Euro (EUR)|CZ:Czech koruna (CZK)|AI:East Caribbean dollar (XCD)|HR:Euro (EUR)|MU:Mauritian rupee (MUR)|FM:US dollar (USD)|CY:Euro (EUR)|VG:US dollar (USD)|EE:Euro (EUR)|TC:US dollar (USD)".split("|").map(x=>{const [k,...v]=x.split(":");return [k,v.join(":")];}));
+const GWX={};
+async function gdWeather(ll){
+  const k=ll.join(",");if(GWX[k]&&Date.now()-GWX[k].t<18e5)return GWX[k].p;
+  const F=/^en-(US|LR)|^my/i.test(navigator.language||"");
+  const p=fetch(`https://api.open-meteo.com/v1/forecast?latitude=${ll[0]}&longitude=${ll[1]}&current=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&forecast_days=3&timezone=auto${F?"&temperature_unit=fahrenheit":""}`)
+    .then(r=>{if(!r.ok)throw 0;return r.json();});GWX[k]={t:Date.now(),p};p.catch(()=>delete GWX[k]);return p;
+}
+const wIc=c=>c===0?"☀︎":c<=2?"⛅︎":c===3?"☁︎":c<=48?"🌫︎":c<=67||(c>=80&&c<=82)?"☂︎":c<=77||c===85||c===86?"❄︎":c>=95?"⚡︎":"☁︎";
+function paintArrival(){
+  const i=ST.info,body=$("gd-body");if(!body)return;
+  if(!i){$("gd-lede").textContent="Add your flight on Home and this fills in for where you're landing.";body.innerHTML="";return;}
+  $("gd-lede").textContent=`${i.toCity} — the things worth knowing before the doors open.`;
+  const lg=AP_LANG[i.to]||CC_LANG[i.toCC],P=lg&&LANGP[lg],cur=CUR[i.toCC],a=ST.auto,cab=ST.cab;
+  const diff=i.tzDiff||0,dtxt=diff===0?`Same time as ${esc(i.fromCity)}`:`${Math.abs(diff)} hour${Math.abs(diff)===1?"":"s"} ${diff>0?"ahead of":"behind"} ${esc(i.fromCity)}`;
+  body.innerHTML=`<div class="box"><h4>${TLI18N.t("Local time")}</h4><div class="big">${esc(i.nowTo)}</div><p>${dtxt}</p></div>
+    <div class="box" id="gd-wx"><h4>${TLI18N.t("Weather")}</h4><p>Checking the forecast…</p></div>
+    <div class="box"><h4>${TLI18N.t("Useful words")}</h4>${P?`<p style="margin-bottom:8px">${esc(P[0])}</p><div class="ph-row"><span>Hello</span><b>${esc(P[1])}</b><span>Thank you</span><b>${esc(P[2])}</b><span>Please</span><b>${esc(P[3])}</b><span>Goodbye</span><b>${esc(P[4])}</b></div>`
+      :`<p>English is widely spoken here.</p>`}</div>
+    <div class="box"><h4>${TLI18N.t("Money")}</h4><p>${esc(cur||"Ask at the airport about local money.")}</p><p style="color:var(--faint)">Cards are taken almost everywhere at the airport.</p></div>
+    <div class="box"><h4>${TLI18N.t("When you land")}</h4><p>Arrives <b>${esc(i.arr)}</b>${i.arrDay?` (+${i.arrDay})`:""} local time</p><p>Checked bags: belt <b>${a&&a.bags&&a.bags.belt||i.belt}</b></p>
+      ${i.arrLounge?`<p>${esc(i.arrLounge)} — arrivals lounge for ${cab==="biz"||cab==="first"?"you":"Business and First"}</p>`:""}</div>
+    ${a&&a.conn?`<div class="box"><h4>Your connection</h4><p><b>${esc(a.conn.fno)}</b> to ${esc(a.conn.toCity)} at <b>${esc(a.conn.dep)}</b></p><p>Gate <b>${esc(a.conn.gate)}</b> · ${Math.floor(a.conn.mins/60)}h ${a.conn.mins%60}m to connect</p>${a.conn.lounge?`<p>${esc(a.conn.lounge)} on the way</p>`:""}</div>`:""}`;
+  if(i.toLL&&i.toLL.length)gdWeather(i.toLL).then(w=>{const box=$("gd-wx");if(!box||!ST.info||ST.info.to!==i.to)return;
+    const d=w.daily,names=["Today","Tomorrow",new Date(d.time[2]+"T12:00").toLocaleDateString(undefined,{weekday:"short"})];
+    box.innerHTML=`<h4>${TLI18N.t("Weather")}</h4><div class="big">${wIc(w.current.weather_code)} ${Math.round(w.current.temperature_2m)}°</div>
+      <div class="wxd">${[0,1,2].map(k=>`<div>${names[k]}<i>${wIc(d.weather_code[k])}</i>${Math.round(d.temperature_2m_max[k])}° / ${Math.round(d.temperature_2m_min[k])}°</div>`).join("")}</div>`;})
+    .catch(()=>{const box=$("gd-wx");if(box)box.innerHTML=`<h4>${TLI18N.t("Weather")}</h4><p>The forecast isn't available right now.</p>`;});
+}
+
+/* ---------- audiobooks (LibriVox, public domain) ---------- */
+const BOOKS=[
+  {t:"The Adventures of Sherlock Holmes",a:"Arthur Conan Doyle",id:"adventures_sherlockholmes_1007_librivox",h:"about 11 hours",c:["#2b2f3a","#7a5a3a"]},
+  {t:"Around the World in 80 Days",a:"Jules Verne",id:"around_world_80_days_mfs_librivox",h:"about 7 hours",c:["#1f4e6b","#c9933d"]},
+  {t:"Alice's Adventures in Wonderland",a:"Lewis Carroll",id:"alice_in_wonderland_librivox",h:"about 3 hours",c:["#3d6b8f","#e7b3c2"],kids:1},
+  {t:"Treasure Island",a:"Robert Louis Stevenson",id:"treasure_island_ap_librivox",h:"about 7 hours",c:["#204a3a","#d6b25a"],kids:1},
+  {t:"Pride and Prejudice",a:"Jane Austen",id:"pride_and_prejudice_librivox",h:"about 11 hours",c:["#5a2e3a","#d9a7a0"]},
+  {t:"The Time Machine",a:"H. G. Wells",id:"time_machine_0805_librivox",h:"about 3 hours",c:["#1c2240","#6b7fd6"]},
+];
+$("bk-list").innerHTML=BOOKS.map((b,k)=>`<button type="button" class="book" data-bk="${k}" style="--a:${b.c[0]};--b:${b.c[1]}"><span>LibriVox</span><div><b>${esc(b.t)}</b><br><small>${esc(b.a)} · ${b.h}</small></div></button>`).join("");
+$("bk-list").querySelectorAll("[data-bk]").forEach(x=>x.onclick=()=>{const b=BOOKS[+x.dataset.bk];play({t:b.t,y:b.a,g:"Audiobook · "+b.h,d:"Read by LibriVox volunteers.",id:b.id,pl:1});});
+
+/* ---------- kids' corner ---------- */
+const KD={tab:"watch",color:"#e53935",fills:{}};
+const KCOL=["#e53935","#fb8c00","#fdd835","#43a047","#1e88e5","#3949ab","#8e24aa","#f06292","#8d6e63","#ffffff","#212121","#90a4ae","#00acc1","#7cb342","#ffb74d"];
+const PLANE_SVG=`<svg viewBox="0 0 800 440" xmlns="http://www.w3.org/2000/svg">
+  <rect data-r="sky" x="0" y="0" width="800" height="440" fill="#ffffff" stroke="none"/>
+  <path data-r="sun" d="M690 80 a46 46 0 1 0 0.1 0z" fill="#ffffff"/>
+  <path data-r="cloud1" d="M70 110 q10-34 46-26 q14-26 46-12 q34-4 34 30 q24 6 14 30 h-130 q-30-4-10-22z" fill="#ffffff"/>
+  <path data-r="cloud2" d="M500 360 q8-26 36-20 q12-22 38-10 q28-2 28 24 q20 6 10 24 h-104 q-24-4-8-18z" fill="#ffffff"/>
+  <path data-r="wingfar" d="M390 200 L470 120 L510 120 L470 205 z" fill="#ffffff"/>
+  <path data-r="body" d="M120 230 Q130 196 190 192 L600 186 Q680 186 712 214 Q726 228 700 238 Q660 254 600 254 L190 256 Q130 256 120 230 z" fill="#ffffff"/>
+  <path data-r="tail" d="M560 190 L620 92 L668 92 L640 190 z" fill="#ffffff"/>
+  <path data-r="stab" d="M600 236 L690 268 L700 252 L640 226 z" fill="#ffffff"/>
+  <path data-r="wing" d="M350 236 L470 340 L520 340 L440 232 z" fill="#ffffff"/>
+  <ellipse data-r="engine" cx="440" cy="300" rx="44" ry="20" fill="#ffffff"/>
+  <path data-r="nose" d="M120 230 Q124 206 160 198 L168 228 Q150 246 120 230z" fill="#ffffff"/>
+  <path data-r="stripe" d="M190 236 L600 230 Q660 230 700 238 Q660 250 600 250 L190 252 Q150 250 150 244z" fill="#ffffff"/>
+  ${Array.from({length:12},(_,k)=>`<rect data-r="win${k}" x="${215+k*30}" y="206" width="14" height="16" rx="5" fill="#ffffff"/>`).join("")}
+</svg>`;
+function kdPaint(){
+  const tabs=[["watch","Cartoons"],["color","Colouring"],["memory","Memory match"]];
+  $("kd-tabs").innerHTML=tabs.map(([k,n])=>`<button type="button" class="chip" data-kt="${k}" aria-pressed="${k===KD.tab}">${TLI18N.t(n)}</button>`).join("");
+  $("kd-tabs").querySelectorAll("[data-kt]").forEach(b=>b.onclick=()=>{KD.tab=b.dataset.kt;kdPaint();});
+  const B=$("kd-body");
+  if(KD.tab==="watch"){const list=[SHOWS[2],SHOWS[3],FILMS[4]],nw=OPEN.filter(x=>x.kids);B.innerHTML=ytCards(nw,"kn")+posters(list,true,1);B.querySelectorAll("[data-kn]").forEach(b=>b.onclick=()=>play(nw[+b.dataset.kn]));B.querySelectorAll("[data-i]").forEach(b=>b.onclick=()=>play(list[+b.dataset.i]));return;}
+  if(KD.tab==="color"){
+    B.innerHTML=`<div class="color-wrap"><div id="kd-svg">${PLANE_SVG}</div><div><div class="pal" id="kd-pal">${KCOL.map(c=>`<button type="button" data-c="${c}" style="background:${c}" aria-label="${c}" aria-pressed="${c===KD.color}"></button>`).join("")}</div>
+      <p class="stat" style="margin:14px 0 6px">Paint it like a TerraLink airline:</p><div class="presets" id="kd-pre"></div>
+      <div style="margin-top:14px;display:flex;gap:8px"><button type="button" class="btn ghost" id="kd-clear">Start again</button><button type="button" class="btn" id="kd-save">Save picture</button></div></div></div>`;
+    const svg=B.querySelector("svg");
+    const fill=()=>svg.querySelectorAll("[data-r]").forEach(el=>{if(KD.fills[el.dataset.r])el.setAttribute("fill",KD.fills[el.dataset.r]);});fill();
+    svg.querySelectorAll("[data-r]").forEach(el=>el.addEventListener("click",()=>{KD.fills[el.dataset.r]=KD.color;el.setAttribute("fill",KD.color);}));
+    B.querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>{KD.color=b.dataset.c;B.querySelectorAll("[data-c]").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));});
+    const AIR=[["Starliner","#3c2490","#ffffff","#b7a6ff"],["Velora","#1f007a","#ffffff","#e3b341"],["Essequibo","#007a3d","#f2c200","#c8102e"],["Hoshizora","#1b2654","#ffffff","#e8b4bf"],["United","#33569b","#ffffff","#7aa0e0"],["ASTRA","#6a2139","#ffffff","#e7a3b4"],["AmeriGo","#0b2d5c","#ffffff","#7fb0ff"]];
+    $("kd-pre").innerHTML=AIR.map(([n],k)=>`<button type="button" class="chip" data-pre="${k}">${n}</button>`).join("");
+    $("kd-pre").querySelectorAll("[data-pre]").forEach(b=>b.onclick=()=>{const [,a,body,c]=AIR[+b.dataset.pre];
+      Object.assign(KD.fills,{body,tail:a,stab:a,stripe:a,nose:body,engine:a,wing:"#c9ced6",wingfar:"#b0b6bf",sky:"#cfe8ff",sun:"#ffd54f",cloud1:"#ffffff",cloud2:"#ffffff"});
+      for(let k=0;k<12;k++)KD.fills["win"+k]=c;fill();});
+    $("kd-clear").onclick=()=>{KD.fills={};kdPaint();};
+    $("kd-save").onclick=()=>{const xml=new XMLSerializer().serializeToString(svg),img=new Image();img.onload=()=>{const c=document.createElement("canvas");c.width=1600;c.height=880;
+      const g=c.getContext("2d");g.drawImage(img,0,0,1600,880);const a=document.createElement("a");a.href=c.toDataURL("image/png");a.download="my-plane.png";a.click();};
+      img.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(xml);};
+    return;
+  }
+  /* memory: pairs of airline logos, from the site */
+  let logos=[];try{const w=win();if(w&&w.TL_IFE&&w.TL_IFE.logos)logos=w.TL_IFE.logos();}catch(_){}
+  if(logos.length<4){B.innerHTML=`<p class="lede">The airline logos load with your flight — give it a moment, then tap Memory match again.</p>`;return;}
+  const set=shuffle(logos.slice()).slice(0,6),deck=shuffle(set.concat(set).map((l,k)=>({l,k})));let up=[],done=0,moves=0,lock=false;
+  B.innerHTML=`<p class="stat" id="kd-ms">Find the pairs. Moves: <b>0</b></p><div class="mem" id="kd-mem">${deck.map((c,k)=>`<button type="button" data-m="${k}" aria-label="Card ${k+1}"><img src="${c.l.logo}" alt=""></button>`).join("")}</div>`;
+  B.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{if(lock||b.classList.contains("up")||b.classList.contains("done"))return;b.classList.add("up");up.push(b);
+    if(up.length===2){moves++;lock=true;const [x,y]=up,same=deck[+x.dataset.m].l.code===deck[+y.dataset.m].l.code;
+      setTimeout(()=>{if(same){x.classList.add("done");y.classList.add("done");done++;}x.classList.remove("up");y.classList.remove("up");up=[];lock=false;
+        $("kd-ms").innerHTML=done===set.length?`All matched in <b>${moves}</b> moves! 🎉 <button type="button" class="linkish" id="kd-again">Play again</button>`:`Find the pairs. Moves: <b>${moves}</b>`;
+        const ag=$("kd-again");if(ag)ag.onclick=kdPaint;},same?350:900);}});
+}
+
+/* ---------- sleep ----------
+   Dims everything, plays Cabin hum, and wakes you with a soft chime 45
+   minutes before landing (or after the nap you pick, with no flight). */
+const SL={on:false,timer:null,clock:null,wakeAt:0};
+function chime(){if(!musInit())return;const c=MUS.ctx;if(c.state==="suspended")c.resume();[[880,0],[1108.7,.35],[1318.5,.7]].forEach(([f,d])=>{
+  const o=c.createOscillator(),g=c.createGain();o.type="sine";o.frequency.value=f;g.gain.setValueAtTime(0,c.currentTime+d);g.gain.linearRampToValueAtTime(.18,c.currentTime+d+.02);
+  g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+d+2.4);o.connect(g);g.connect(MUS.master);o.start(c.currentTime+d);o.stop(c.currentTime+d+2.5);});}
+function sleepStart(mins){
+  const i=ST.info;let wake=null;
+  if(i&&i.inAir&&i.left>50)wake=(i.left-45)*6e4;else if(mins)wake=mins*6e4;
+  SL.on=true;SL.wakeAt=wake?Date.now()+wake:0;$("sleep").hidden=false;$("sleep").classList.remove("wake");
+  musPlay(STATIONS.find(s=>s.id==="hum"));
+  const tick=()=>{const left=SL.wakeAt?Math.max(0,SL.wakeAt-Date.now()):0;$("sl-t").textContent=new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit",hour12:false});
+    $("sl-s").innerHTML=SL.wakeAt?`Sleep well. We'll wake you ${i&&i.inAir?`about 45 minutes before ${esc(i.toCity)}`:"when your nap is over"} — in ${Math.floor(left/36e5)}h ${Math.round(left%36e5/6e4)}m.`:"Sleep well. Tap Wake up when you're ready.";
+    if(SL.wakeAt&&Date.now()>=SL.wakeAt){SL.wakeAt=0;musStop();chime();$("sleep").classList.add("wake");$("sl-s").innerHTML=i&&i.inAir?`Good morning. About 45 minutes to ${esc(i.toCity)}, where it's ${esc(i.nowTo)}.`:"Time to wake up.";}};
+  tick();clearInterval(SL.clock);SL.clock=setInterval(tick,15000);
+}
+function sleepEnd(){SL.on=false;clearInterval(SL.clock);$("sleep").hidden=true;if(MUS.on&&MUS.st&&MUS.st.id==="hum")musStop();}
+$("sl-x").onclick=sleepEnd;
+function openSleep(){
+  const i=ST.info;
+  if(i&&i.inAir&&i.left>50){sleepStart();return;}
+  $("sleep").hidden=false;$("sleep").classList.remove("wake");$("sl-t").textContent=new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit",hour12:false});
+  $("sl-s").innerHTML=`How long a nap?<div style="display:flex;gap:8px;justify-content:center;margin-top:12px">${[20,45,90].map(m=>`<button type="button" class="btn" data-nap="${m}">${m} min</button>`).join("")}</div>`;
+  $("sl-s").querySelectorAll("[data-nap]").forEach(b=>b.onclick=()=>sleepStart(+b.dataset.nap));
 }
 
 /* ---------- start ---------- */
