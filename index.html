@@ -11,6 +11,7 @@
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0e1412" media="(prefers-color-scheme: dark)">
 <meta name="color-scheme" content="light dark">
+<script>try{var t=localStorage.getItem("tl_theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);}catch(e){}</script>
 <meta name="description" content="Book flights across the TerraLink network.">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap">
 <style>
@@ -738,6 +739,16 @@ button{font-family:inherit;cursor:pointer}
 .nav-right{margin-left:auto;flex:none;white-space:nowrap;display:flex;align-items:center;gap:16px;font-weight:500;font-size:14px;color:var(--chrome-muted)}
 .nav-right .signin{color:var(--ink);background:transparent;border:1px solid var(--line);padding:7px 16px;border-radius:999px;text-decoration:none;font-weight:600}
 .nav-right .signin:hover{background:var(--surface-2)}
+.thm{position:relative;display:flex}
+.thm-b{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--ink);display:grid;place-items:center;cursor:pointer;padding:0}
+.thm-b:hover{background:var(--surface-2)}
+.thm-b svg{width:17px;height:17px}
+.thm-m{position:absolute;right:0;top:42px;z-index:3000;background:var(--surface);border:1px solid var(--line);border-radius:12px;
+  box-shadow:0 12px 30px rgba(0,0,0,.18);padding:6px;min-width:168px;display:flex;flex-direction:column}
+.thm-m button{font:inherit;font-size:14px;font-weight:500;text-align:left;background:none;border:0;color:var(--ink);padding:8px 10px 8px 30px;border-radius:8px;cursor:pointer;position:relative}
+.thm-m button:hover{background:var(--surface-2)}
+.thm-m button[aria-checked="true"]{font-weight:700}
+.thm-m button[aria-checked="true"]::before{content:"✓";position:absolute;left:10px;color:var(--brand-ink)}
 @media(max-width:820px){.nav-links{gap:14px;font-size:14px}.nav-right .hidem{display:none}}
 /* on a phone the tabs drop to their own row under the wordmark and scroll sideways */
 @media(max-width:700px){
@@ -991,8 +1002,88 @@ a.bd-row{text-decoration:none}
 .ap-none{padding:30px 0;color:var(--muted)}
 .rw-lab{font:700 10px var(--ui);color:#14211b;background:#fff;border:1px solid #c9d6cf;border-radius:4px;padding:1px 4px;white-space:nowrap}
 .rw-lab.use{background:#1d7a44;color:#fff;border-color:#1d7a44}
+.rw-lab.dep{background:#c47d12;color:#fff;border-color:#c47d12}
+.ap-inuse{line-height:1.9}.ap-inuse .rw-lab{display:inline-block;width:14px;padding:0;vertical-align:-2px;margin-right:4px}
 @media (max-width:900px){.ap-grid{grid-template-columns:1fr}}
 @media (max-width:560px){.ap-code{font-size:44px}.ap-clock{text-align:left}}
+/* ---- route pages ---- */
+.rt-top{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:flex-end;margin-bottom:16px}
+.rt-od{font-family:var(--display);font-size:40px;font-weight:600;line-height:1.1}
+.rt-od a{color:inherit;text-decoration:none}.rt-od a:hover{text-decoration:underline}
+.rt-meta{color:var(--muted);font-size:14px;margin-top:4px}
+.rt-acts{display:flex;gap:8px;flex-wrap:wrap}
+.rt-acts a{text-decoration:none}
+.rt-grid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:18px;align-items:start}
+.rt-map{height:260px;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--water)}
+.rt-tt{width:100%;border-collapse:collapse;font-size:14px}
+.rt-tt th{text-align:left;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);padding:0 8px 8px;border-bottom:1px solid var(--line)}
+.rt-tt td{padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:middle}
+.rt-tt .fn{display:flex;align-items:center;gap:8px;font-weight:700;white-space:nowrap}
+.rt-tt .fn small{display:block;font-weight:500;color:var(--muted);font-size:11.5px}
+.rt-tt .t{font-family:var(--ui);font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.rt-tt .t sup{font-size:10px;color:var(--muted);margin-left:2px}
+.rt-tt .ac{color:var(--muted);font-size:12.5px}
+.rt-days{display:flex;gap:3px}
+.rt-days i{width:19px;height:19px;border-radius:5px;display:grid;place-items:center;font-style:normal;font-size:10.5px;font-weight:700;
+  color:var(--faint);border:1px solid var(--line)}
+.rt-days i.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.rt-pr{display:grid;grid-template-columns:1fr auto;gap:6px 12px;font-size:14px}
+.rt-pr b{font-variant-numeric:tabular-nums}
+.rt-dir{display:flex;gap:6px;margin:4px 0 12px}
+@media (max-width:900px){.rt-grid{grid-template-columns:1fr}}
+@media (max-width:640px){.rt-od{font-size:30px}.rt-tt .ac,.rt-tt th.ac{display:none}.rt-tt td,.rt-tt th{padding-left:4px;padding-right:4px}
+  .rt-days i{width:15px;height:17px;font-size:9.5px}}
+/* ---- flight log ---- */
+.lg-stats{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:14px}
+.lg-stat{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--surface)}
+.lg-stat b{display:block;font-family:var(--display);font-size:26px;font-weight:600;line-height:1.1;font-variant-numeric:lining-nums}
+.lg-stat span{font-size:12px;color:var(--muted)}
+.lg-map{height:380px;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--water);margin-bottom:8px}
+.lg-key{font-size:12.5px;color:var(--muted);margin-bottom:20px}
+.lg-key i{display:inline-block;width:22px;height:0;border-top:3px solid var(--brand);vertical-align:middle;margin:0 6px 0 0}
+.lg-key i.up{border-top-style:dashed;border-top-color:var(--sky)}
+.lg-badges{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.lg-badge{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--surface);display:flex;gap:12px;align-items:flex-start}
+.lg-badge .ic{width:38px;height:38px;border-radius:50%;flex:none;display:grid;place-items:center;font-size:18px;background:var(--surface-2);border:1px solid var(--line);filter:grayscale(1);opacity:.55}
+.lg-badge.got .ic{background:#fdf3d8;border-color:#e6c873;filter:none;opacity:1}
+.lg-badge b{display:block;font-size:14px}
+.lg-badge span{font-size:12.5px;color:var(--muted)}
+.lg-badge .pg{height:4px;border-radius:2px;background:var(--surface-2);margin-top:7px;overflow:hidden}
+.lg-badge .pg i{display:block;height:100%;background:var(--brand)}
+.lg-h3{font-family:var(--display);font-size:21px;font-weight:600;margin:26px 0 10px}
+@media (max-width:900px){.lg-stats{grid-template-columns:repeat(3,1fr)}.lg-badges{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.lg-badges{grid-template-columns:1fr}.lg-map{height:300px}}
+/* ---- airport TV board ---- */
+.view.tv{position:fixed;inset:0;z-index:5000;background:#0b0f0d;color:#f5f1e3;display:flex;flex-direction:column;padding:22px 28px;
+  font-family:"JetBrains Mono","SFMono-Regular",Consolas,"Liberation Mono",monospace}
+.tv-top{display:flex;align-items:center;gap:20px;margin-bottom:16px}
+.tv-ap b{display:block;font-size:44px;line-height:1;color:#ffd24a;letter-spacing:.05em}
+.tv-ap span{font-family:var(--ui);font-size:15px;color:#a9b3ad}
+.tv-title{flex:1;text-align:center;font-family:var(--ui);font-size:30px;font-weight:700;letter-spacing:.24em;text-transform:uppercase}
+.tv-right{text-align:right}
+.tv-clock{font-size:40px;color:#ffd24a;font-variant-numeric:tabular-nums;line-height:1}
+.tv-btns{display:flex;gap:6px;justify-content:flex-end;margin-top:8px}
+.tv-btns button{font:600 12px var(--ui);color:#cfd6d1;background:transparent;border:1px solid #2f3a34;border-radius:999px;padding:5px 11px;cursor:pointer}
+.tv-btns button:hover{border-color:#6b7a71;color:#fff}
+#tv-x{font-size:18px;line-height:1;padding:3px 10px}
+.tv-head,.tv-row{display:grid;grid-template-columns:5.6em 7.6em minmax(0,1fr) 4.6em 10.6em;gap:14px;align-items:center}
+.tv-head{font-size:clamp(15px,1.9vw,26px);padding:0 6px 8px;border-bottom:2px solid #232c27}
+.tv-head span{font-family:var(--ui);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#7d8a83}
+.tv-rows{flex:1;overflow:hidden}
+.tv-row{padding:7px 6px;border-bottom:1px solid #1a211d;font-size:clamp(15px,1.9vw,26px)}
+.tv-cell{display:flex;gap:2px;overflow:hidden;white-space:nowrap}
+.tv-cell i{font-style:normal;display:inline-block;min-width:.78em;text-align:center;background:#161c19;border-radius:3px;padding:2px 0;
+  box-shadow:inset 0 -1px 0 #000,inset 0 1px 0 #222a26;position:relative}
+.tv-cell i::after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:#050706}
+.tv-cell i.flip{animation:tvflip .09s linear}
+@keyframes tvflip{0%{transform:scaleY(1)}50%{transform:scaleY(.1)}100%{transform:scaleY(1)}}
+.tv-row .c-t{color:#ffd24a}
+.tv-row .c-r.k-board i{color:#7dffb0}.tv-row .c-r.k-air i{color:#9fd3ff}.tv-row .c-r.k-land i{color:#c7b8ff}
+.tv-foot{font-family:var(--ui);font-size:12px;color:#6c7a72;margin-top:10px;display:flex;justify-content:space-between}
+@media (max-width:760px){.view.tv{padding:14px 12px}.tv-title{font-size:18px;letter-spacing:.14em}.tv-ap b{font-size:30px}.tv-clock{font-size:26px}
+  .tv-head,.tv-row{grid-template-columns:4.4em 5.6em minmax(0,1fr) 7em;gap:6px}.tv-head span:nth-child(4),.tv-row .c-g{display:none}
+  .tv-row,.tv-head{font-size:13px}.tv-head span{font-size:10px}.tv-btns button{padding:4px 8px}}
+@media (prefers-reduced-motion:reduce){.tv-cell i.flip{animation:none}}
 /* ---- what's new ---- */
 .nw{display:grid;grid-template-columns:118px 1fr;gap:18px;padding:22px 0;border-top:1px solid var(--line)}
 .nw:first-child{border-top:0;padding-top:4px}
@@ -1025,7 +1116,14 @@ a.nw-rt:hover{border-color:var(--brand);color:var(--brand-ink)}
 .fl-row{display:grid;grid-template-columns:minmax(0,1fr) auto 120px;gap:12px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}
 .fl-row:last-child{border-bottom:0}
 .fl-row .mdl{font-weight:600;font-size:14px}
-.fl-row .regs{font-size:11.5px;color:var(--faint);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fl-row .regs{font-size:11.5px;color:var(--faint);margin-top:2px;display:flex;gap:6px;align-items:baseline;min-width:0}
+.fl-row .regs .rl{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.fl-more{flex:none;font:inherit;font-size:11.5px;font-weight:700;color:var(--brand-ink);background:none;border:0;padding:0;cursor:pointer;white-space:nowrap}
+.fl-more:hover{text-decoration:underline}
+.regs-all{display:flex;flex-wrap:wrap;gap:4px 6px;margin-top:6px;font-size:12px}
+.regs-all a{font-variant-numeric:tabular-nums;border:1px solid var(--line);border-radius:5px;padding:1px 6px;text-decoration:none;color:var(--ink);background:var(--surface-2)}
+.regs-all a:hover{border-color:var(--brand);color:var(--brand-ink)}
+.regs-all .fl-more{padding:2px 4px}
 .fl-row .cnt{font-family:var(--ui);font-weight:700;font-size:18px;text-align:right}
 .fl-bar{height:7px;border-radius:4px;background:var(--surface-2);overflow:hidden}
 .fl-bar i{display:block;height:100%;border-radius:4px}
@@ -1190,6 +1288,11 @@ a.nw-rt:hover{border-color:var(--brand);color:var(--brand-ink)}
 .tier .tq{font-size:12px;color:var(--faint);text-transform:uppercase;letter-spacing:1.2px;margin-top:2px}
 .tier ul{margin:12px 0 0;padding:0;list-style:none;font-size:13px;color:var(--muted);line-height:1.6}
 .tier li::before{content:"·";margin-right:7px;color:var(--brand)}
+.lg-card li a{color:inherit;text-decoration:none}.lg-card li a:hover{color:var(--brand-ink);text-decoration:underline}
+.lg-card .lg-more{margin-top:0}
+.lg-card .fl-more{margin-top:6px}
+.lg-note{font-size:12.5px;color:var(--muted);margin:8px 0 0;line-height:1.5}
+.lg-neb{border-color:#c9b6ff;background:linear-gradient(180deg,rgba(124,92,230,.07),transparent 60%)}
 .actv{border:1px solid var(--line);border-radius:13px;overflow:hidden}
 .actv .r{display:flex;justify-content:space-between;gap:14px;padding:13px 16px;border-bottom:1px solid var(--line);font-size:13.5px}
 .actv .r:last-child{border-bottom:0}
@@ -1897,60 +2000,102 @@ body.sb-open{overflow:hidden}
    light colours: tinted notices and badges, logo plates (the airlines' logos
    are made for white), the map tiles and Leaflet's controls. The departure
    board and the seatback screen are dark already. */
+/* dark when the device is dark (unless the visitor chose light on the site),
+   or whenever the visitor chose dark */
 @media (prefers-color-scheme:dark){
-:root{
-  --brand:#23874e; --brand-ink:#7fd3a2; --sky:#5fbfae; --leaf:#7fd3a2;
+:root:not([data-theme="light"]){--brand:#23874e; --brand-ink:#7fd3a2; --sky:#5fbfae; --leaf:#7fd3a2;
   --bg:#0e1412; --surface:#141c18; --surface-2:#19231e;
   --ink:#e3eae5; --muted:#a2b1a8; --faint:#76877d; --line:#27332d; --good:#7fd3a2;
   --chrome:#0e1412; --chrome-ink:#e3eae5; --chrome-muted:#a2b1a8;
   --water:#0f1b18; --land:#1a2420; --coast:#33433b;
-  --shadow:none; color-scheme:dark;
+  --shadow:none; color-scheme:dark;}
+:root:not([data-theme="light"]) #tl-splash{background:var(--bg)}
+:root:not([data-theme="light"]) .sp-logo,:root:not([data-theme="light"]) .navplate{background:#fff;border-radius:10px;padding:4px 8px}
+:root:not([data-theme="light"]) .sp-logo{width:104px}
+:root:not([data-theme="light"]) #sp-route{stroke:#3a4a42}
+:root:not([data-theme="light"]) #tl-splash circle{fill:var(--bg)}
+:root:not([data-theme="light"]) .sp-plane path{fill:#7fd3a2}
+:root:not([data-theme="light"]) .logo,:root:not([data-theme="light"]) .dlogo:not(.navplate),:root:not([data-theme="light"]) .al-plate,:root:not([data-theme="light"]) .f-plate,:root:not([data-theme="light"]) .m-plate,:root:not([data-theme="light"]) .tc-logo,:root:not([data-theme="light"]) .stlogo,:root:not([data-theme="light"]) .eu-al .logo,:root:not([data-theme="light"]) .nw-join .logo{background:#fff;border-radius:8px;padding:3px 6px}
+:root:not([data-theme="light"]) .lg-logo{border-color:#3a4a42}
+:root:not([data-theme="light"]) .mcy-warn{background:#2b2414;border-color:#5c4a22;color:#f0d9a6}
+:root:not([data-theme="light"]) .opby.chtag{color:#f0d9a6;background:#2b2414;border-color:#5c4a22}
+:root:not([data-theme="light"]) .badge.awd,:root:not([data-theme="light"]) .badge-st.board,:root:not([data-theme="light"]) .tc-tag{color:#f0d9a6;background:#2b2414;border-color:#5c4a22}
+:root:not([data-theme="light"]) .badge.cxl,:root:not([data-theme="light"]) .badge-st.off{color:#f1c4c4;background:#2e1919;border-color:#5a3434}
+:root:not([data-theme="light"]) .badge.upg,:root:not([data-theme="light"]) .badge-st.land{color:#cdd3ff;background:#1c2142;border-color:#3a4378}
+:root:not([data-theme="light"]) .badge-st.air,:root:not([data-theme="light"]) .mc-d.low,:root:not([data-theme="light"]) .dn-done{color:#a7e6c4;background:#132a20;border-color:#2a5641}
+:root:not([data-theme="light"]) .mc-d.low b{color:#a7e6c4}
+:root:not([data-theme="light"]) .lg-in,:root:not([data-theme="light"]) .yf-lg{color:#7fd3a2}
+:root:not([data-theme="light"]) .dc-w{color:#f0b37a}
+:root:not([data-theme="light"]) .tbtn.warn,:root:not([data-theme="light"]) .terr{color:#f0a3a3}
+:root:not([data-theme="light"]) .err,:root:not([data-theme="light"]) .inp.bad input,:root:not([data-theme="light"]) #car-err{color:#f08a80}
+:root:not([data-theme="light"]) .tl-row.now{background:#16261f}
+:root:not([data-theme="light"]) .acitem.ishub{background:rgba(127,211,162,.08)}
+:root:not([data-theme="light"]) .acitem.ishub.on{background:rgba(127,211,162,.16)}
+:root:not([data-theme="light"]) .ulink:hover,:root:not([data-theme="light"]) .chp:hover,:root:not([data-theme="light"]) .tbtn:hover{border-color:#3e5047}
+:root:not([data-theme="light"]) .acct .dot.off{background:#5c5850}
+:root:not([data-theme="light"]) .gbtn:not(.dbtn){background:#fff;color:#1f1f1f}
+:root:not([data-theme="light"]) .who{color:#9fb8ab}
+:root:not([data-theme="light"]) .seat{background-color:#8fa198}
+:root:not([data-theme="light"]) .seat.taken{background-color:#34423b}
+:root:not([data-theme="light"]) .seat.off{background-color:#56665e}
+:root:not([data-theme="light"]) .tl-tiles{filter:invert(1) hue-rotate(180deg) brightness(.92) contrast(.88) saturate(.6)}
+:root:not([data-theme="light"]) .leaflet-container{background:#0f1b18}
+:root:not([data-theme="light"]) .leaflet-bar a,:root:not([data-theme="light"]) .leaflet-bar a:hover{background:#19231e;color:#e3eae5;border-bottom-color:#27332d}
+:root:not([data-theme="light"]) .leaflet-control-attribution{background:rgba(14,20,18,.82)!important;color:#a2b1a8}
+:root:not([data-theme="light"]) .leaflet-control-attribution a{color:#a7e6c4}
+:root:not([data-theme="light"]) .trk-legend{background:rgba(20,28,24,.92)!important}
+:root:not([data-theme="light"]) .rw-lab{background:#19231e;color:#e3eae5;border-color:#3a4a42}
+:root:not([data-theme="light"]) .rw-lab.use{background:#23874e;color:#fff;border-color:#23874e}
+:root:not([data-theme="light"]) .modal{background:rgba(0,0,0,.6)}
+:root:not([data-theme="light"]) .go:hover,:root:not([data-theme="light"]) .f .buy button:hover,:root:not([data-theme="light"]) .sheet .cont:hover,:root:not([data-theme="light"]) .selbar button:hover,:root:not([data-theme="light"]) .tbtn.pri:hover,:root:not([data-theme="light"]) .car-buy button:hover{background:#1b6b3e}
 }
-#tl-splash{background:var(--bg)}
-.sp-logo,.navplate{background:#fff;border-radius:10px;padding:4px 8px}
-.sp-logo{width:104px}
-#sp-route{stroke:#3a4a42}
-#tl-splash circle{fill:var(--bg)}
-.sp-plane path{fill:#7fd3a2}
-/* logos sit on white, as they would on paper */
-.logo,.dlogo:not(.navplate),.al-plate,.f-plate,.m-plate,.tc-logo,.stlogo,.eu-al .logo,.nw-join .logo{background:#fff;border-radius:8px;padding:3px 6px}
-.lg-logo{border-color:#3a4a42}
-/* tinted notices and badges */
-.mcy-warn{background:#2b2414;border-color:#5c4a22;color:#f0d9a6}
-.opby.chtag{color:#f0d9a6;background:#2b2414;border-color:#5c4a22}
-.badge.awd,.badge-st.board,.tc-tag{color:#f0d9a6;background:#2b2414;border-color:#5c4a22}
-.badge.cxl,.badge-st.off{color:#f1c4c4;background:#2e1919;border-color:#5a3434}
-.badge.upg,.badge-st.land{color:#cdd3ff;background:#1c2142;border-color:#3a4378}
-.badge-st.air,.mc-d.low,.dn-done{color:#a7e6c4;background:#132a20;border-color:#2a5641}
-.mc-d.low b{color:#a7e6c4}
-.lg-in,.yf-lg{color:#7fd3a2}
-.dc-w{color:#f0b37a}
-.tbtn.warn,.terr{color:#f0a3a3}
-.err,.inp.bad input,#car-err{color:#f08a80}
-.tl-row.now{background:#16261f}
-.acitem.ishub{background:rgba(127,211,162,.08)}.acitem.ishub.on{background:rgba(127,211,162,.16)}
-.ulink:hover,.chp:hover,.tbtn:hover{border-color:#3e5047}
-.acct .dot.off{background:#5c5850}
-/* sign-in buttons keep their brands' own colours */
-.gbtn:not(.dbtn){background:#fff;color:#1f1f1f}
-.who{color:#9fb8ab}
-/* seat maps */
-.seat{background-color:#8fa198}
-.seat.taken{background-color:#34423b}
-.seat.off{background-color:#56665e}
-/* maps: the same tiles, turned to night */
-.tl-tiles{filter:invert(1) hue-rotate(180deg) brightness(.92) contrast(.88) saturate(.6)}
-.leaflet-container{background:#0f1b18}
-.leaflet-bar a,.leaflet-bar a:hover{background:#19231e;color:#e3eae5;border-bottom-color:#27332d}
-.leaflet-control-attribution{background:rgba(14,20,18,.82)!important;color:#a2b1a8}
-.leaflet-control-attribution a{color:#a7e6c4}
-.trk-legend{background:rgba(20,28,24,.92)!important}
-.rw-lab{background:#19231e;color:#e3eae5;border-color:#3a4a42}
-.rw-lab.use{background:#23874e;color:#fff;border-color:#23874e}
-.modal{background:rgba(0,0,0,.6)}
-/* hover on green buttons darkens, as in light mode */
-.go:hover,.f .buy button:hover,.sheet .cont:hover,.selbar button:hover,.tbtn.pri:hover,.car-buy button:hover{background:#1b6b3e}
-}
+:root[data-theme="dark"]{--brand:#23874e; --brand-ink:#7fd3a2; --sky:#5fbfae; --leaf:#7fd3a2;
+  --bg:#0e1412; --surface:#141c18; --surface-2:#19231e;
+  --ink:#e3eae5; --muted:#a2b1a8; --faint:#76877d; --line:#27332d; --good:#7fd3a2;
+  --chrome:#0e1412; --chrome-ink:#e3eae5; --chrome-muted:#a2b1a8;
+  --water:#0f1b18; --land:#1a2420; --coast:#33433b;
+  --shadow:none; color-scheme:dark;}
+:root[data-theme="dark"] #tl-splash{background:var(--bg)}
+:root[data-theme="dark"] .sp-logo,:root[data-theme="dark"] .navplate{background:#fff;border-radius:10px;padding:4px 8px}
+:root[data-theme="dark"] .sp-logo{width:104px}
+:root[data-theme="dark"] #sp-route{stroke:#3a4a42}
+:root[data-theme="dark"] #tl-splash circle{fill:var(--bg)}
+:root[data-theme="dark"] .sp-plane path{fill:#7fd3a2}
+:root[data-theme="dark"] .logo,:root[data-theme="dark"] .dlogo:not(.navplate),:root[data-theme="dark"] .al-plate,:root[data-theme="dark"] .f-plate,:root[data-theme="dark"] .m-plate,:root[data-theme="dark"] .tc-logo,:root[data-theme="dark"] .stlogo,:root[data-theme="dark"] .eu-al .logo,:root[data-theme="dark"] .nw-join .logo{background:#fff;border-radius:8px;padding:3px 6px}
+:root[data-theme="dark"] .lg-logo{border-color:#3a4a42}
+:root[data-theme="dark"] .mcy-warn{background:#2b2414;border-color:#5c4a22;color:#f0d9a6}
+:root[data-theme="dark"] .opby.chtag{color:#f0d9a6;background:#2b2414;border-color:#5c4a22}
+:root[data-theme="dark"] .badge.awd,:root[data-theme="dark"] .badge-st.board,:root[data-theme="dark"] .tc-tag{color:#f0d9a6;background:#2b2414;border-color:#5c4a22}
+:root[data-theme="dark"] .badge.cxl,:root[data-theme="dark"] .badge-st.off{color:#f1c4c4;background:#2e1919;border-color:#5a3434}
+:root[data-theme="dark"] .badge.upg,:root[data-theme="dark"] .badge-st.land{color:#cdd3ff;background:#1c2142;border-color:#3a4378}
+:root[data-theme="dark"] .badge-st.air,:root[data-theme="dark"] .mc-d.low,:root[data-theme="dark"] .dn-done{color:#a7e6c4;background:#132a20;border-color:#2a5641}
+:root[data-theme="dark"] .mc-d.low b{color:#a7e6c4}
+:root[data-theme="dark"] .lg-in,:root[data-theme="dark"] .yf-lg{color:#7fd3a2}
+:root[data-theme="dark"] .dc-w{color:#f0b37a}
+:root[data-theme="dark"] .tbtn.warn,:root[data-theme="dark"] .terr{color:#f0a3a3}
+:root[data-theme="dark"] .err,:root[data-theme="dark"] .inp.bad input,:root[data-theme="dark"] #car-err{color:#f08a80}
+:root[data-theme="dark"] .tl-row.now{background:#16261f}
+:root[data-theme="dark"] .acitem.ishub{background:rgba(127,211,162,.08)}
+:root[data-theme="dark"] .acitem.ishub.on{background:rgba(127,211,162,.16)}
+:root[data-theme="dark"] .ulink:hover,:root[data-theme="dark"] .chp:hover,:root[data-theme="dark"] .tbtn:hover{border-color:#3e5047}
+:root[data-theme="dark"] .acct .dot.off{background:#5c5850}
+:root[data-theme="dark"] .gbtn:not(.dbtn){background:#fff;color:#1f1f1f}
+:root[data-theme="dark"] .who{color:#9fb8ab}
+:root[data-theme="dark"] .seat{background-color:#8fa198}
+:root[data-theme="dark"] .seat.taken{background-color:#34423b}
+:root[data-theme="dark"] .seat.off{background-color:#56665e}
+:root[data-theme="dark"] .tl-tiles{filter:invert(1) hue-rotate(180deg) brightness(.92) contrast(.88) saturate(.6)}
+:root[data-theme="dark"] .leaflet-container{background:#0f1b18}
+:root[data-theme="dark"] .leaflet-bar a,:root[data-theme="dark"] .leaflet-bar a:hover{background:#19231e;color:#e3eae5;border-bottom-color:#27332d}
+:root[data-theme="dark"] .leaflet-control-attribution{background:rgba(14,20,18,.82)!important;color:#a2b1a8}
+:root[data-theme="dark"] .leaflet-control-attribution a{color:#a7e6c4}
+:root[data-theme="dark"] .trk-legend{background:rgba(20,28,24,.92)!important}
+:root[data-theme="dark"] .rw-lab{background:#19231e;color:#e3eae5;border-color:#3a4a42}
+:root[data-theme="dark"] .rw-lab.use{background:#23874e;color:#fff;border-color:#23874e}
+:root[data-theme="dark"] .modal{background:rgba(0,0,0,.6)}
+:root[data-theme="dark"] .go:hover,:root[data-theme="dark"] .f .buy button:hover,:root[data-theme="dark"] .sheet .cont:hover,:root[data-theme="dark"] .selbar button:hover,:root[data-theme="dark"] .tbtn.pri:hover,:root[data-theme="dark"] .car-buy button:hover{background:#1b6b3e}
+:root[data-theme="light"]{color-scheme:light}
+
 </style>
 
 <div id="tl-splash" role="status" aria-live="polite">
@@ -2028,7 +2173,12 @@ body.sb-open{overflow:hidden}
   </div>
   <button class="nav-arrow r" type="button" aria-label="Scroll tabs right" hidden>›</button>
   </div>
-  <div class="nav-right"><span class="hidem">Help</span><span class="hidem" id="who"></span><button class="signin" id="signin-btn">Sign in</button></div>
+  <div class="nav-right"><span class="hidem">Help</span><span class="hidem" id="who"></span><div class="thm"><button type="button" class="thm-b" id="thm-b" aria-haspopup="true" aria-expanded="false" aria-label="Appearance" title="Appearance"></button>
+    <div class="thm-m" id="thm-m" role="menu" hidden>
+      <button type="button" role="menuitemradio" data-thm="device">Match device</button>
+      <button type="button" role="menuitemradio" data-thm="light">Light</button>
+      <button type="button" role="menuitemradio" data-thm="dark">Dark</button></div></div>
+    <button class="signin" id="signin-btn">Sign in</button></div>
 </div></nav>
 
 <!-- HOME -->
@@ -2187,6 +2337,34 @@ body.sb-open{overflow:hidden}
   <section class="section" id="ap-page"></section>
 </div>
 
+<!-- ROUTE -->
+<div class="view" id="view-route" hidden>
+  <section class="section" id="rt-page"></section>
+</div>
+
+<!-- FLIGHT LOG -->
+<div class="view" id="view-log" hidden>
+  <section class="section">
+    <h2>Your flight log</h2>
+    <p class="lede" id="log-lede">Every TerraLink flight you've taken, on one map.</p>
+    <div id="log-body"></div>
+  </section>
+</div>
+
+<!-- AIRPORT TV BOARD -->
+<div class="view tv" id="view-tv" hidden>
+  <div class="tv-top">
+    <div class="tv-ap"><b id="tv-code">—</b><span id="tv-city"></span></div>
+    <div class="tv-title" id="tv-title">Departures</div>
+    <div class="tv-right"><div class="tv-clock" id="tv-clock">--:--</div>
+      <div class="tv-btns"><button type="button" id="tv-kind">Show arrivals</button><button type="button" id="tv-fs">Full screen</button>
+      <button type="button" id="tv-x" aria-label="Close the board">×</button></div></div>
+  </div>
+  <div class="tv-head"><span>Time</span><span>Flight</span><span id="tv-dest">Destination</span><span>Gate</span><span>Remarks</span></div>
+  <div class="tv-rows" id="tv-rows"></div>
+  <div class="tv-foot" id="tv-foot"></div>
+</div>
+
 <!-- WHAT'S NEW -->
 <div class="view" id="view-news" hidden>
   <section class="section">
@@ -2331,7 +2509,7 @@ body.sb-open{overflow:hidden}
 <div class="view" id="view-trips" hidden>
   <section class="section">
     <h2>My trips</h2>
-    <p class="lede">Everything you've booked, soonest first. Open a trip for its flights, seats and reference.</p>
+    <p class="lede">Everything you've booked, soonest first. Open a trip for its flights, seats and reference. <a class="lnk" href="#/log">Your flight log →</a></p>
     <div id="trips-acct"></div>
     <div id="trips-live"></div>
     <div id="trips-list"></div>
@@ -2371,7 +2549,7 @@ body.sb-open{overflow:hidden}
     <div class="awd" id="award-chart"></div>
     <p class="ph" style="margin-top:12px">Award tickets don't earn points. Seats are subject to availability in the cabin you choose.</p>
     <h2 style="font-size:24px;margin-top:38px">Lounges</h2>
-    <p class="lede">Every group airline has a lounge at each of its hubs — somewhere quiet before you fly, with food, showers and Starlink Wi-Fi.</p>
+    <p class="lede">Group airlines have lounges at their hubs, at the other TerraLink hubs they fly to and at major airports around the world — somewhere quiet before you fly, with food, showers and Starlink Wi-Fi.</p>
     <div class="tiers" id="lounge-list"></div>
     <div id="club-actv-wrap">
       <h2 style="font-size:24px;margin-top:38px">Your activity</h2>
@@ -2425,6 +2603,7 @@ body.sb-open{overflow:hidden}
     <div class="conf-hero"><div class="tick">✓</div>
       <h2>You're booked.</h2>
       <div class="ref">Booking reference<b id="conf-ref">—</b></div>
+      <button type="button" class="tbtn" id="conf-ics" style="margin-top:14px">Add to calendar</button>
     </div>
     <div class="bookwrap">
       <div class="panel"><h3>Itinerary</h3><div class="ph" id="conf-route"></div><div id="conf-itin"></div></div>
@@ -3535,12 +3714,21 @@ const CHARTER_REG={};CHARTER_FLEET.forEach(f=>f.regs.forEach(r=>CHARTER_REG[r]=f
         const op=ch?null:operatorOf(i,model);
         return `<div class="fl-row${ch?" charter":""}">
           <div><div class="mdl">${model}${op?` <span class="opby">Operated by ${op}</span>`:""}${ch?` <span class="opby chtag">Charter plane · ${ch.product}</span>`:""}</div>
-            <div class="regs">${regs.slice(0,8).map(r=>`<a href="#/status?q=${r}">${r}</a>`).join(" · ")}${regs.length>8?" · +"+(regs.length-8)+" more":""}</div></div>
+            <div class="regs"><span class="rl">${regs.slice(0,8).map(r=>`<a href="#/status?q=${r}">${r}</a>`).join(" · ")}</span>${regs.length>8?`<button type="button" class="fl-more" data-flmore aria-expanded="false">+${regs.length-8} more</button>`:""}</div>
+            ${regs.length>8?`<div class="regs-all" hidden>${[...regs].sort().map(r=>`<a href="#/status?q=${r}">${r}</a>`).join("")}<button type="button" class="fl-more" data-flless>Show fewer</button></div>`:""}</div>
           <div class="cnt tnum">${regs.length}</div>
           <div class="fl-bar"><i style="width:${Math.round(regs.length/max*100)}%;background:${a.color}"></i></div>
         </div>`;}).join("")}`;
     wrap.appendChild(card);});
   document.getElementById("fleet-lede").textContent=`${total.toLocaleString()} aircraft flying for the group, by carrier and type.`;
+  /* "+71 more" opens every registration of that type; each one links to its status */
+  wrap.addEventListener("click",ev=>{
+    const more=ev.target.closest("[data-flmore]"),less=ev.target.closest("[data-flless]");
+    if(!more&&!less)return;
+    const row=ev.target.closest(".fl-row"),all=row.querySelector(".regs-all"),short=row.querySelector(".regs");
+    all.hidden=!more; short.hidden=!!more;
+    if(less){const b=short.querySelector("[data-flmore]");if(b)b.focus();}
+  });
 })();
 
 /* ---------- map (lazy) ---------- */
@@ -3597,14 +3785,64 @@ function rwyEnds(code){
   return RWY_ENDS[code]=out;
 }
 const angDiff=(a,b)=>Math.abs(((a-b+540)%360)-180);
-/* the runway end in use: the one facing most nearly into the day's wind; with
-   parallel runways, each flight gets one of them */
-function rwyEnd(code,day,salt){
+/* Which runways are in use, for landing and for taking off. The busy airports
+   below run fixed configurations, as they do for real (Houston lands on the
+   east–west runways and departs off 15L/15R, San Francisco lands on 28 and
+   takes off on 1, Heathrow lands on one runway and departs off the other);
+   each day one configuration is picked, weighted by how often it's used.
+   Elsewhere the runways facing into the day's wind are used, and where there
+   are parallel runways, landings get the outer ones and departures the rest. */
+const RWY_OPS={
+  IAH:[[.55,"26L 26R 27","15L 15R"],[.30,"08L 08R 09","15L 15R"],[.15,"26L 26R 27","33L 33R"]],
+  SFO:[[.85,"28L 28R","01L 01R"],[.15,"19L 19R","10L 10R"]],
+  LAX:[[.90,"24R 25L","24L 25R"],[.10,"06L 07R","06R 07L"]],
+  LHR:[[.70,"27L","27R","alt"],[.30,"09L","09R"]],
+  EWR:[[.70,"22L","22R"],[.30,"04R","04L"]],
+  JFK:[[.35,"31R","31L"],[.25,"22L","22R"],[.20,"13L","13R"],[.20,"04R","04L"]],
+  HND:[[.60,"34L 34R","34R 05"],[.40,"22 23","16L 16R"]],
+  ATL:[[.65,"26R 27L 28","26L 27R"],[.35,"08L 09R 10","08R 09L"]],
+  DEN:[[.55,"34R 35L 35R","34L 25 08"],[.45,"16L 16R 17R","17L 25 08"]],
+  DFW:[[.65,"17C 18R 13R","17R 18L"],[.35,"35C 36L 31R","35L 36R"]],
+  CDG:[[.65,"27R 26L","27L 26R"],[.35,"09L 08R","09R 08L"]],
+  FRA:[[.70,"25L 25R","25C 18"],[.30,"07L 07R","07C 18"]],
+  IAD:[[.55,"19C 19R","19L 30"],[.45,"01C 01R","01L 30"]],
+};
+const rwyNorm=id=>String(id).toUpperCase().replace(/^0+(?=\d)/,"");
+const RWY_OPS_CACHE={};
+function rwyOps(code,day){
+  const key=code+"|"+day; if(RWY_OPS_CACHE[key])return RWY_OPS_CACHE[key];
   const ends=rwyEnds(code); if(!ends.length)return null;
-  const wind=Math.floor(h32("wind"+code+day)*360);
-  const best=Math.min(...ends.map(e=>angDiff(e.hdg,wind)));
-  const ok=ends.filter(e=>angDiff(e.hdg,wind)<=best+25&&e.len>=Math.max(...ends.map(x=>x.len))*.55);
-  const pool=ok.length?ok:ends;
+  const byId=id=>ends.find(e=>rwyNorm(e.id)===rwyNorm(id));
+  let out=null;
+  const cfg=RWY_OPS[code];
+  if(cfg){
+    const r=h32("flow"+code+day);let acc=0,pick=cfg[cfg.length-1];
+    for(const c of cfg){acc+=c[0];if(r<acc){pick=c;break;}}
+    let arr=pick[1].split(" ").map(byId).filter(Boolean),dep=pick[2].split(" ").map(byId).filter(Boolean);
+    if(pick[3]==="alt"&&day%2)[arr,dep]=[dep,arr];           // Heathrow swaps its westerly runways day by day
+    if(arr.length&&dep.length)out={arr,dep,fixed:true};
+  }
+  if(!out){
+    const wind=Math.floor(h32("wind"+code+day)*360), longest=Math.max(...ends.map(x=>x.len));
+    const big=ends.filter(e=>e.len>=longest*.55);
+    const lead=big.reduce((m,e)=>angDiff(e.hdg,wind)<angDiff(m.hdg,wind)?e:m,big[0]);
+    const set=big.filter(e=>angDiff(e.hdg,lead.hdg)<=15);            // the runways parallel to it
+    if(set.length<2)out={arr:set,dep:set};
+    else{
+      /* order the parallels across the direction of travel */
+      const h=set[0].hdg*RAD,la0=set[0].la,lo0=set[0].lo,cl=Math.cos(la0*RAD);
+      const side=e=>((e.lo-lo0)*cl)*Math.cos(h)-(e.la-la0)*Math.sin(h);
+      const ord=set.slice().sort((a,b)=>side(a)-side(b));
+      if(ord.length===2){const f=h32("seg"+code)<.5;out={arr:[ord[f?0:1]],dep:[ord[f?1:0]]};}
+      else out={arr:[ord[0],ord[ord.length-1]],dep:ord.slice(1,-1)};
+    }
+  }
+  return RWY_OPS_CACHE[key]=out;
+}
+/* the runway end a flight uses: mode "dep" or "arr" */
+function rwyEnd(code,day,salt,mode){
+  const ops=rwyOps(code,day); if(!ops)return null;
+  const pool=(mode==="arr"?ops.arr:ops.dep); if(!pool.length)return null;
   return pool[Math.floor(h32(salt)*pool.length)];
 }
 /* fly on from a point, turning at a steady rate until heading for the target */
@@ -3621,7 +3859,7 @@ function turnTowards(pts,la,lo,hdg,tla,tlo,r){
 const PATHS=new Map();
 function flightPath(from,to,tDep,tArr,salt){
   const A=AINFO[from],B=AINFO[to];
-  const de=rwyEnd(from,Math.floor((tDep||0)/864e5),"d"+salt), ae=rwyEnd(to,Math.floor((tArr||0)/864e5),"a"+salt);
+  const de=rwyEnd(from,Math.floor((tDep||0)/864e5),"d"+salt,"dep"), ae=rwyEnd(to,Math.floor((tArr||0)/864e5),"a"+salt,"arr");
   const key=from+"|"+to+"|"+(de?de.id:"")+"|"+(ae?ae.id:"");
   if(PATHS.has(key))return PATHS.get(key);
   const dist=gcKm(A[0],A[1],B[0],B[1]), short=dist<90;
@@ -4301,7 +4539,7 @@ function renderYourFlight(trips){
     <div class="yf-l"><span class="yf-k">Your flight</span>
       <div class="yf-r"><b>${fno}</b> ${e.from} → ${e.to} <span class="badge-st ${y.s.k}">${y.s.label}</span></div>
       <div class="yf-t">${y.s.text}</div>
-      ${(()=>{if(y.s.k!=="sched"&&y.s.k!=="board")return "";const lg=loungeAt(e.from,e.ai),acc=lg&&loungeAccess(y.b.ctx.cab,myPoints(),false);
+      ${(()=>{if(y.s.k!=="sched"&&y.s.k!=="board")return "";const neb=nebulaAt(e,y.b.ctx.cab),lg=neb||loungeAt(e.from,e.ai),acc=neb?"Nebula":lg&&loungeAccess(y.b.ctx.cab,myPoints(),false);
         return lg&&acc?`<div class="yf-lg">${lg.name} is open for you · ${lg.where}</div>`:"";})()}</div>
     <div class="yf-a">${ck&&ck.k==="open"?`<button type="button" class="tbtn pri" data-yf-ck="${y.b.ref}" data-dir="${y.L.dir}">Check in</button>`:""}
       <a class="tbtn" href="#/status?q=${fno}">${y.s.k==="air"?"Follow on the map":"See it on the map"}</a>
@@ -4648,7 +4886,7 @@ function icsFor(b){
   /* lines over 75 bytes are folded, as the format asks */
   const fold=l=>{const out=[];let s=l;while(s.length>70){out.push(s.slice(0,70));s=" "+s.slice(70);}out.push(s);return out.join("\r\n");};
   const ev=[],stamp=at(Date.now());
-  [["out",b.out,b.ctx&&b.ctx.d],["ret",b.ret,b.ctx&&b.ctx.r]].forEach(([dir,legs,base])=>(legs||[]).forEach((e,i)=>{
+  tripParts(b).map(P=>[P.dir,P.legs,P.base]).forEach(([dir,legs,base])=>(legs||[]).forEach((e,i)=>{
     if(!base||!AINFO[e.from]||!AINFO[e.to])return;
     const date=e.off?addDays(base,e.off):base, t=localToUtc(e.from,date,e.dep);
     const end=localToUtc(e.to,addDays(date,e.ad||0),e.arr);
@@ -4770,13 +5008,6 @@ function apBoardHtml(){
     ${list.length>AP.shown?`<button type="button" class="bd-more" data-apmore>Show ${Math.min(30,list.length-AP.shown)} more</button>`:""}
     <div class="bd-note">The last half hour and the next 24, from the timetable, in local time. Tap a flight for its status.</div></div>`;
 }
-/* runway ends facing today's wind, as the tracker uses them */
-function rwyInUse(code){
-  const ends=rwyEnds(code); if(!ends.length)return [];
-  const wind=Math.floor(h32("wind"+code+Math.floor(Date.now()/864e5))*360);
-  const best=Math.min(...ends.map(e=>angDiff(e.hdg,wind))), longest=Math.max(...ends.map(x=>x.len));
-  return ends.filter(e=>angDiff(e.hdg,wind)<=best+25&&e.len>=longest*.55);
-}
 function renderAirport(code){
   const el=document.getElementById("ap-page");
   if(AP.timer){clearInterval(AP.timer);AP.timer=null;}
@@ -4791,8 +5022,8 @@ function renderAirport(code){
     if(!e.cs)per[e.ai]=(per[e.ai]||0)+w;
     const d=(dest[e.to]=dest[e.to]||{w:0,ai:new Set()});d.w+=w;d.ai.add(e.ai);});
   const als=Object.keys(per).map(Number).sort((x,y)=>per[y]-per[x]);
-  const lounges=AL.filter(a=>!a.retired&&LOUNGE_NAMES[a.code]&&(a.hubs||[]).includes(code));
-  const ends=rwyEnds(code), use=new Set(rwyInUse(code).map(e=>e.id));
+  const lounges=loungesAt(code), srHere=AL.find(a=>a.code==="SR"&&(a.hubs||[]).includes(code));
+  const ops=rwyOps(code,Math.floor(Date.now()/864e5)), arrIds=new Set(ops?ops.arr.map(e=>e.id):[]), depIds=new Set(ops?ops.dep.map(e=>e.id):[]);
   const rws=(RWY[code]||[]).map(([a,b,c,d,i1,i2])=>({i1,i2,len:Math.round(gcKm(a,b,c,d)*1000)}));
   const tomorrow=addDays(todayISO(),1);
   const dl=Object.keys(dest).sort((x,y)=>cityOf(x).localeCompare(cityOf(y)));
@@ -4800,20 +5031,22 @@ function renderAirport(code){
   el.innerHTML=`<div class="ap-top">
       <div><div class="ap-code">${code}</div><h2>${cityOf(code)}</h2>
         <div class="meta">${nm[0]?escapeHtml(nm[0]):""}${nm[2]?` · ${nm[2]}`:""}</div></div>
-      <div class="ap-clock">Local time<b id="ap-clock">${clk(utcToLocal(code,Date.now()).min)}</b>${TZ[code]||""}</div></div>
+      <div class="ap-clock">Local time<b id="ap-clock">${clk(utcToLocal(code,Date.now()).min)}</b>${TZ[code]||""}<br><a class="lnk" href="#/tv?c=${code}">Open the TV board ↗</a></div></div>
     <div class="ap-grid">
       <div><div id="ap-board">${apBoardHtml()}</div>
         <h3 class="eu-h3">Nonstop from ${cityOf(code)} <span style="font-family:var(--ui);font-size:14px;color:var(--muted);font-weight:500">${dl.length} destinations</span></h3>
-        <div class="ap-dests">${dl.map(c=>`<a class="hub ap-dest" href="#/search?from=${code}&to=${c}&cabin=eco&trip=oneway&d=${tomorrow}" title="${cityOf(c)} · ${c}">${cityOf(c)}<small>${wk(dest[c].w)}</small></a>`).join("")||`<span class="ap-none">No scheduled flights.</span>`}</div>
+        <div class="ap-dests">${dl.map(c=>`<a class="hub ap-dest" href="#/route?a=${code}&b=${c}" title="${cityOf(c)} · ${c}">${cityOf(c)}<small>${wk(dest[c].w)}</small></a>`).join("")||`<span class="ap-none">No scheduled flights.</span>`}</div>
       </div>
       <aside>
         ${rws.length?`<div class="ap-card"><h3>Runways</h3><div class="ap-rmap" id="ap-rmap"></div>
           ${rws.map(r=>`<div class="ap-rw"><span>${r.i1} / ${r.i2}</span><b>${r.len.toLocaleString()} m</b></div>`).join("")}
-          ${use.size?`<div class="ap-inuse">In use today: ${[...use].join(", ")}</div>`:""}</div>`:""}
+          ${arrIds.size?`<div class="ap-inuse"><span class="rw-lab use">&nbsp;</span> Landing today: ${[...arrIds].join(", ")}<br>
+            <span class="rw-lab dep">&nbsp;</span> Taking off: ${[...depIds].join(", ")}</div>`:""}</div>`:""}
         <div class="ap-card"><h3>Airlines here</h3>
           ${als.map(i=>{const a=AL[i];return `<div class="ap-al"><span class="lg-logo"><img src="${a.logo||""}" alt=""></span>${a.name}${(a.hubs||[]).includes(code)?`<span class="ap-tag">HUB</span>`:""}<span>${per[i]} departures a week</span></div>`;}).join("")||`<div class="ap-none">None scheduled.</div>`}</div>
-        ${lounges.length?`<div class="ap-card"><h3>Lounges</h3>${lounges.map(a=>{const lg=loungeAt(code,AL.indexOf(a));
-          return `<div class="ap-lg">${LOUNGE_NAMES[a.code]}<small>${a.name} · ${lg&&lg.al===a?lg.where:"Airside, after security"}</small></div>`;}).join("")}</div>`:""}
+        ${lounges.length||srHere?`<div class="ap-card"><h3>Lounges</h3>${lounges.map(a=>{const lg=loungeHere(LOUNGE_NAMES[a.code],a,code,"lounge"+a.code);
+          return `<div class="ap-lg">${LOUNGE_NAMES[a.code]}<small>${a.name} · ${lg.where}</small></div>`;}).join("")}
+          ${srHere?`<div class="ap-lg">${NEBULA_LOUNGE}<small>Starliner · Nebula passengers only · ${loungeHere(NEBULA_LOUNGE,srHere,code,"nebula").where}</small></div>`:""}</div>`:""}
       </aside></div>`;
   const wire=()=>{const b=document.getElementById("ap-board");
     b.querySelectorAll("[data-apb]").forEach(x=>x.onclick=()=>{AP.tab=x.dataset.apb;AP.shown=30;b.innerHTML=apBoardHtml();wire();});
@@ -4824,20 +5057,200 @@ function renderAirport(code){
     const b=document.getElementById("ap-board");if(b){b.innerHTML=apBoardHtml();wire();}},60000);
   /* the runway map */
   if(rws.length&&typeof L!=="undefined"){
-    const map=L.map("ap-rmap",{zoomControl:false,attributionControl:true,scrollWheelZoom:false,dragging:!trkNarrow()});
+    const map=L.map("ap-rmap",{zoomControl:true,attributionControl:true,scrollWheelZoom:false,dragging:!trkNarrow()});
     baseMap(map);AP.map=map;
     const pts=[];
     (RWY[code]||[]).forEach(([a,b,c,d,i1,i2])=>{
       pts.push([a,b],[c,d]);
       L.polyline([[a,b],[c,d]],{color:"#3b4741",weight:7,opacity:.9,lineCap:"butt",interactive:false}).addTo(map);
       L.polyline([[a,b],[c,d]],{color:"#fff",weight:1,opacity:.9,dashArray:"6 6",interactive:false}).addTo(map);
-      [[a+(a-c)*.1,b+(b-d)*.1,i1],[c+(c-a)*.1,d+(d-b)*.1,i2]].forEach(([la,lo,id])=>L.marker([la,lo],{interactive:false,keyboard:false,
-        icon:L.divIcon({className:"",html:`<span class="rw-lab${use.has(id)?" use":""}">${id}</span>`,iconSize:null,iconAnchor:[12,9]})}).addTo(map));
+      /* labels sit just beyond each end; parallel runways' labels step apart sideways */
+      const lab=(x,y,ox,oy,id)=>{const s=/L$/.test(id)?1:/R$/.test(id)?-1:0,dx=x-ox,dy=y-oy;
+        return [x+dx*.1+(-dy)*.06*s*(-1),y+dy*.1+dx*.06*s*(-1),id];};
+      [lab(a,b,c,d,i1),lab(c,d,a,b,i2)].forEach(([la,lo,id])=>L.marker([la,lo],{interactive:false,keyboard:false,
+        icon:L.divIcon({className:"",html:`<span class="rw-lab${arrIds.has(id)?" use":depIds.has(id)?" dep":""}">${id}</span>`,iconSize:null,iconAnchor:[12,9]})}).addTo(map));
     });
     map.fitBounds(L.latLngBounds(pts),{padding:[26,26],maxZoom:15});
     setTimeout(()=>map.invalidateSize(),60);
   }
 }
+
+/* ---------- route pages ----------
+   One city pair: the nonstop timetable for a week, who flies it and on what,
+   fares by cabin, and the way the aircraft actually fly it. */
+const RT={map:null};
+function routeLegs(a,b){
+  ensureSchedule(iso(new Date()));
+  const by=new Map();
+  (ALL[a]||[]).forEach(e=>{if(e.to!==b||e.unsched||!e.wd||!e.wd.length)return;
+    const k=[e.ai,e.fn,e.dep,e.arr,e.cs?e.opCode:""].join("|");
+    const x=by.get(k); if(x){e.wd.forEach(d=>x.days.add(d));} else by.set(k,{e,days:new Set(e.wd)});});
+  return [...by.values()].sort((x,y)=>x.e.dep-y.e.dep||(x.e.cs-y.e.cs));
+}
+function renderRoute(a,b){
+  const el=document.getElementById("rt-page");
+  if(RT.map){RT.map.remove();RT.map=null;}
+  if(!AINFO[a]||!AINFO[b]||a===b){el.innerHTML=`<h2>Route</h2><p class="ap-none">That isn't a route we know. <a href="#/where">See every destination →</a></p>`;return;}
+  const rows=routeLegs(a,b), back=routeLegs(b,a), km=kmBetween(a,b)||0, tomorrow=addDays(todayISO(),1);
+  const DAYS=[[1,"M"],[2,"T"],[3,"W"],[4,"T"],[5,"F"],[6,"S"],[0,"S"]];
+  const perWeek=rows.reduce((s,r)=>s+r.days.size,0), carriers=new Set(rows.filter(r=>!r.e.cs).map(r=>r.e.ai));
+  const typical=rows.length?rows.map(r=>r.e.dur).sort((x,y)=>x-y)[Math.floor(rows.length/2)]:0;
+  const cab=[["eco","Economy"],["prem","Premium economy"],["biz","Business"],["first","First"]].map(([k,n])=>{
+    const p=rows.map(r=>r.e.pr&&r.e.pr[k]).filter(x=>x>0);return p.length?[n,Math.min(...p)]:null;}).filter(Boolean);
+  el.innerHTML=`<div class="rt-top"><div>
+      <div class="rt-od"><a href="${apLink(a)}">${cityOf(a)}</a> → <a href="${apLink(b)}">${cityOf(b)}</a></div>
+      <div class="rt-meta">${a} – ${b} · ${Math.round(km).toLocaleString()} km${typical?` · about ${durFmt(typical)}`:""}${rows.length?` · ${perWeek} nonstop flight${perWeek===1?"":"s"} a week on ${carriers.size||1} airline${carriers.size===1?"":"s"}`:""}</div></div>
+      <div class="rt-acts"><a class="tbtn pri" href="#/search?from=${a}&to=${b}&cabin=eco&trip=oneway&d=${tomorrow}">Search flights</a>
+        <a class="tbtn" href="#/route?a=${b}&b=${a}">${b} → ${a}${back.length?"":" (no nonstop)"}</a></div></div>
+    <div class="rt-grid"><div>
+      ${rows.length?`<table class="rt-tt"><thead><tr><th>Flight</th><th>Departs</th><th>Arrives</th><th class="ac">Aircraft</th><th>Days</th></tr></thead><tbody>
+        ${rows.map(({e,days})=>{const al=AL[e.ai]||{code:"",name:""},model=(DATA.aircraft[e.ac]||[])[0]||"";
+          return `<tr><td><div class="fn"><span class="lg-logo"><img src="${al.logo||""}" alt=""></span><div><a class="lnk" href="#/status?q=${al.code}${e.fn}">${al.code}${e.fn}</a>
+              <small>${e.cs?`operated by ${escapeHtml(e.op||"")}`:al.name}</small></div></div></td>
+            <td class="t">${clk(e.dep)}</td><td class="t">${clk(e.arr)}${e.arrDay?`<sup>+${e.arrDay}</sup>`:""}</td>
+            <td class="ac">${model}<br>${durFmt(e.dur)}</td>
+            <td><div class="rt-days">${DAYS.map(([d,l])=>`<i class="${days.has(d)?"on":""}" title="${["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][d]}">${l}</i>`).join("")}</div></td></tr>`;}).join("")}
+        </tbody></table>
+        <p class="eu-note">Times are local at each airport. Days are when the flight leaves ${cityOf(a)}.</p>`
+      :`<div class="nores"><b>No nonstop flights</b>Nobody in the group flies ${a}–${b} nonstop.
+        <div style="margin-top:12px"><a class="lnk" href="#/search?from=${a}&to=${b}&cabin=eco&trip=oneway&d=${tomorrow}">Search with connections →</a></div></div>`}
+    </div><aside>
+      <div class="rt-map" id="rt-map"></div>
+      ${cab.length?`<div class="ap-card" style="margin-top:14px"><h3>Fares from</h3><div class="rt-pr">${cab.map(([n,p])=>`<span>${n}</span><b>${money(p)}</b>`).join("")}</div>
+        <p class="eu-note" style="margin-top:10px">One way, per person, the cheapest nonstop.</p></div>`:""}
+    </aside></div>`;
+  if(typeof L!=="undefined"){
+    const map=L.map("rt-map",{zoomControl:false,scrollWheelZoom:false,worldCopyJump:false});baseMap(map);RT.map=map;
+    const now=Date.now(),P=flightPath(a,b,now,now+(typical||90)*6e4,"route"+a+b);
+    const col=rows.length?brandOf((AL[rows[0].e.ai]||{}).code).c:"#5d6a63";
+    WRAP.forEach(off=>L.polyline(P.pts.map(p=>[p[0],p[1]+off]),{color:col,weight:3,opacity:.9,dashArray:rows.length?null:"2 8",interactive:false}).addTo(map));
+    [[a,P.pts[0]],[b,P.pts[P.pts.length-1]]].forEach(([c,p])=>L.circleMarker(p,{radius:5,color:col,weight:2.5,fillColor:"#fff",fillOpacity:1,interactive:false})
+      .bindTooltip(c,{permanent:true,direction:"top",offset:[0,-7],className:"trk-ap"}).addTo(map));
+    map.fitBounds(L.latLngBounds(P.pts),{padding:[30,30],maxZoom:7});setTimeout(()=>map.invalidateSize(),60);
+  }
+}
+
+/* ---------- flight log ----------
+   Every flight on your trips that has already landed, added up, with the
+   ones still to come drawn dashed. Badges are just for fun. */
+const LOGV={map:null};
+async function renderLog(){
+  const body=document.getElementById("log-body");
+  if(LOGV.map){LOGV.map.remove();LOGV.map=null;}
+  body.innerHTML=`<div class="ph">Loading your flights…</div>`;
+  const all=(await STORE.trips()).filter(b=>b.status!=="cancelled"), now=Date.now();
+  const legs=[];all.forEach(b=>tripLegTimes(b).forEach(L=>legs.push(L)));
+  const flown=legs.filter(L=>L.end<=now), ahead=legs.filter(L=>L.end>now);
+  document.getElementById("log-lede").textContent=STORE.live()
+    ?"Every TerraLink flight on your account, on one map."
+    :"Every TerraLink flight saved in this browser, on one map. Sign in to keep your log on your account.";
+  if(!legs.length){body.innerHTML=`<div class="nores"><b>Nothing to log yet</b>Once you've flown a trip booked here, it shows up on your map.
+    <div style="margin-top:14px"><a class="lnk" href="#/">Find a flight</a></div></div>`;return;}
+  const km=flown.reduce((s,L)=>s+(kmBetween(L.e.from,L.e.to)||0),0), mins=flown.reduce((s,L)=>s+(L.e.dur||0),0);
+  const ports=new Set();flown.forEach(L=>{ports.add(L.e.from);ports.add(L.e.to);});
+  const als=new Set(flown.map(L=>L.e.ai)), countries=new Set([...ports].map(c=>(APNAME[c]||[])[1]).filter(Boolean));
+  const hubs=new Set();AL.forEach(a=>{if(!a.retired)(a.hubs||[]).forEach(h=>hubs.add(h));});
+  const hubsSeen=[...ports].filter(c=>hubs.has(c)).length, carriers=AL.filter(a=>!a.retired).length;
+  const longest=flown.reduce((m,L)=>Math.max(m,L.e.dur||0),0), night=flown.some(L=>L.e.dep<300);
+  const stat=(n,l)=>`<div class="lg-stat"><b>${n}</b><span>${l}</span></div>`;
+  const B=(ic,name,desc,got,pg)=>`<div class="lg-badge${got?" got":""}"><div class="ic">${ic}</div><div><b>${name}</b><span>${desc}</span>
+    ${!got&&pg!=null?`<div class="pg"><i style="width:${Math.round(Math.min(1,pg)*100)}%"></i></div>`:""}</div></div>`;
+  body.innerHTML=`<div class="lg-stats">${stat(flown.length,"flights flown")}${stat(Math.round(km).toLocaleString(),"km in the air")}
+      ${stat(Math.round(mins/60).toLocaleString(),"hours aloft")}${stat(ports.size,"airports")}${stat(countries.size,"countries")}${stat(als.size,"airlines")}</div>
+    <div class="lg-map" id="lg-map"></div>
+    <div class="lg-key"><i></i>Flown${ahead.length?` &nbsp; <i class="up"></i>Coming up (${ahead.length})`:""}</div>
+    <h3 class="lg-h3">Badges</h3>
+    <div class="lg-badges">
+      ${B("✈","First flight","Fly once with the group",flown.length>=1,flown.length)}
+      ${B("🌙","Night flight","Take off between midnight and 5am",night,null)}
+      ${B("🕗","Long haul","A flight of eight hours or more",longest>=480,longest/480)}
+      ${B("🛰","Ultra long haul","Fourteen hours or more",longest>=840,longest/840)}
+      ${B("🧭","Hub hopper",`Visit five of our hubs · ${Math.min(hubsSeen,5)} of 5`,hubsSeen>=5,hubsSeen/5)}
+      ${B("🏷","Every carrier",`Fly all ${carriers} airlines · ${als.size} of ${carriers}`,als.size>=carriers,als.size/carriers)}
+      ${B("🗺","Globetrotter",`Ten countries · ${Math.min(countries.size,10)} of 10`,countries.size>=10,countries.size/10)}
+      ${B("🌍","Around the world",`40,075 km, the equator · ${Math.round(Math.min(km,40075)).toLocaleString()} so far`,km>=40075,km/40075)}
+    </div>`;
+  if(typeof L!=="undefined"){
+    const map=L.map("lg-map",{zoomControl:true,scrollWheelZoom:false,worldCopyJump:false});baseMap(map);LOGV.map=map;
+    const pts=[],seen=new Set();
+    const line=(Lg,dash)=>{const k=Lg.e.from+Lg.e.to+(dash?"u":"");if(seen.has(k))return;seen.add(k);
+      const P=flightPath(Lg.e.from,Lg.e.to,Lg.t,Lg.end,Lg.e.fn+Lg.e.from);P.pts.forEach(p=>pts.push(p));
+      L.polyline(P.pts,{color:dash?"#2f8f7f":"#1d7a44",weight:dash?2:2.6,opacity:.9,dashArray:dash?"2 7":null,interactive:false}).addTo(map);};
+    flown.forEach(Lg=>line(Lg,false));ahead.forEach(Lg=>line(Lg,true));
+    new Set(legs.flatMap(Lg=>[Lg.e.from,Lg.e.to])).forEach(c=>{const A=AINFO[c];if(!A)return;
+      L.circleMarker([A[0],A[1]],{radius:4,color:"#1d7a44",weight:2,fillColor:"#fff",fillOpacity:1,interactive:false})
+        .bindTooltip(c,{direction:"top",offset:[0,-5],className:"trk-ap"}).addTo(map);});
+    if(pts.length)map.fitBounds(L.latLngBounds(pts),{padding:[24,24],maxZoom:6});else map.setView([25,0],2);
+    setTimeout(()=>map.invalidateSize(),60);
+  }
+}
+
+/* ---------- airport TV board ----------
+   A split-flap departures board for any airport, full screen. It refreshes
+   itself, swaps between departures and arrivals, and the letters flip when
+   anything changes. Esc or × goes back to the airport. */
+const TV={code:null,kind:"dep",pinned:false,timer:null,swap:null,clock:null,rows:0};
+const TV_W=[5,7,18,4,10];
+function tvCell(cls,text,w){
+  text=String(text||"").toUpperCase().slice(0,w).padEnd(w," ");
+  return `<span class="tv-cell ${cls}">${[...text].map(c=>`<i>${c===" "?"&nbsp;":escapeHtml(c)}</i>`).join("")}</span>`;
+}
+function tvFlip(cell,text,w){
+  text=String(text||"").toUpperCase().slice(0,w).padEnd(w," ");
+  const tiles=cell.querySelectorAll("i"),A="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  const still=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  [...text].forEach((ch,i)=>{const t=tiles[i];if(!t)return;const want=ch===" "?" ":ch;
+    if(t.textContent===want)return;
+    if(still){t.textContent=want;return;}
+    let n=3+Math.floor(Math.random()*6);
+    const step=()=>{t.classList.remove("flip");void t.offsetWidth;t.classList.add("flip");
+      if(n--<=0){t.textContent=want;return;}t.textContent=A[Math.floor(Math.random()*A.length)];setTimeout(step,70);};
+    setTimeout(step,i*18);});
+}
+function tvData(){
+  const code=TV.code,now=Date.now(),rows=boardRows(code)[TV.kind];
+  const list=rows.filter(r=>TV.kind==="dep"?r.t>=now-10*6e4:r.end>=now-20*6e4);
+  return list.slice(0,TV.rows).map(r=>{const e=r.e,a=AL[e.ai]||{code:""},[k,lab]=boardStatus(r,TV.kind,now);
+    const when=TV.kind==="dep"?utcToLocal(code,r.t):utcToLocal(code,r.end),other=TV.kind==="dep"?e.to:e.from;
+    return {k,cells:[clk(when.min),a.code+e.fn,cityOf(other),TV.kind==="dep"?gateFor(e,e.charter?e.date:utcToLocal(e.from,r.t).date):"",lab]};});
+}
+function tvDraw(full){
+  const box=document.getElementById("tv-rows"),data=tvData();
+  document.getElementById("tv-title").textContent=TV.kind==="dep"?"Departures":"Arrivals";
+  document.getElementById("tv-dest").textContent=TV.kind==="dep"?"Destination":"From";
+  document.getElementById("tv-kind").textContent=TV.kind==="dep"?"Show arrivals":"Show departures";
+  const cls=["c-t","c-f","c-d","c-g","c-r"];
+  if(full||box.children.length!==TV.rows){
+    box.innerHTML=Array.from({length:TV.rows},(_,i)=>{const d=data[i];
+      return `<div class="tv-row">${cls.map((c,j)=>tvCell(c+(j===4&&d?" k-"+d.k:""),"",TV_W[j])).join("")}</div>`;}).join("");
+  }
+  [...box.children].forEach((row,i)=>{const d=data[i];
+    row.querySelectorAll(".tv-cell").forEach((cell,j)=>{if(j===4)cell.className="tv-cell c-r"+(d?" k-"+d.k:"");tvFlip(cell,d?d.cells[j]:"",TV_W[j]);});});
+  document.getElementById("tv-foot").innerHTML=`<span>${data.length?"":"Nothing "+(TV.kind==="dep"?"leaving":"arriving")+" in the next 24 hours."}</span><span>TerraLink · times are local · refreshed every 30 seconds</span>`;
+}
+function tvSize(){TV.rows=Math.max(5,Math.min(22,Math.floor((window.innerHeight-(trkNarrow()?170:210))/(trkNarrow()?36:Math.max(44,Math.min(60,window.innerWidth*.033))))));}
+function tvTick(){if(!TV.code)return;document.getElementById("tv-clock").textContent=clk(utcToLocal(TV.code,Date.now()).min);}
+function openTv(code){
+  tvStop();
+  if(!AINFO[code]){location.hash="#/where";return;}
+  TV.code=code;TV.kind="dep";TV.pinned=false;
+  document.getElementById("tv-code").textContent=code;document.getElementById("tv-city").textContent=cityOf(code);
+  tvSize();tvTick();tvDraw(true);
+  TV.timer=setInterval(()=>tvDraw(false),30000);
+  TV.clock=setInterval(tvTick,1000);
+  TV.swap=setInterval(()=>{if(TV.pinned)return;TV.kind=TV.kind==="dep"?"arr":"dep";tvDraw(false);},25000);
+}
+function tvStop(){["timer","swap","clock"].forEach(k=>{if(TV[k]){clearInterval(TV[k]);TV[k]=null;}});
+  if(document.fullscreenElement&&document.fullscreenElement.id==="view-tv")document.exitFullscreen().catch(()=>{});}
+(function(){
+  const close=()=>{const c=TV.code;tvStop();TV.code=null;location.hash=c?apLink(c):"#/where";};
+  document.getElementById("tv-x").onclick=close;
+  document.getElementById("tv-kind").onclick=()=>{TV.kind=TV.kind==="dep"?"arr":"dep";TV.pinned=true;tvDraw(false);};
+  document.getElementById("tv-fs").onclick=()=>{const v=document.getElementById("view-tv");
+    if(document.fullscreenElement)document.exitFullscreen().catch(()=>{});else if(v.requestFullscreen)v.requestFullscreen().catch(()=>{});};
+  document.addEventListener("keydown",e=>{if(e.key==="Escape"&&TV.code&&!document.fullscreenElement&&!document.getElementById("view-tv").hidden)close();});
+  window.addEventListener("resize",()=>{if(!TV.code||document.getElementById("view-tv").hidden)return;const r=TV.rows;tvSize();if(r!==TV.rows)tvDraw(true);});
+})();
 
 /* ---------- what's new ----------
    One entry per refresh of the timetable from the game, newest first. Each
@@ -4853,7 +5266,7 @@ function renderNews(){
   const byCode=c=>AL.find(a=>a.code===c);
   const day=d=>new Date(d+"T12:00:00Z");
   const tomorrow=addDays(todayISO(),1);
-  const rt=(a,b,extra)=>`<a class="hub nw-rt" href="#/search?from=${a}&to=${b}&cabin=eco&trip=oneway&d=${tomorrow}" title="${cityOf(a)} – ${cityOf(b)}">${a}–${b}${extra?` <small>${extra}</small>`:""}</a>`;
+  const rt=(a,b,extra)=>`<a class="hub nw-rt" href="#/route?a=${a}&b=${b}" title="${cityOf(a)} – ${cityOf(b)}">${a}–${b}${extra?` <small>${extra}</small>`:""}</a>`;
   el.innerHTML=(NEWS||[]).map(n=>{
     const dt=day(n.date);
     const date=`<div class="nw-date"><b>${dt.toLocaleDateString("en-GB",{day:"numeric",month:"short",timeZone:"UTC"})}</b><span>${dt.getUTCFullYear()}</span></div>`;
@@ -4896,13 +5309,46 @@ function renderNews(){
    airline's lounge where there is one, otherwise another group lounge at that
    airport. First and Business get in, so do Summit members and above on any
    fare, and every charter. The lounges are the site's own invention. */
-const LOUNGE_NAMES={SR:"Starliner Club",AX:"ASTRA Lounge",VX:"Velora House",GU:"Kaieteur Lounge",AG:"AmeriGo Club",
+/* Where each airline has a lounge:
+   - at its own hubs, at every other TerraLink hub it flies to, and at the
+     world's major airports it flies to (MAJOR_AIRPORTS);
+   - Hoshizora also at every airport it served when it joined (its hubs and
+     its first destinations) — later routes only get one by the rules above;
+   - ASTRA is low-cost and has none of its own;
+   - Starliner's Nebula Lounge, at Starliner's hubs, is only for passengers
+     in Nebula (The Room or The Pod).
+   A flight uses its own airline's lounge where there is one, otherwise
+   another group lounge at that airport. */
+const LOUNGE_NAMES={SR:"Starliner Club",VX:"Velora House",GU:"Kaieteur Lounge",AG:"AmeriGo Club",
   UA:"United Club",["7S"]:"Seven Stars Lounge"};
+const NEBULA_LOUNGE="Nebula Lounge";
+const HOSHI_LOUNGES=["HND","CTS","KIX","DFW","IAH","JFK","LAX","MIA","SFO"];
+const MAJOR_AIRPORTS=new Set(("ATL DFW DEN ORD LAX JFK LAS MCO MIA CLT SEA PHX EWR SFO IAH BOS FLL MSP LGA DTW PHL SLC BWI DCA SAN IAD TPA BNA AUS HNL PDX STL "+
+  "YYZ YVR YUL YYC MEX CUN GDL GRU GIG BOG LIM SCL EZE PTY MDE "+
+  "LHR CDG AMS FRA IST MAD BCN MUC FCO LGW DUB ZRH CPH OSL ARN VIE LIS BRU MAN ATH HEL "+
+  "DXB DOH AUH JED RUH TLV HND NRT KIX ICN PEK PKX PVG CAN SZX HKG TPE SIN BKK KUL CGK MNL "+
+  "DEL BOM BLR HYD MAA CCU SGN HAN SYD MEL BNE AKL PER JNB CPT CAI ADD NBO LOS CMN").split(" "));
+function hasLounge(a,code){
+  if(!a||a.retired||!LOUNGE_NAMES[a.code])return false;
+  if((a.hubs||[]).includes(code))return true;
+  if(a.code==="7S"&&HOSHI_LOUNGES.includes(code))return true;
+  const i=AL.indexOf(a);
+  return (HUBSET.has(code)||MAJOR_AIRPORTS.has(code))&&!!SERVED[code]&&SERVED[code].has(i);
+}
+const loungesAt=code=>AL.filter(a=>hasLounge(a,code));
+function loungeHere(name,a,code,key){
+  const g=gatePlan(code), pier=g.piers?g.piers[Math.floor(h32(key+code)*g.piers.length)]:"";
+  return {name,al:a,pier,where:pier?`Pier ${pier}, after security`:"Airside, after security"};
+}
 function loungeAt(code,ai){
-  const has=a=>a&&LOUNGE_NAMES[a.code]&&(a.hubs||[]).includes(code);
-  const a=has(AL[ai])?AL[ai]:AL.find(has); if(!a)return null;
-  const g=gatePlan(code), pier=g.piers?g.piers[Math.floor(h32("lounge"+code+a.code)*g.piers.length)]:"";
-  return {name:LOUNGE_NAMES[a.code],al:a,pier,where:pier?`Pier ${pier}, after security`:"Airside, after security"};
+  const own=AL[ai];
+  const a=hasLounge(own,code)?own:loungesAt(code).sort((x,y)=>((y.hubs||[]).includes(code)-(x.hubs||[]).includes(code)))[0];
+  return a?loungeHere(LOUNGE_NAMES[a.code],a,code,"lounge"+a.code):null;
+}
+/* a Nebula seat on Starliner, leaving a Starliner hub */
+function nebulaAt(e,cab){
+  const a=AL[e.ai]; if(!a||a.code!=="SR"||e.cs||!(a.hubs||[]).includes(e.from))return null;
+  return /^nebula/i.test(cabOf(e,cab)||"")?loungeHere(NEBULA_LOUNGE,a,e.from,"nebula"):null;
 }
 function loungeAccess(cab,points,charter){
   if(charter)return "your charter";
@@ -4916,6 +5362,9 @@ function loungeRowsHtml(b){
   const seen=new Set(),rows=[];
   [["out",b.out],["ret",b.ret]].forEach(([,legs])=>(legs||[]).forEach(e=>{
     if(seen.has(e.from))return; seen.add(e.from);
+    const neb=nebulaAt(e,b.ctx.cab);
+    if(neb){rows.push(`<div class="sumline"><span class="sl">${e.from}</span><span>${neb.name} · ${neb.where}<br>
+      <small class="lg-in">Included with your Nebula seat</small></span></div>`);return;}
     const lg=loungeAt(e.from,e.ai); if(!lg)return;
     const acc=loungeAccess(b.ctx.cab,myPoints(),!!b.charterCls);
     rows.push(`<div class="sumline"><span class="sl">${e.from}</span><span>${lg.name} · ${lg.where}<br>
@@ -4924,13 +5373,27 @@ function loungeRowsHtml(b){
 }
 function renderLounges(){
   const el=document.getElementById("lounge-list"); if(!el)return;
-  el.innerHTML=AL.filter(a=>LOUNGE_NAMES[a.code]).map(a=>`<div class="tier lg-card">
-    <div class="tn"><span class="lg-logo"><img src="${a.logo||""}" alt=""></span>${LOUNGE_NAMES[a.code]}</div>
-    <div class="tq">${a.name}</div>
-    <ul>${(a.hubs||[]).filter(c=>AINFO[c]).map(c=>{const lg=loungeAt(c,AL.indexOf(a));return `<li>${cityOf(c)} (${c}) · ${lg&&lg.al===a?lg.where:"Airside"}</li>`;}).join("")}</ul></div>`).join("")+
+  const list=(codes,a)=>{const hubs=a?(a.hubs||[]):[];
+    const all=[...new Set(codes)].filter(c=>AINFO[c]).sort((x,y)=>(hubs.includes(y)-hubs.includes(x))||cityOf(x).localeCompare(cityOf(y)));
+    const li=c=>`<li><a href="${apLink(c)}">${cityOf(c)}</a> (${c})${hubs.includes(c)?' <span class="ap-tag">HUB</span>':""}</li>`;
+    return `<ul>${all.slice(0,8).map(li).join("")}</ul>${all.length>8?`<ul class="lg-more" hidden>${all.slice(8).map(li).join("")}</ul>
+      <button type="button" class="fl-more" data-lgmore>+${all.length-8} more</button>`:""}`;};
+  const cards=AL.filter(a=>!a.retired&&LOUNGE_NAMES[a.code]).map(a=>{
+    const codes=Object.keys(AINFO).filter(c=>hasLounge(a,c));
+    return `<div class="tier lg-card"><div class="tn"><span class="lg-logo"><img src="${a.logo||""}" alt=""></span>${LOUNGE_NAMES[a.code]}</div>
+      <div class="tq">${a.name} · ${codes.length} lounge${codes.length===1?"":"s"}</div>${list(codes,a)}</div>`;});
+  const sr=AL.find(a=>a.code==="SR");
+  if(sr)cards.splice(1,0,`<div class="tier lg-card lg-neb"><div class="tn"><span class="lg-logo"><img src="${sr.logo||""}" alt=""></span>${NEBULA_LOUNGE}</div>
+      <div class="tq">Starliner · Nebula passengers only</div>
+      <p class="lg-note">For travellers in Nebula, The Room and The Pod, leaving one of Starliner's ${(sr.hubs||[]).length} hubs.</p>${list(sr.hubs||[],sr)}</div>`);
+  el.innerHTML=cards.join("")+
     `<div class="tier note"><div class="tn">Who gets in</div>
       <ul><li>First or Business on any TerraLink flight</li><li>Summit, Apex, Stratos and Zenith members, on any fare</li>
-        <li>Zenith members bring a guest</li><li>Every charter passenger</li><li>Open from three hours before your flight</li></ul></div>`;
+        <li>Zenith members bring a guest</li><li>Every charter passenger</li><li>Nebula Lounge: Nebula passengers only</li>
+        <li>ASTRA is low-cost and has no lounges of its own; with the right fare or status you're welcome in another group lounge</li>
+        <li>Open from three hours before your flight</li></ul></div>`;
+  if(!el.dataset.wired){el.dataset.wired="1";el.addEventListener("click",ev=>{const b=ev.target.closest("[data-lgmore]");if(!b)return;
+    const m=b.previousElementSibling;m.hidden=!m.hidden;b.textContent=m.hidden?`+${m.children.length} more`:"Show fewer";});}
 }
 
 /* ---------- tail tracker ----------
@@ -4939,8 +5402,9 @@ function renderLounges(){
 function tailFor(q){
   const n=normReg(q); if(n.length<4)return null;
   const ids=regIndex().get(n), creg=Object.keys(CHARTER_REG).find(r=>normReg(r)===n);
-  if(!ids&&!creg)return null;
+  /* aircraft in the fleet that no flight uses yet still have a page */
   const fr=(DATA.fleet||[]).find(r=>normReg(r[2])===n);
+  if(!ids&&!creg&&!fr)return null;
   const reg=fr?fr[2]:ids?DATA.aircraft[ids[0]][1]:creg, model=fr?fr[1]:ids?DATA.aircraft[ids[0]][0]:CHARTER_REG[creg].type;
   const now=Date.now(),lo=now-12*36e5,hi=now+36*36e5,set=new Set(ids||[]),inst=[],seen=new Set();
   const add=(e,v,t,end)=>{const k=e.from+e.to+e.fn+t;if(seen.has(k))return;seen.add(k);if(end>=lo&&t<=hi)inst.push({e,v,t,end});};
@@ -4948,7 +5412,7 @@ function tailFor(q){
     departures(e,now,-1,2).forEach(x=>add(e,x.v,x.t,x.t+(e.dur||90)*6e4));}));
   (typeof CHARTER_LEGS!=="undefined"?CHARTER_LEGS:[]).forEach(e=>{if(normReg(e.reg)===n)add(e,e,e.t,e.t+e.dur*6e4);});
   inst.sort((a,b)=>a.t-b.t);
-  return {reg,model,ai:fr?fr[0]:0,hub:fr&&fr[3]!=="EMPTY"?fr[3]:null,inst,charter:creg?CHARTER_REG[creg]:null};
+  return {reg,model,ai:fr?fr[0]:0,hub:fr&&fr[3]!=="EMPTY"?fr[3]:null,inst,charter:creg?CHARTER_REG[creg]:null,idle:!ids&&!creg};
 }
 function tailHtml(T){
   const now=Date.now(),a=AL[T.ai]||{code:"",name:"",logo:""},op=T.charter?null:operatorOf(T.ai,T.model);
@@ -4960,6 +5424,7 @@ function tailHtml(T){
       <button type="button" class="lnk" data-hit="${hit(cur.e)}">Track it</button>`
     :last?`<b>On the ground</b> at ${cityOf(last.e.to)} (${last.e.to}) since ${clk(loc(last.e.to,last.end).min)} local${next?` · next ${fno(next.e)} to ${cityOf(next.e.to)} at ${clk(loc(next.e.from,next.t).min)}${dayWord(next.e.from,next.t)}`:""}`
     :next?`<b>Next</b> ${fno(next.e)} ${cityOf(next.e.from)} → ${cityOf(next.e.to)} at ${clk(loc(next.e.from,next.t).min)} local${dayWord(next.e.from,next.t)}`
+    :T.idle?`Not on the timetable at the moment: this aircraft isn't assigned to any scheduled flight.`
     :`Nothing scheduled for this aircraft in the next day and a half.`;
   const rows=T.inst.map(x=>{const e=x.e,air=x.t<=now&&now<x.end,done=x.end<=now,soon=!done&&!air&&x.t-now<45*6e4;
     const [k,lab]=air?["air","In the air"]:done?["land","Landed"]:soon?["board","Boarding"]:["sched","Scheduled"];
@@ -4972,7 +5437,7 @@ function tailHtml(T){
       <div><div class="tl-reg">${T.reg}</div><div class="tl-m">${T.model} · ${a.name}${op?` · operated by ${opText(op)}`:""}${T.charter?` · charter jet, ${T.charter.product}`:""}${T.hub?` · based at ${T.hub}`:""}</div></div></div>
     <div class="tl-now">${nowLine}</div>
     ${rows?`<div class="tl-list">${rows}</div>`:""}
-    <div class="ph" style="margin-top:8px">From twelve hours ago to a day and a half ahead, from the timetable. Tap a flight to see it on the map.</div></div>`;
+    ${T.idle?"":`<div class="ph" style="margin-top:8px">From twelve hours ago to a day and a half ahead, from the timetable. Tap a flight to see it on the map.</div>`}</div>`;
 }
 
 /* ---------- seatback moving map ----------
@@ -5507,7 +5972,8 @@ function passesFor(b){
         name:((p.last||"")+"/"+(p.first||"")).toUpperCase(),
         seat:picked[i]||null, ref:b.ref, cab:b.ctx.cab,
         car:b.status!=="cancelled"&&L.e.car||null, cls:b.charterCls||null,
-        lounge:(()=>{const lg=loungeAt(L.e.from,L.e.ai);return lg&&loungeAccess(b.ctx.cab,myPoints(),!!b.charterCls)?lg.name+(lg.pier?"  ·  PIER "+lg.pier:""):null;})()});
+        lounge:(()=>{const neb=nebulaAt(L.e,b.ctx.cab);if(neb)return neb.name+(neb.pier?"  ·  PIER "+neb.pier:"");
+          const lg=loungeAt(L.e.from,L.e.ai);return lg&&loungeAccess(b.ctx.cab,myPoints(),!!b.charterCls)?lg.name+(lg.pier?"  ·  PIER "+lg.pier:""):null;})()});
     });
   });
   return out;
@@ -7165,6 +7631,7 @@ document.getElementById("confirm-booking").onclick=()=>{
 let LAST_BOOKING=null;
 function renderConfirmed(){
   const b=LAST_BOOKING;
+  const ics=document.getElementById("conf-ics"); if(ics&&b)ics.onclick=()=>addToCalendar(b);
   if(!b){location.hash="#/";return;}
   document.getElementById("conf-ref").textContent=b.ref;
   carCrossSell(b);
@@ -7946,9 +8413,9 @@ if(FRAMED){
 })();
 
 /* ---------- router ---------- */
-const VIEWS=["home","results","map","where","fleet","news","alliance","airport","status","trips","club","cars","charter","desk","stats","seatback","book","confirmed"];
+const VIEWS=["home","results","map","where","fleet","news","alliance","airport","route","log","tv","status","trips","club","cars","charter","desk","stats","seatback","book","confirmed"];
 /* what the loading screen says while it flies you to each page */
-const VIEW_LOADING={alliance:"Loading Echo United Alliances",airport:"Loading the airport",home:"Loading",results:"Finding flights",map:"Loading the route map",where:"Loading destinations",
+const VIEW_LOADING={route:"Loading the route",log:"Loading your flight log",tv:"Loading the board",alliance:"Loading Echo United Alliances",airport:"Loading the airport",home:"Loading",results:"Finding flights",map:"Loading the route map",where:"Loading destinations",
   fleet:"Loading the fleet",news:"Loading what's new",status:"Loading flight status",trips:"Loading your trips",
   club:"Loading TerraClub",cars:"Loading cars",charter:"Loading charters",desk:"Loading the charter desk",stats:"Loading stats",
   seatback:"Loading seatback",book:"Loading your booking",confirmed:"Confirming your booking"};
@@ -7962,7 +8429,8 @@ function show(v){
   if(v!=="results")document.getElementById("selbar").hidden=true;
   if(window.__liveVisible)window.__liveVisible(v==="status");
   if(window.__sbVisible)window.__sbVisible(v==="seatback");
-  document.body.classList.toggle("sb-open",v==="seatback");
+  document.body.classList.toggle("sb-open",v==="seatback"||v==="tv");
+  if(v!=="tv")tvStop();
   /* when the tabs scroll sideways, keep the current one in sight */
   const act=document.querySelector(".nav-links a.active"),bar=document.querySelector(".nav-links");
   if(act&&bar&&bar.scrollWidth>bar.clientWidth){
@@ -8207,6 +8675,9 @@ function route(){
   else if(path==="fleet"){show("fleet");}
   else if(path==="news"){show("news");renderNews();}
   else if(path==="alliance"){show("alliance");renderAlliance();}
+  else if(path==="route"){const q=new URLSearchParams(qs||"");show("route");renderRoute((q.get("a")||"").toUpperCase(),(q.get("b")||"").toUpperCase());}
+  else if(path==="log"){show("log");renderLog();}
+  else if(path==="tv"){show("tv");openTv((new URLSearchParams(qs||"").get("c")||"").toUpperCase());}
   else if(path==="airport"){show("airport");renderAirport((new URLSearchParams(qs||"").get("c")||"").toUpperCase());}
   else if(path==="status"){show("status");
     const sq=new URLSearchParams(qs||"").get("q")||"";
@@ -8227,6 +8698,33 @@ function route(){
   else show("home");
 }
 window.addEventListener("hashchange",route);
+/* ---------- appearance: match the device, or always light / always dark ----------
+   The choice is kept in this browser; a tiny script in the head applies it
+   before the page paints, so there's no flash of the wrong one. */
+(function(){
+  const btn=document.getElementById("thm-b"),menu=document.getElementById("thm-m"); if(!btn||!menu)return;
+  const ICON={device:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor"/></svg>',
+    light:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>',
+    dark:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>'};
+  const LABEL={device:"Match device",light:"Light",dark:"Dark"};
+  const get=()=>{try{const t=localStorage.getItem("tl_theme");return t==="light"||t==="dark"?t:"device";}catch(_){return "device";}};
+  const isDark=t=>t==="dark"||(t==="device"&&matchMedia("(prefers-color-scheme: dark)").matches);
+  function apply(t){
+    if(t==="device")document.documentElement.removeAttribute("data-theme");else document.documentElement.setAttribute("data-theme",t);
+    try{if(t==="device")localStorage.removeItem("tl_theme");else localStorage.setItem("tl_theme",t);}catch(_){}
+    btn.innerHTML=ICON[t];btn.title="Appearance: "+LABEL[t];btn.setAttribute("aria-label","Appearance: "+LABEL[t]);
+    menu.querySelectorAll("[data-thm]").forEach(b=>b.setAttribute("aria-checked",String(b.dataset.thm===t)));
+    document.querySelectorAll('meta[name="theme-color"]').forEach(m=>{m.setAttribute("content",isDark(t)?"#0e1412":"#ffffff");m.removeAttribute("media");});
+  }
+  const close=()=>{menu.hidden=true;btn.setAttribute("aria-expanded","false");};
+  btn.onclick=e=>{e.stopPropagation();const open=menu.hidden;menu.hidden=!open;btn.setAttribute("aria-expanded",String(open));
+    if(open)(menu.querySelector('[aria-checked="true"]')||menu.firstElementChild).focus();};
+  menu.onclick=e=>{const b=e.target.closest("[data-thm]");if(!b)return;apply(b.dataset.thm);close();btn.focus();};
+  document.addEventListener("click",e=>{if(!menu.hidden&&!e.target.closest(".thm"))close();});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!menu.hidden){close();btn.focus();}});
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>apply(get()));
+  apply(get());
+})();
 wireStatus();wireClub();wireCars();
 /* confirmed charters, for the map and flight status — refreshed now and then */
 loadCharterFlights().then(()=>{if(location.hash.startsWith("#/status"))route();});
