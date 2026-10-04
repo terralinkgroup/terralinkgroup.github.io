@@ -3076,13 +3076,6 @@ const MENUS={
   first:[["To start",[["Oysters on ice","Mignonette"]]],["Main",[["Prime rib","Yorkshire pudding, horseradish"],["Lobster roll","Brown butter, chives"]]],["Sweet",[["Chocolate cream pie",""]]]],
   drinks:{eco:"Soft drinks, coffee, tea; beer and wine for sale.",biz:"Midwest craft beers, wine and cocktails.",first:"The full bar and a reserve wine list."},
   note:"Chicago and New York, the two cities AmeriGo calls home."},
- UA:{kit:"From the galley",
-  eco:[["Main",[["Chicken teriyaki rice bowl",""],["Penne marinara","Vegetarian"],["Egg and cheese wrap","On breakfast flights"]]],["Snack",[["Pretzels or cookies",""]]]],
-  prem:[["To start",[["Seasonal salad",""]]],["Main",[["Herb-roasted chicken","Mashed potatoes"],["Penne marinara","Vegetarian"]]],["Sweet",[["Ice cream",""]]]],
-  biz:[["To start",[["Mezze plate","Hummus, olives, flatbread"]]],["Main",[["Braised short rib","Polenta, gremolata"],["Seared halibut","Lemon beurre blanc"],["Butternut squash ravioli","Vegetarian"]]],["Sweet",[["Ice cream sundae","Your choice of toppings"]]]],
-  first:[["Chef's tasting",[["Five courses","Ask the crew for today's menu"]]]],
-  drinks:{eco:"Soft drinks, coffee and tea; beer, wine and spirits for sale.",biz:"Wine, beer, spirits and cocktails included.",first:"The full bar, included."},
-  note:""},
  "7S":{kit:"星空ダイニング · Hoshizora dining",ja:1,
   eco:[["主菜 · Main",[["鶏の照り焼き丼","Chicken teriyaki on rice"],["鮭の塩焼き弁当","Salted salmon bento"],["野菜カレー","Japanese vegetable curry · vegetarian"]]],["汁物 · Soup",[["味噌汁","Miso soup"]]],["甘味 · Sweet",[["抹茶ロールケーキ","Matcha roll cake"]]]],
   prem:[["前菜 · To start",[["季節の前菜三種","Three seasonal appetisers"]]],["主菜 · Main",[["鶏の照り焼き丼","Chicken teriyaki on rice"],["鮭の塩焼き弁当","Salted salmon bento"]]],["甘味 · Sweet",[["抹茶アイス","Matcha ice cream"]]]],
@@ -3242,7 +3235,7 @@ const AIRPORT_TASTE={
  ATQ:["Amritsar","Amritsari chole kulcha","Onion, pickle","Tandoori chicken","Dal makhani, naan","Phirni"],
  PNQ:["Pune","Misal pav","Spicy sprouts curry, pav","Mutton sukka","Bhakri","Puran poli"],
 };
-const HOME={SR:"US",AX:"US",UA:"US",AG:"US",VX:"IN",GU:"GY","7S":"JP"};
+const HOME={SR:"US",AX:"US",AG:"US",VX:"IN",GU:"GY","7S":"JP"};
 function tasteFor(i){
   if(!i)return null;
   const home=HOME[i.code]||"";
@@ -6094,7 +6087,7 @@ function renderNews(){
     const dt=day(n.date);
     const date=`<div class="nw-date"><b>${dt.toLocaleDateString("en-GB",{day:"numeric",month:"short",timeZone:"UTC"})}</b><span>${dt.getUTCFullYear()}</span></div>`;
     if(n.note==="meridian")return `<article class="nw">${date}<div><h3>Meridian is being discontinued</h3>
-      <p class="nw-note">TerraLink is acquiring United, and Meridian is being wound down as part of it. Its flights have come off sale. Trips already booked on Meridian still show in My trips.</p></div></article>`;
+      <p class="nw-note">Meridian is being wound down. Its flights have come off sale. Trips already booked on Meridian still show in My trips.</p></div></article>`;
     const als=Object.entries(n.airlines||{}).filter(([c])=>{const a=byCode(c);return a&&!a.retired;})
       .sort((x,y)=>AL.indexOf(byCode(x[0]))-AL.indexOf(byCode(y[0])));
     const newR=als.reduce((s,[,v])=>s+v.new.length,0), planes=als.reduce((s,[,v])=>s+v.planes.reduce((t,p)=>t+p[1],0),0);
@@ -6143,7 +6136,7 @@ function renderNews(){
    A flight uses its own airline's lounge where there is one, otherwise
    another group lounge at that airport. */
 const LOUNGE_NAMES={SR:"Starliner Club",VX:"Velora House",GU:"Kaieteur Lounge",AG:"AmeriGo Club",
-  UA:"United Club",["7S"]:"Seven Stars Lounge"};
+  ["7S"]:"Seven Stars Lounge"};
 const NEBULA_LOUNGE="Nebula Lounge";
 const HOSHI_LOUNGES=["HND","CTS","KIX","DFW","IAH","JFK","LAX","MIA","SFO"];
 const MAJOR_AIRPORTS=new Set(("ATL DFW DEN ORD LAX JFK LAS MCO MIA CLT SEA PHX EWR SFO IAH BOS FLL MSP LGA DTW PHL SLC BWI DCA SAN IAD TPA BNA AUS HNL PDX STL "+
