@@ -5113,8 +5113,8 @@ function renderYourFlight(trips){
 setInterval(()=>{const v=document.getElementById("view-trips");if(v&&!v.hidden&&TRIPS.length)renderYourFlight(TRIPS);},60000);
 
 /* ---------- online check-in ----------
-   Opens 24 hours before a direction's first flight and closes 45 minutes
-   before it. Passengers are confirmed as booked — no document numbers are
+   Open from the moment the trip is booked until 45 minutes before a
+   direction's first flight (there used to be a 24-hour wait; removed 7 October). Passengers are confirmed as booked — no document numbers are
    asked for or kept — seats can be changed in the booked cabin, and the
    boarding passes appear once it's done. */
 function checkinState(b,dir){
@@ -5124,7 +5124,6 @@ function checkinState(b,dir){
   if(!legs||!legs.length||!base)return null;
   const e=legs[0],date=e.off?addDays(base,e.off):base, t=localToUtc(e.from,date,e.dep), now=Date.now();
   if(b.checkin&&b.checkin[dir])return {k:"done",e,date,t};
-  if(now<t-24*36e5)return {k:"soon",e,date,t};
   if(now<t-45*6e4)return {k:"open",e,date,t};
   return {k:"closed",e,date,t};
 }
@@ -7191,7 +7190,7 @@ async function renderPasses(b,host){
   if(!host)return;
   const list=passesFor(b);
   if(!list.length){host.innerHTML=b.status==="cancelled"||b.charterCls?""
-    :`<h3 style="margin-bottom:4px">Boarding passes</h3><div class="ph">They appear here once you check in — online check-in opens 24 hours before each flight.</div>`;return;}
+    :`<h3 style="margin-bottom:4px">Boarding passes</h3><div class="ph">They appear here once you check in. Check-in is open now, up to 45 minutes before each flight.</div>`;return;}
   await (document.fonts&&document.fonts.ready);await loadLogos();
   host.innerHTML=`<h3 style="margin-bottom:4px">Boarding passes</h3>
     <div class="ph">One per passenger, per flight. Download the image or keep it on your phone.</div>
