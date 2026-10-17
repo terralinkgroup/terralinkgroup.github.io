@@ -2292,7 +2292,7 @@ body.sb-open{overflow:hidden}
     <a href="#/trips" data-nav="trips">My trips</a>
     <a href="#/cars" data-nav="cars">Cars</a>
     <a href="#/charter" data-nav="charter">Charter</a>
-    <a href="#/club" data-nav="club">TerraClub</a>
+    <a href="#/club" data-nav="club">SummitPlus</a>
     <a href="entertainment/" data-nav="ife" target="_blank" rel="noopener">Entertainment ↗</a>
     <a href="#/desk" data-nav="desk" id="nav-desk" hidden>Charter desk <span class="navbadge" id="desk-count" hidden></span></a>
     <a href="#/stats" data-nav="stats" id="nav-stats" hidden>Stats</a>
@@ -2391,7 +2391,7 @@ body.sb-open{overflow:hidden}
   <section class="section" style="padding-top:6px">
     <h2>Useful links for you</h2>
     <div class="ulinks">
-      <a class="ulink" href="#/club"><span><b>More perks with TerraClub</b>
+      <a class="ulink" href="#/club"><span><b>More perks with SummitPlus</b>
         <span>Earn on every fare and climb seven tiers to free upgrades.</span></span><i aria-hidden="true">→</i></a>
       <a class="ulink" href="#/charter"><span><b>Charter a whole Starliner</b>
         <span>Private Regular, Pro and Max — your route, your schedule.</span></span><i aria-hidden="true">→</i></a>
@@ -2402,7 +2402,7 @@ body.sb-open{overflow:hidden}
       <a class="ulink" href="#/status"><span><b>Watch the network fly</b>
         <span>Every aircraft in the air right now — tap one to follow it.</span></span><i aria-hidden="true">→</i></a>
       <a class="ulink" href="#/club" id="ul-wifi"><span><b>Free inflight Starlink Wi-Fi</b>
-        <span>Join TerraClub to start your journey.</span></span><i aria-hidden="true">→</i></a>
+        <span>Join SummitPlus to start your journey.</span></span><i aria-hidden="true">→</i></a>
     </div>
   </section>
 </div>
@@ -2543,7 +2543,7 @@ body.sb-open{overflow:hidden}
       <div class="ap-card hp-me"><h3>Your setup</h3><dl id="hp-me"></dl>
         <button type="button" class="tbtn" id="hp-copy" style="margin-top:12px;width:100%;justify-content:center">Copy these details</button></div>
       <div class="ap-card"><h3>Quick fixes</h3><div class="hp-fix">
-        <p>Neither of these touches your trips, TerraClub points or sign-in.</p>
+        <p>Neither of these touches your trips, SummitPlus points or sign-in.</p>
         <button type="button" class="tbtn" id="hp-data">Reload the timetable</button>
         <button type="button" class="tbtn" id="hp-sw">Clear the offline copy</button></div></div>
     </aside></div>
@@ -2705,10 +2705,10 @@ body.sb-open{overflow:hidden}
 
 <div class="view" id="view-club" hidden>
   <section class="section">
-    <h2>TerraClub</h2>
+    <h2>SummitPlus</h2>
     <p class="lede">One membership across all nine carriers. Earn points on every mile you fly, and keep them wherever you fly next.</p>
     <div class="joinbox" id="club-guest" hidden>
-      <div class="jb-t">Join TerraClub</div>
+      <div class="jb-t">Join SummitPlus</div>
       <div class="jb-s">Points are held on your account, not in this browser — so they follow you
         to your phone and can't be lost. Sign in or create an account to start earning.</div>
       <button class="go" id="club-signin">Sign in or join</button>
@@ -2806,7 +2806,7 @@ body.sb-open{overflow:hidden}
     <button class="x" id="jx">×</button></div></div>
   <div class="body">
     <p style="margin:0 0 16px;color:var(--muted);font-size:14.5px;line-height:1.6">
-      This booking is worth <b id="join-pts" style="color:var(--brand-ink)">0</b> TerraClub points.
+      This booking is worth <b id="join-pts" style="color:var(--brand-ink)">0</b> SummitPlus points.
       Points live on your account, so signing in now keeps them — book as a guest and they're gone.</p>
     <button class="go" id="join-signin" style="width:100%">Sign in and earn the points</button>
     <button class="det" id="join-skip" style="background:none;border:0;color:var(--muted);
@@ -3267,7 +3267,7 @@ function tasteFor(i){
   return TASTE[cc]||(CARIB.has(cc)?REGION.caribbean:PACIFIC.has(cc)?REGION.pacific:GULF.has(cc)?REGION.gulf:AFRICA.has(cc)?REGION.africa:EUROPE.has(cc)?REGION.europe:LATAM.has(cc)?REGION.latam:null);
 }
 
-const CAB_NOTES={eco:["Seatback screen and USB-C power","Free Starlink Wi-Fi for TerraClub members","Pillow and blanket on long flights"],
+const CAB_NOTES={eco:["Seatback screen and USB-C power","Free Starlink Wi-Fi for SummitPlus members","Pillow and blanket on long flights"],
   prem:["More legroom and a wider seat","Noise-cancelling headphones","Amenity kit on long flights"],
   biz:["Lie-flat seat on long-haul aircraft","Lounge access before you fly","Turndown service and pyjamas on overnight flights"],
   first:["A private suite with a door on widebodies","Dine whenever you like","Chauffeur and lounge on the ground"]};
@@ -3303,7 +3303,7 @@ return {MENUS,CAB_NOTES,tasteFor,menuList,mealChoices,HOME};
    times, fares — stays as it is. Shared by both pages; the choice is kept in
    this browser (tl_lang). */
 const TLI18N=(function(){
-const K=["Book","Explore","Route map","Where we fly","Fleet","What's new","Alliance","Flight status","My trips","Cars","Charter","TerraClub","Entertainment ↗","Help","Sign in",
+const K=["Book","Explore","Route map","Where we fly","Fleet","What's new","Alliance","Flight status","My trips","Cars","Charter","SummitPlus","Entertainment ↗","Help","Sign in",
 "Match device","Light","Dark","Text size","Standard","Larger","Largest","High contrast","Language",
 "The TerraLink network","Seven carriers, one booking. Search live schedules, connections and fares across the TerraLink Group.","Airlines","Airports","Daily flights",
 "Round trip","One way","Multi-city","From","To","Depart","Return","Cabin","Economy","Premium","Business","First","Search flights","City or airport","+ Add a flight",
@@ -3360,7 +3360,7 @@ te:["బుక్ చేయండి","అన్వేషించండి","�
 "నెట్‌వర్క్ క్విజ్","సుడోకు","పాము","మైన్‌స్వీపర్","సులభం","మధ్యస్థం","కష్టం","ప్రారంభించండి","మళ్లీ ఆడండి","బయటికి చూడండి","షేడ్ దించండి","షేడ్ ఎత్తండి","ఎడమ కిటికీ","కుడి కిటికీ",
 "ఆడియో పుస్తకాలు","పిల్లల మూల","రంగులు వేయండి","జ్ఞాపకశక్తి ఆట","కార్టూన్లు","గమ్యస్థాన గైడ్","స్థానిక సమయం","వాతావరణం","ఉపయోగపడే మాటలు","కరెన్సీ","దిగిన తర్వాత","ఎత్తు","వేగం","దిశ",
 "దిగే ముందు లేపండి","లేవండి","రాబోయేవి","పూర్తయినవి","రద్దయినవి","ప్రింట్","తదుపరి","వెనక్కి"],
-es:["Reservar","Explorar","Mapa de rutas","Destinos","Flota","Novedades","Alianza","Estado del vuelo","Mis viajes","Coches","Chárter","TerraClub","Entretenimiento ↗","Ayuda","Iniciar sesión",
+es:["Reservar","Explorar","Mapa de rutas","Destinos","Flota","Novedades","Alianza","Estado del vuelo","Mis viajes","Coches","Chárter","SummitPlus","Entretenimiento ↗","Ayuda","Iniciar sesión",
 "Según el dispositivo","Claro","Oscuro","Tamaño del texto","Normal","Grande","Muy grande","Alto contraste","Idioma",
 "La red TerraLink","Siete aerolíneas, una sola reserva. Busca horarios, conexiones y tarifas en todo el Grupo TerraLink.","Aerolíneas","Aeropuertos","Vuelos diarios",
 "Ida y vuelta","Solo ida","Varias ciudades","Origen","Destino","Salida","Regreso","Clase","Turista","Premium","Business","Primera","Buscar vuelos","Ciudad o aeropuerto","+ Añadir un vuelo",
@@ -5428,6 +5428,7 @@ async function renderStats(){
   const g=gameStats(), B=s.bookings, CAB2={eco:"Economy",prem:"Premium",biz:"Business",first:"First"};
   const days=[...Array(14)].map((_,i)=>addDays(todayISO(),i-13)), dv=days.map(d=>B.days[d]||0), dmax=Math.max(1,...dv);
   const tierOrder=["Basecamp","Treeline","Ridge","Summit","Apex","Stratos","Zenith"];
+  const tierLabel=t=>({Ridge:"Summit Ridge",Summit:"Summit Crest",Apex:"Summit Apex",Stratos:"Summit Stratos",Zenith:"Summit Zenith"})[t]||t;
   el.innerHTML=`
   <div class="st-sec"><h3>Bookings</h3>
     <div class="st-tiles">${tile(B.live.toLocaleString(),"Active bookings",B.cancelled?`${B.cancelled} cancelled`:"")}
@@ -5442,10 +5443,10 @@ async function renderStats(){
       <div class="st-card"><h4>Most-booked routes</h4>${hbars(B.routes.map(([k,v])=>[k.replace("-"," → "),v]))}</div>
       <div class="st-card"><h4>Cabins</h4>${hbars(["first","biz","prem","eco"].filter(c=>B.cabins[c]).map(c=>[CAB2[c],B.cabins[c]]))}</div>
     </div></div>
-  <div class="st-sec"><h3>TerraClub</h3>
+  <div class="st-sec"><h3>SummitPlus</h3>
     <div class="st-tiles">${tile(s.members.total.toLocaleString(),"Members",s.members.unlimited?`${s.members.unlimited} with unlimited points`:"")}
       ${tile(s.points.earned.toLocaleString(),"Points earned","unlimited accounts left out")}${tile(s.points.spent.toLocaleString(),"Points spent")}</div>
-    <div class="st-cols"><div class="st-card"><h4>Members by tier</h4>${hbars(tierOrder.filter(t=>s.members.tiers[t]).map(t=>[t,s.members.tiers[t]]))}</div></div></div>
+    <div class="st-cols"><div class="st-card"><h4>Members by tier</h4>${hbars(tierOrder.filter(t=>s.members.tiers[t]).map(t=>[tierLabel(t),s.members.tiers[t]]))}</div></div></div>
   <div class="st-sec"><h3>Charters</h3>
     <div class="st-tiles">${tile(s.charters.confirmed.toLocaleString(),"Confirmed")}${tile(s.charters.requested.toLocaleString(),"Waiting")}
       ${tile((s.charters.declined+s.charters.cancelled).toLocaleString(),"Declined or cancelled")}${tile(money(s.charters.revenue),"Charter revenue","confirmed charters")}</div>
@@ -6214,7 +6215,7 @@ function loungeRowsHtml(b){
     const lg=loungeAt(e.from,e.ai); if(!lg)return;
     const acc=loungeAccess(b.ctx.cab,myPoints(),!!b.charterCls);
     rows.push(`<div class="sumline"><span class="sl">${e.from}</span><span>${lg.name} · ${lg.where}<br>
-      <small class="${acc?"lg-in":"lg-out"}">${acc?`Included with ${acc}`:"Not included — Business, First or Summit status gets you in"}</small></span></div>`);}));
+      <small class="${acc?"lg-in":"lg-out"}">${acc?`Included with ${acc}`:"Not included — Business, First or Summit Crest status gets you in"}</small></span></div>`);}));
   return rows.length?`<div class="tsec">Lounges</div>${rows.join("")}`:"";
 }
 function renderLounges(){
@@ -6234,8 +6235,8 @@ function renderLounges(){
       <p class="lg-note">For travellers in Nebula, The Room and The Pod, leaving one of Starliner's ${(sr.hubs||[]).length} hubs.</p>${list(sr.hubs||[],sr)}</div>`);
   el.innerHTML=cards.join("")+
     `<div class="tier note"><div class="tn">Who gets in</div>
-      <ul><li>First or Business on any TerraLink flight</li><li>Summit, Apex, Stratos and Zenith members, on any fare</li>
-        <li>Zenith members bring a guest</li><li>Every charter passenger</li><li>Nebula Lounge: Nebula passengers only</li>
+      <ul><li>First or Business on any TerraLink flight</li><li>Summit Crest members and above, on any fare</li>
+        <li>Summit Zenith members bring a guest</li><li>Every charter passenger</li><li>Nebula Lounge: Nebula passengers only</li>
         <li>ASTRA is low-cost and has no lounges of its own; with the right fare or status you're welcome in another group lounge</li>
         <li>Open from three hours before your flight</li></ul></div>`;
   if(!el.dataset.wired){el.dataset.wired="1";el.addEventListener("click",ev=>{const b=ev.target.closest("[data-lgmore]");if(!b)return;
@@ -6626,7 +6627,7 @@ function monthCal(a,b,cab,date,minDate,onPick){
   draw(); return box;
 }
 
-/* ---------- TerraClub ---------- */
+/* ---------- SummitPlus ---------- */
 /* Altitude names, low to high. Existing thresholds are kept where they were so
    nobody already on the ladder moves; the new rungs sit in the gaps and above.
    bonus is real — it's applied to what you earn, here and on the server. */
@@ -6635,17 +6636,17 @@ const TIERS=[
   perks:["5 points per $1 on every fare","Free Starlink Wi-Fi on every flight","Free seat selection at check-in","Member fares"]},
  {k:"treeline",name:"Treeline",min:10000,bonus:.10,
   perks:["10% bonus points","Free standard seats at booking","Priority on the waitlist"]},
- {k:"ridge",name:"Ridge",min:25000,bonus:.25,
+ {k:"ridge",name:"Summit Ridge",min:25000,bonus:.25,
   perks:["25% bonus points","Priority check-in","1 free checked bag"]},
- {k:"summit",name:"Summit",min:60000,bonus:.50,
+ {k:"summit",name:"Summit Crest",min:60000,bonus:.50,
   perks:["50% bonus points","Lounge access on departure","2 free checked bags","Priority boarding"]},
- {k:"apex",name:"Apex",min:125000,bonus:1,
+ {k:"apex",name:"Summit Apex",min:125000,bonus:1,
   perks:["100% bonus points","Lounge access worldwide","Upgrades for 25% fewer points","Dedicated service line"]},
- {k:"stratos",name:"Stratos",min:250000,bonus:1.25,
-  perks:["125% bonus points","Free upgrades one cabin up","Two guest lounge passes a year","Gift Ridge status to a companion"]},
- {k:"zenith",name:"Zenith",min:500000,bonus:1.5,
+ {k:"stratos",name:"Summit Stratos",min:250000,bonus:1.25,
+  perks:["125% bonus points","Free upgrades one cabin up","Two guest lounge passes a year","Gift Summit Ridge status to a companion"]},
+ {k:"zenith",name:"Summit Zenith",min:500000,bonus:1.5,
   perks:["150% bonus points","Every upgrade free","On Starliner and Velora: a Mercedes-Benz to the aircraft at their hubs","A named concierge"]}];
-/* TerraClub is revenue-based: you earn on what you pay, not how far you go,
+/* SummitPlus is revenue-based: you earn on what you pay, not how far you go,
    and a point is worth 1.2c when you spend it. Premium cabins still earn more
    because they cost more — no separate multiplier is needed. */
 const PTS_PER_DOLLAR=5, POINT_VALUE=0.012;
@@ -6710,7 +6711,7 @@ function bonusNote(){const t=earnTier();return t.bonus?` incl. ${Math.round(t.bo
 function clubRead(){try{return JSON.parse(localStorage.getItem("tl_club")||"null")||{no:null,points:0,activity:[]};}
   catch(_){return{no:null,points:0,activity:[]};}}
 function clubSave(c){try{localStorage.setItem("tl_club",JSON.stringify(c));}catch(_){}}
-/* TerraClub is an account, not a browser. Points only exist for a signed-in
+/* SummitPlus is an account, not a browser. Points only exist for a signed-in
    member — otherwise there's nothing to attach them to and nothing that would
    follow you to another device. */
 function signedIn(){try{return !!(AUTH&&AUTH.user);}catch(_){return false;}}
@@ -7296,7 +7297,7 @@ function tripCard(b,ix){
         <p class="carperk">With Mercedes-Benz: a car takes you from the lounge to the aircraft. It's included — add it to any flight below.</p>
         ${carLegsFor(b).map(({e,why,ix,date})=>`<div class="carrow"><div><b>${e.from} → ${e.to}</b> · ${fmtDate(date)}
           <span>${e.car?`${e.car} · leaves the lounge ${carPickup(e)} · stand ${standFor(e,date)}`
-            :`Included with ${why==="Zenith"?"your Zenith status":why}`}</span></div>
+            :`Included with ${why==="Zenith"?"your Summit Zenith status":why}`}</span></div>
           ${why||e.car?`<button type="button" class="tbtn${e.car?"":" pri"}" data-car-ix="${ix}" data-car-on="${e.car?0:1}" data-trip="${ix_}">${e.car?"Remove":"Add car"}</button>`:""}</div>`).join("")}`:""}
       <div class="tsec">Fare</div>
       ${award
@@ -7551,13 +7552,13 @@ function manageChange(b,panel){
 }
 
 /* ---- upgrade ---- */
-const UPG_PERK={Zenith:"As Zenith, every upgrade is free.",
-  Stratos:"As Stratos, one cabin up is free and further is 25% off.",
-  Apex:"As Apex, upgrades cost 25% fewer points."};
+const UPG_PERK={Zenith:"As Summit Zenith, every upgrade is free.",
+  Stratos:"As Summit Stratos, one cabin up is free and further is 25% off.",
+  Apex:"As Summit Apex, upgrades cost 25% fewer points."};
 async function manageUpgrade(b,panel){
   if(!(STORE.live()&&b.synced)){
     panel.innerHTML=`<h4>Upgrade with points</h4>
-      <p>Upgrades are paid for with TerraClub points, so they need a signed-in account — and this trip was booked as a guest in this browser.</p>
+      <p>Upgrades are paid for with SummitPlus points, so they need a signed-in account — and this trip was booked as a guest in this browser.</p>
       ${STORE.live()?"":`<button type="button" class="lnk up-si">Sign in</button>`}`;
     const si=panel.querySelector(".up-si");if(si)si.onclick=()=>document.getElementById("signin-btn").click();
     return;
@@ -7568,7 +7569,7 @@ async function manageUpgrade(b,panel){
   const opts=(Q.upgrade&&Q.upgrade.options)||[], tier=Q.upgrade&&Q.upgrade.tier;
   panel.innerHTML=`<h4>Upgrade with points</h4>
     <p>The price is the fare difference, in points, for ${plural(Math.max(1,(b.pax||[]).length),"passenger")} on every flight.
-    ${UPG_PERK[tier]||"Apex members and above pay less, Stratos gets one cabin free, Zenith gets them all."}
+    ${UPG_PERK[tier]||"Summit Apex members and above pay less, Summit Stratos gets one cabin free, Summit Zenith gets them all."}
     You have <b class="tnum">${balText(Q.balance)}</b> points.</p>
     ${opts.length?opts.map(o=>`<div class="upopt"><div><b>${CAB[o.cabin]?CAB[o.cabin].label:o.label}</b>
         ${o.cost<o.full?`<s class="tnum">${pts(o.full)}</s>`:""}</div>
@@ -7703,7 +7704,7 @@ function chSummary(){
       :`<p class="ph" style="margin:14px 0 0">Pick where from and where to for an estimate.</p>`}
     ${warn.map(w=>`<div class="terr">${w}</div>`).join("")}
     <p class="ph chs-n">An estimate, not the price. The final price comes with the confirmation, along with the aircraft,
-      flight number and times. Charters earn TerraClub points on the price you pay.</p>`;
+      flight number and times. Charters earn SummitPlus points on the price you pay.</p>`;
   return {ok,e,warn};
 }
 async function chSend(){
@@ -8548,7 +8549,7 @@ function renderCarChoice(){
     ${legs.map(L=>`<label class="carpick"><input type="checkbox" data-carkey="${L.key}" ${SEL.cars[L.key]?"checked":""}>
       <span><b>${L.e.from} → ${L.e.to} · ${AL[L.e.ai].code}${L.e.fn}</b>
         ${mbCar(L.e.from,pax)} · leaves the lounge ${carPickup(L.e)}</span>
-      <em>${L.why==="Zenith"?"Zenith":L.why}</em></label>`).join("")}`;
+      <em>${L.why==="Zenith"?"Summit Zenith":L.why}</em></label>`).join("")}`;
   w.querySelectorAll("[data-carkey]").forEach(i=>i.onchange=()=>{SEL.cars[i.dataset.carkey]=i.checked;});
 }
 let PAYMODE="cash";
@@ -8612,7 +8613,7 @@ function renderBookFare(){
   f.insertAdjacentHTML("beforeend",PAYMODE==="points"
     ? `<div class="earn">✦ Award ticket · ${mi.toLocaleString()} miles · earns no points</div>`
     : signedIn()
-    ? `<div class="earn">✦ Earns <b>${pts.toLocaleString()} TerraClub points</b>${bonusNote()} · ${mi.toLocaleString()} miles</div>`
+    ? `<div class="earn">✦ Earns <b>${pts.toLocaleString()} SummitPlus points</b>${bonusNote()} · ${mi.toLocaleString()} miles</div>`
     : `<div class="earn">✦ <b>${pts.toLocaleString()} points</b> available on this trip · sign in to earn them</div>`);
 }
 document.getElementById("paxcount").addEventListener("change",()=>{if(!document.getElementById("view-book").hidden)renderBookView();});
@@ -8704,7 +8705,7 @@ function renderConfirmed(){
     `<div class="sumline"><span class="sl">Contact email</span><span>${b.email}</span></div>`;
   const awd=b.paidWith==="points";
   if(b.club)document.getElementById("conf-pax").insertAdjacentHTML("beforeend",
-    `<div class="sumline"><span class="sl">TerraClub ${b.club.no}</span><span>${awd
+    `<div class="sumline"><span class="sl">SummitPlus ${b.club.no}</span><span>${awd
       ? "−"+(b.pointsSpent||0).toLocaleString()+" points"
       : "+"+(b.points||0).toLocaleString()+" points"}</span></div>
      <div class="sumline"><span class="sl">New balance</span><span>${balText(b.club.total)} · ${b.club.tier}</span></div>`);
@@ -8743,7 +8744,7 @@ function setUser(u){
   AUTH.user=u;
   /* members already have the Wi-Fi — the home-page link says so */
   const wf=document.querySelector("#ul-wifi span span");
-  if(wf)wf.textContent=u?"Included on every flight — you're a TerraClub member.":"Join TerraClub to start your journey.";
+  if(wf)wf.textContent=u?"Included on every flight — you're a SummitPlus member.":"Join SummitPlus to start your journey.";
   if(u){try{const back=sessionStorage.getItem("tl_after_signin");
     if(back){sessionStorage.removeItem("tl_after_signin");if(/^#\/[a-z]/.test(back))setTimeout(()=>{location.hash=back;},0);}}catch(_){}}
   document.getElementById("who").textContent=u?(u.email||"Signed in"):"";
@@ -8881,7 +8882,7 @@ function carSVG(shape,color){
 
 const CAR_CO=[
   {k:"TD",name:"Terra Drive",tag:"The group's own desk",col:"#00627a",f:1.00,where:"In terminal",hubsOnly:false,
-   note:"TerraClub members: second driver free"},
+   note:"SummitPlus members: second driver free"},
   {k:"NB",name:"Northbound Car Hire",tag:"",col:"#1c4e80",f:0.95,where:"In terminal"},
   {k:"KB",name:"Kerbside",tag:"",col:"#c4501b",f:0.84,where:"Free shuttle · 6 min"},
   {k:"GW",name:"Gateway Motors",tag:"",col:"#5b3a8c",f:1.14,where:"In terminal"},
@@ -9271,7 +9272,7 @@ function openCarBook(ix){
           <div class="inp"><label for="cd-fl">Arriving on (optional)</label><input id="cd-fl" placeholder="e.g. SR408" value="${CARQ.flight}"></div>
         </div>
         <label class="cb-chk"><input type="checkbox" id="cd-extra"> Add a second driver
-          <span>${x.co.k==="TD"&&member?"free for TerraClub members":m2(12)+" a day"}</span></label>
+          <span>${x.co.k==="TD"&&member?"free for SummitPlus members":m2(12)+" a day"}</span></label>
         <div id="cd-err"></div>
         <button class="go" id="cd-go" style="margin-top:14px">Reserve this car</button>
         <p class="cb-note">Nothing is charged — TerraLink is a demo, and so is the desk.
@@ -9477,7 +9478,7 @@ const VIEWS=["home","results","map","where","fleet","news","alliance","airport",
 /* what the loading screen says while it flies you to each page */
 const VIEW_LOADING={explore:"Finding everywhere you can go",ops:"Loading the ops desk",route:"Loading the route",log:"Loading your flight log",tv:"Loading the board",alliance:"Loading Echo United Alliances",airport:"Loading the airport",home:"Loading",results:"Finding flights",map:"Loading the route map",where:"Loading destinations",
   fleet:"Loading the fleet",news:"Loading what's new",help:"Loading help",status:"Loading flight status",trips:"Loading your trips",
-  club:"Loading TerraClub",cars:"Loading cars",charter:"Loading charters",desk:"Loading the charter desk",stats:"Loading stats",
+  club:"Loading SummitPlus",cars:"Loading cars",charter:"Loading charters",desk:"Loading the charter desk",stats:"Loading stats",
   seatback:"Loading seatback",book:"Loading your booking",confirmed:"Confirming your booking"};
 let SHOWN_VIEW=null;
 function show(v){
