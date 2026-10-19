@@ -737,7 +737,7 @@ button{font-family:inherit;cursor:pointer}
 .dd-m{position:absolute;left:-12px;top:100%;margin-top:8px;z-index:1100;min-width:190px;padding:6px;background:var(--surface);border:1px solid var(--line);border-radius:12px;
   box-shadow:0 12px 30px rgba(0,0,0,.16);display:flex;flex-direction:column;opacity:0;visibility:hidden;transform:translateY(-4px);transition:opacity .12s,transform .12s,visibility 0s .12s}
 .dd-m::before{content:"";position:absolute;left:0;right:0;top:-10px;height:10px}   /* a bridge, so the menu stays open on the way down */
-.dd.open .dd-m{opacity:1;visibility:visible;transform:none;transition:opacity .12s,transform .12s}
+.dd.open .dd-m,.dd-m.open{opacity:1;visibility:visible;transform:none;transition:opacity .12s,transform .12s}
 .nav-links .dd-m a{color:var(--ink);padding:8px 10px;border-radius:8px;border:0;font-size:14.5px}
 .nav-links .dd-m a:hover{background:var(--surface-2)}
 .nav-links .dd-m a.active{background:var(--surface-2);font-weight:600}
@@ -833,6 +833,13 @@ button{font-family:inherit;cursor:pointer}
   .dd-m{position:fixed;left:12px;right:12px;margin-top:0;top:var(--dd-top,104px)}
   .nav-links .dd-m a{padding:11px 12px;font-size:15px}
 }
+/* On a phone the menus sit outside the sliding tab row: iPhone Safari cuts off anything inside
+   a row that scrolls sideways, even a menu pinned to the screen (18 October). */
+.dd-layer{font-weight:500}
+.dd-layer .dd-m{position:fixed;left:12px;right:12px;margin-top:0;top:var(--dd-top,104px);max-height:calc(100vh - var(--dd-top,104px) - 16px);overflow-y:auto}
+.dd-layer .dd-m a{white-space:nowrap;text-decoration:none;color:var(--ink);padding:11px 12px;border-radius:8px;font-size:15px}
+.dd-layer .dd-m a:hover{background:var(--surface-2)}
+.dd-layer .dd-m a.active{background:var(--surface-2);font-weight:600}
 
 .hero{position:relative;background:var(--chrome);color:var(--ink);overflow:hidden;border-bottom:1px solid var(--line)}
 .hero svg.paths{position:absolute;inset:0;width:100%;height:100%;opacity:.75;pointer-events:none}
@@ -2393,7 +2400,7 @@ footer .foot-al:hover span{color:var(--deep-ink)}
   fly(2400);
 })();
 </script>
-<nav class="nav"><div class="nav-in">
+<nav class="nav"><div class="dd-layer" id="dd-layer"></div><div class="nav-in">
   <a class="brand" href="#/"><span class="dlogo navplate"><img id="tl-logo" alt="TerraLink"></span>TerraLink</a>
   <div class="navwrap">
   <div class="nav-links">
@@ -9811,7 +9818,7 @@ function renderInfo(slug){
   box.classList.toggle("reading",!!t);
   pages.forEach(p=>p.hidden=p.dataset.t!==t);
   document.querySelectorAll("#view-info .ti-list a").forEach(a=>a.classList.toggle("on",a.dataset.ti===t));
-  document.querySelectorAll('.nav-links a[data-nav^="info-"]').forEach(a=>a.classList.toggle("active",a.dataset.nav==="info-"+t));
+  document.querySelectorAll('.nav-links a[data-nav^="info-"],.dd-layer a[data-nav^="info-"]').forEach(a=>a.classList.toggle("active",a.dataset.nav==="info-"+t));
   if(window.__navGroups)window.__navGroups();
   if(t==="alerts")infoAlerts();
   if(t==="connections")infoHubs();
@@ -9884,28 +9891,38 @@ async function infoAlerts(){
 (function(){
   const dds=[...document.querySelectorAll(".nav-links .dd")],hover=matchMedia("(hover:hover) and (pointer:fine)");
   const bar=document.querySelector(".nav");
+  /* each tab keeps hold of its menu; on a phone the menus move out of the sliding row into a
+     layer of their own, because iPhone Safari clips them inside it (they move back on a wider screen) */
+  dds.forEach(d=>{d._m=d.querySelector(".dd-m");});
+  const layer=document.getElementById("dd-layer"),phone=matchMedia("(max-width:700px)");
+  const place=()=>{if(!layer)return;dds.forEach(d=>{const want=phone.matches?layer:d;if(d._m.parentNode!==want)want.appendChild(d._m);});};
+  place();if(phone.addEventListener)phone.addEventListener("change",place);else if(phone.addListener)phone.addListener(place);
   const set=(d,on)=>{if(on&&bar)document.documentElement.style.setProperty("--dd-top",Math.round(bar.getBoundingClientRect().bottom+6)+"px");
-    d.classList.toggle("open",on);d.querySelector(".dd-b").setAttribute("aria-expanded",String(on));};
+    d.classList.toggle("open",on);d._m.classList.toggle("open",on);d.querySelector(".dd-b").setAttribute("aria-expanded",String(on));};
   /* sliding the tab row (on a phone) closes an open menu, which would otherwise point at nothing */
   const row=document.querySelector(".nav-links");if(row)row.addEventListener("scroll",()=>closeAll(null),{passive:true});
   const closeAll=x=>dds.forEach(d=>{if(d!==x)set(d,false);});
   dds.forEach(d=>{let t=0;const b=d.querySelector(".dd-b");
     d.addEventListener("mouseenter",()=>{if(!hover.matches)return;clearTimeout(t);closeAll(d);set(d,true);});
     d.addEventListener("mouseleave",()=>{if(!hover.matches)return;t=setTimeout(()=>set(d,false),160);});
+    d._m.addEventListener("mouseenter",()=>{if(hover.matches)clearTimeout(t);});
+    d._m.addEventListener("mouseleave",()=>{if(!hover.matches||d.contains(d._m))return;t=setTimeout(()=>set(d,false),160);});
     b.addEventListener("click",e=>{e.stopPropagation();const on=!d.classList.contains("open");closeAll(d);set(d,on);});
-    d.querySelectorAll(".dd-m a").forEach(a=>a.addEventListener("click",()=>set(d,false)));
-    d.addEventListener("keydown",e=>{if(e.key==="Escape"){set(d,false);b.focus();}
-      if(e.key==="ArrowDown"&&document.activeElement===b){e.preventDefault();set(d,true);const f=d.querySelector(".dd-m a:not([hidden])");if(f)f.focus();}});
-    d.addEventListener("focusout",()=>setTimeout(()=>{if(!d.contains(document.activeElement)&&!(hover.matches&&d.matches(":hover")))set(d,false);},0));});
-  document.addEventListener("click",e=>{if(!e.target.closest(".nav-links .dd"))closeAll(null);});
+    d._m.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>set(d,false)));
+    const key=e=>{if(e.key==="Escape"){set(d,false);b.focus();}
+      if(e.key==="ArrowDown"&&document.activeElement===b){e.preventDefault();set(d,true);const f=d._m.querySelector("a:not([hidden])");if(f)f.focus();}};
+    const out=()=>setTimeout(()=>{const ae=document.activeElement;if(!d.contains(ae)&&!d._m.contains(ae)&&!(hover.matches&&(d.matches(":hover")||d._m.matches(":hover"))))set(d,false);},0);
+    d.addEventListener("keydown",key);d.addEventListener("focusout",out);
+    d._m.addEventListener("keydown",e=>{if(!d.contains(d._m))key(e);});d._m.addEventListener("focusout",()=>{if(!d.contains(d._m))out();});});
+  document.addEventListener("click",e=>{if(!e.target.closest(".nav-links .dd,.dd-layer .dd-m"))closeAll(null);});
   /* the Staff menu shows once one of its links does (operators only); a dot when charter requests are waiting */
   const staff=document.getElementById("dd-staff");
   /* (it only writes when something changes: writing would wake the watcher again) */
-  const sync=()=>{if(!staff)return;const hide=![...staff.querySelectorAll(".dd-m a")].some(a=>!a.hidden);if(staff.hidden!==hide)staff.hidden=hide;
+  const sync=()=>{if(!staff)return;const hide=![...staff._m.querySelectorAll("a")].some(a=>!a.hidden);if(staff.hidden!==hide)staff.hidden=hide;
     const n=document.getElementById("desk-count"),b=staff.querySelector(".dd-b"),dot=b.querySelector(".dd-dot"),want=!!(n&&!n.hidden&&n.textContent);
     if(want&&!dot){const d=document.createElement("i");d.className="dd-dot";b.insertBefore(d,b.lastElementChild);}else if(!want&&dot)dot.remove();};
-  if(staff)new MutationObserver(sync).observe(staff.querySelector(".dd-m"),{subtree:true,attributes:true,attributeFilter:["hidden"],childList:true,characterData:true});
-  window.__navGroups=()=>dds.forEach(d=>d.classList.toggle("active",!!d.querySelector(".dd-m a.active")));
+  if(staff)new MutationObserver(sync).observe(staff._m,{subtree:true,attributes:true,attributeFilter:["hidden"],childList:true,characterData:true});
+  window.__navGroups=()=>dds.forEach(d=>d.classList.toggle("active",!!d._m.querySelector("a.active")));
   sync();
   /* tabs and the sign-in corner on one line only while they fit side by side */
   const nav=document.querySelector(".nav"),wrap=document.querySelector(".navwrap"),right=document.querySelector(".nav-right"),links=document.querySelector(".nav-links");
@@ -9935,7 +9952,7 @@ function show(v){
   SHOWN_VIEW=v;
   VIEWS.forEach(x=>document.getElementById("view-"+x).hidden=(x!==v));
   const navKey=(v==="results"||v==="book"||v==="confirmed")?"home":v;
-  document.querySelectorAll(".nav-links a").forEach(a=>a.classList.toggle("active",a.dataset.nav===navKey));
+  document.querySelectorAll(".nav-links a,.dd-layer a").forEach(a=>a.classList.toggle("active",a.dataset.nav===navKey));
   if(window.__navGroups)window.__navGroups();
   if(v!=="results")document.getElementById("selbar").hidden=true;
   if(window.__liveVisible)window.__liveVisible(v==="status");
